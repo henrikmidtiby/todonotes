@@ -1,0 +1,6 @@
+The package lets the user mark things to do later, in a simple and
+and visually appealing way.  The package takes several options to
+enable customization / finetuning of the visual appearance.
+
+The package makes use of the tikz and xkeyval packages.
+
