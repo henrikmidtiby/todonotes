@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[colorlinks]{hyperref}
+\usepackage[colorinlistoftodos, textwidth=4cm, shadow]{todonotes}
+\usepackage{amsmath}
+\usepackage[displaymath, tightpage]{preview}
+
+
+\begin{document}
+\listoftodos
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla
+\todo{Plain todonotes.}%
+urna. Maecenas interdum nunc in augue. Mauris quis massa in ante
+tincidunt mollis. Proin imperdiet. Donec porttitor pede id est. Sed
+in ante. Integer id arcu. Nam lectus nisl, posuere sit amet,
+imperdiet ut, tristique ac, lorem. In erat. In commodo enim.
+\todo[color=blue!40]{Todonote with a different color.}%
+Phasellus libero ipsum, tempor a, pharetra consequat, pellentesque
+sit amet, sem. Praesent ut augue luctus elit adipiscing ultricies.
+Vestibulum suscipit cursus leo. Nullam molestie justo.
+
+
+Morbi dui. Morbi convallis mi sed sem. Nulla convallis lacus vitae
+risus. Phasellus adipiscing. Nullam tortor. Sed laoreet aliquam
+ante. Vestibulum diam. Pellentesque nec leo. Pellentesque velit.
+\todo[nolist]{Todonote that is only shown in the margin and not in
+the list of todos.}%
+Praesent congue mi eu ipsum cursus fringilla. Etiam leo erat,
+tristique et, pharetra eget, mollis vitae, velit. In hac habitasse
+\todo[size=\small, color=green!40]{A note with a small fontsize.}%
+platea dictumst. In quam nibh, facilisis et, laoreet non, facilisis
+tempus, justo.
+
+\todo[inline]{A very long todonote that certainly will fill more
+than a single line in the list of todos. Just to make sure let's add
+some more text \ldots}
+
+Donec nulla lectus, faucibus sit amet, auctor non, consectetuer
+quis, pede. Nullam dictum. Nullam suscipit, ligula in scelerisque
+\todo[noline]{A note with no line back to the text.}%
+posuere, sapien purus rutrum magna, vitae pharetra leo quam vel
+tortor. Donec eleifend condimentum sapien. Etiam sed orci. Aliquam
+\todo[inline, color=red!50]{Inline todonotes.}%
+tempor. Pellentesque egestas tortor id eros. Donec mauris justo,
+commodo id, pellentesque id, eleifend non, mi. Duis venenatis
+\todo[caption={A short entry in the list of todos}]{A very long
+todonote that certainly will fill more than a single line in the
+list of todos \ldots}
+sagittis metus. 
+\missingfigure{A figure I have to make \ldots}
+
+\end{document}

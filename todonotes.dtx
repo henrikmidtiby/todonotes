@@ -1,0 +1,1135 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2008 by Henrik Skov Midtiby <henrikmidtiby@gmail.com>
+% -------------------------------------------------------
+% 
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%    http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX 
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{todonotes.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{todonotes}
+%<*package>
+    [2009/01/09 .dtx Todonotes source and documentation.]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{wrapfig}
+\usepackage[colorlinks, linkcolor=black]{hyperref}
+\usepackage[colorinlistoftodos, shadow]{todonotes}[2009/01/09]
+\usepackage{amsmath}
+\usepackage{setspace}
+\EnableCrossrefs         
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{todonotes.dtx}
+%\iffalse
+%  \PrintChanges
+%  \PrintIndex
+%\fi
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{387}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{0.1}{2008/04/17}{The first version of the package}
+% \changes{0.2}{2008/05/15}{Updated the option handling of the package}
+% \changes{0.2.1}{2008/05/16}{Slightly modified by Kjell Magne Fauske to 
+%             support notes in the left margin (for documentstyle book).}
+% \changes{0.2.2}{2008/05/28}{Added a missingfigure command}
+% \changes{0.2.3}{2008/06/10}{Made a dependency on the calc package}
+% \changes{0.3}{2008/07/11}{Delayed the requirements for the hyperref package
+%             untill begin document and added an optional argument
+%             to the todo command for adding inline todonotes (Idea
+%             from Patrick Toche)}
+% \changes{0.3.1}{2008/07/15}{Added some options to the todo macro (Idea: Patrick
+%             Toche) and made the \\listoftodos point at the inserted
+%             todos and not only the current / previous section, 
+%             subsection or figure using the \\phantomsection macro.}
+% \changes{0.4}{2008/07/28}{Modified the behaviour of the inline todonotes, to
+%             avoid empty lines around the inline todonotes.}
+% \changes{0.4.1}{2008/07/28}{
+%             Added the option colorinlistoftodos which inserts a
+%             small box with the used fillcolor of the todonotes in
+%             the list of todos.}
+% \changes{0.4.2}{2008/07/30}{Fixed a bug with the disable option to the
+%             package.}
+% \changes{0.5}{2008/08/05}{Created a dtx file containing both source
+%             code and documentation of the package}
+% \changes{0.5.1}{2008/09/15}{Updated the documentation}
+% \changes{0.5.2}{2008/10/20}{Fixed a bug that prevented the usage
+%             of the option french for babel. Bug report by Thomas
+%             Braun.}
+% \changes{0.6}{2008/10/24}{Added the caption option to the todo
+%             command.}
+% \changes{0.6.1}{2008/11/07}{Added a new usecase with decreased line
+%             spacing.}
+% \changes{0.6.2}{2008/11/13}{Added a usecase by Fabrice Niessen.}
+% \changes{0.7}{2008/11/22}{Added language options on request from
+%             Peter Zimmermann.}
+% \changes{0.7.1}{2008/12/07}{Reworked the color options for both
+%             the whole package and the todo command. General code
+%             clean up. Added the prependcaption package option.}
+% \changes{0.7.2}{2008/12/27}{Avoid to change the fontsize inside
+%             the list of todos, fixing a bug revealed by Vladimir
+%             Zhuravlev.}
+% \changes{0.7.3}{2008/12/30}{The localization options (danish and
+%             german) and the disable options, were all flawed by
+%             naming inconsistencies that made then break the
+%             package. This have been fixed.}
+% \changes{0.7.4}{2008/12/30}{Fixed a bug related to the caption
+%             option for the todo command. Introduced a counter of
+%             the number of inserted todos.}
+% \changes{0.7.5}{2009/01/02}{Fixed a typo in a macroname.}
+% \changes{0.7.6}{2009/01/04}{Added a textsize option for the
+%             package and the prepend / noprepend option for the
+%             todo command.}
+% \changes{0.8}{2009/01/09}{Added three new translations french,
+%             spanish and catalan thanks to Richard Dominique and
+%             Joan Queralt. Improved the visual appearence of the
+%             inserted notes (rounded corners and optional shadows) 
+%             with code from Joan Queralt. Found an untranslated
+%             textstring ''Figure'' in the source. Added a figwidth
+%             option to the missingfigure command, patch by Paul
+%             Ivanov.}
+% \changes{0.8.1}{2009/01/12}{Added a space between the colored
+%             square and the text in the list of todos. Added a new
+%             usecase for marking old / new sections.}
+%
+% \GetFileInfo{todonotes.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+% \iffalse
+% A macro for marking things todo before the next relase
+% (typically update of documentation).
+% \fi
+% \newcommand{\donow}[1]{\todo[color=blue]{#1}}
+% 
+%
+% \title{The \textsf{todonotes} package\thanks{This document
+%   corresponds to \textsf{todonotes}~\fileversion, dated \filedate.}}
+% \author{Henrik Skov Midtiby \\ \texttt{henrikmidtiby@gmail.com}}
+%
+% \maketitle
+%
+% \begin{abstract}
+% The |todonotes| package allows you to insert to--do items in your
+% document. At any point in the document a list of all the inserted
+% to--do items can be listed with the |\listoftodos| command.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \newpage
+% \section{Introduction}
+%
+% The |todonotes| package makes three commands available to the
+% user: |\todo[]{}|, |\missingfigure{}| and |\listoftodos|.
+% |\todo[]{}| and |\missingfigure{}| makes it possible to insert
+% notes in your document about things that has to be done later
+% (todonotes \ldots).
+% I developed the basic functionality of the package while I worked
+% on my bachelor project.
+% 
+%
+%
+% \subsection{Usage}
+%
+% \DescribeMacro{\todo}
+% My \index{\todo}most common usage of the todonotes package, is to 
+% insert an uncustomized todonotes somewhere in a latex document. 
+% An example of this usage is the command 
+%
+% |\todo{Make a cake \ldots}|, 
+% 
+% \noindent
+% which renders like\todo{Make a cake \ldots}.
+% The |\todo| command has this structure: 
+% |\todo|\oarg{options}\marg{todo text}.
+% The |todo text| is the text that will be shown in the todonote and
+% in the list of todos. The optional argument |options|, allows the
+% user to customize the appearance of the inserted todonotes.
+% For a description of all the options see section
+% \ref{subsecTodoOptions}.
+%
+%
+% \DescribeMacro{\missingfigure}
+% The |\missingfigure| command inserts an image containing an 
+% attention sign and the given text.
+% The command takes only one argument
+% |\missingfigure|\marg{text}, a text string that could
+% describe what the figure should consist of.
+% An example of its usage could be 
+%
+% |\missingfigure{Make a sketch of the structure of a trebuchet.}| 
+%
+% \noindent
+% which renders like.
+%
+% \missingfigure{Make a sketch of the structure of a trebuchet.}
+%
+%
+% \DescribeMacro{\listoftodos}
+% The |\listoftodos| command inserts a list of all the todos in the
+% current document. |\listoftodos| takes no arguments.
+% For this document the list of to--do's looks like.
+% \listoftodos
+%
+%
+% \subsection{Package options}
+% \label{subsecPackageOptions}
+% \DescribeMacro{disable}
+% If the option |disable| is passed to the package, the macros
+% usually defined by the package (|\todo|, |\listoftodos| and
+% |\missingfigure|) are defined as macros with no effect, and thus
+% all inserted notes are removed.
+%
+% \DescribeMacro{danish, german, french}
+% \DescribeMacro{spanish, catalan}
+% Use the danish or german translations of the text strings 
+% ''List of todos'' and ''Missing figure''.
+% The default is to use none of these options, which results in
+% english text strings.
+% 
+% \DescribeMacro{colorinlistoftodos}
+% Adds a small colored square in front of all items in the Todo
+% list. The color of the square is the same as the fill color of the
+% inserted todonote.
+% This can be usefull if there are different types of todos 
+% (insert reference, explain in detail, \ldots) where the color of
+% the inserted todonote marks the type of todo.
+%
+% \DescribeMacro{color}
+% \DescribeMacro{backgrouncolor}
+% \DescribeMacro{linecolor}
+% \DescribeMacro{bordercolor}
+% These options sets the default colors for the todo command.
+% There is three colors that can be specified. The border color
+% (default |bordercolor=black|) around the inserted text, the color
+% behind the inserted text (default |backgroundcolor=orange|) and
+% the color of the line connecting the inserted textbox with the
+% current location in the text (default |linecolor=orange|). 
+% Setting the |color| option to |val| passes this value on to the 
+% background and line color options.
+% The specified colors must be valid according to the 
+% |xcolor| package.
+% 
+% \DescribeMacro{textwidth}
+% |textwidth=length| sets the width of a todo item in the margin to
+% |length|. The width of inline todonotes will allways be the same 
+% as the current line width.
+%
+% \DescribeMacro{textsize}
+% |textsize=value| sets the default text size of the inserted
+% todonotes to the given value.
+% Value is the ''name'' of the used fontsize, eg. if the desired
+% fontsize is |\tiny| use |textsize=tiny|. The default value is 
+% |textsize=normalsize|.
+%
+% \DescribeMacro{prependcaption}
+% The |prependcaption| option triggers a special behaviour of the
+% |caption=val| option for the todo command, where the given value
+% |val| is inserted in the inserted todonote.
+% 
+% \DescribeMacro{shadow}
+% If the |shadow| option is given, the inserted todonotes will be
+% displayed with a gray shadow.
+% I expect that the option will trigger problems with tikz versions
+% prior to 2.0.
+%
+% \DescribeMacro{dvistyle}
+% When a document with todonotes is compiled with plain latex (to a
+% dvi-file), there is an issue with the visual
+% appearance\footnote{The problem is placement of text inside the
+% colored boxes.}.
+% The option |dvistyle| changes the appearance of the inserted
+% todonotes to avoid this problem.
+%
+% 
+%
+% \subsection{Options for the todo command}
+% \label{subsecTodoOptions}
+% There are several options that can be given to the |\todo|
+% command. All the options are described here and often I have
+% included examples of the change in visual appearance.
+%
+% \DescribeMacro{color}
+% \DescribeMacro{backgroundcolor}
+% \DescribeMacro{linecolor}
+% \DescribeMacro{bordercolor}
+% These options set the color that is used in the current todo
+% command.
+% The color classes is the same as used in the color package
+% options, see section \ref{subsecPackageOptions}.
+% Default values can be set by the color
+% options when the todonotes package is loaded.
+% \todo[color=green!40]{And a green note}
+% The todo notes inserted in this paragraph is created with the
+% command
+% |\todo[color=green!40]{And a green note}|.
+% The color of the inserted note could be used to mark different
+% types of tasks (insert references, explain something in detail,
+% \ldots), this could be streamlined by defining new commands like
+% below.
+% \begin{verbatim}
+% \newcommand{\insertref}[1]{\todo[color=green!40]{#1}}
+% \newcommand{\explainindetail}[1]{\todo[color=red!40]{#1}}
+% \end{verbatim}
+% An example that uses all of the color options is given below
+% \todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
+% bordercolor=red]{Anything but default colors}.
+% \begin{verbatim}
+% \todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
+% bordercolor=red]{Anything but default colors}.
+% \end{verbatim}
+%
+%
+% \DescribeMacro{line / noline}
+% If you want to get rid of the line connecting the inserted note
+% with the place in the text where the note occurs in the latex
+% code, the option |noline| can be used.
+% \todo[noline]{A note with no line connecting it to the placement
+% in the original text.}
+% |\todo[noline]{A note with no line ...}|
+% \vspace{1.0cm}
+% 
+%
+% \DescribeMacro{inline / noinline}
+% It is possible to place a todonote inside the text instead of
+% placing it in the margin, this could be desireable if the text in
+% the note has a considerable length.
+% |\todo[inline]{A todonote placed in the text}|
+% \todo[inline]{A todonote placed in the text}
+
+% \begin{wrapfigure}[1]{r}[20mm]{40mm}
+% \begin{tikzpicture}
+% \draw[red] (0, 0) circle(0.45);
+% \draw[green] (1, 0) circle(0.45);
+% \draw[blue] (2, 0) circle(0.45);
+% \end{tikzpicture}
+% \caption{A text explaining the image.
+% \todo[inline]{Fill those circles \ldots}}
+% \end{wrapfigure}
+% Another usage for the inline option is when you want to add a
+% todonote to a figure caption.
+%
+% \begin{verbatim}
+% \begin{wrapfigure}{r}[20mm]{40mm}
+% \begin{tikzpicture}
+% \draw[red] (0, 0) circle(0.45);
+% \draw[green] (1, 0) circle(0.45);
+% \draw[blue] (2, 0) circle(0.45);
+% \end{tikzpicture}
+% \caption{A text explaining the image.
+% \todo[inline]{Fill those circles \ldots}}
+% \end{wrapfigure}
+% \end{verbatim}
+%
+% \DescribeMacro{size}
+% |size=val| changes the size of the text inside the todonote.
+% The commands used to create the notes below are \\ \noindent
+% |\todo[size=\Large]{A note with a large fontsize.}|
+% and \\ \noindent
+% |\todo[inline, size=\tiny]{Note with very small fontsize.}|.
+% \todo[size=\Large]{A note with a large fontsize.}
+% \todo[inline, size=\footnotesize]{Note with very small fontsize.}
+%
+% \DescribeMacro{list / nolist}
+% When the option |nolist| is given, the todo item will not appear in
+% the list of todos.
+%
+% \DescribeMacro{caption}
+% The |caption| option enables the user to specify a short
+% description of the todonote that are inserted in the list of
+% todos instead of the full todonote text.
+% \todo[caption={Short note}]{A very long and tedious note that
+% cannot be on one line in the list of todos.}
+% \begin{verbatim}
+% \todo[caption={Short note}]{A very long and tedious note that
+% cannot be on one line in the list of todos.}.
+% \end{verbatim}
+% The effect of this option is altered with the package option
+% |prependcaption| or the |prepend| / |noprepend| option for the
+% todo command.
+%
+% \DescribeMacro{prepend / noprepend}
+% The options |prepend| and |noprepend| can be used for setting
+% whether a given caption should be prepended to the todonote or
+% not.
+% Globally this can be set using the |prependcaption| option for the
+% package.~\todo[prepend, caption={Short note with prepend}]{A very
+% long and tedious note that cannot be on one line in the list of
+% todos.} Below is the effect of the option shown using the code:
+% \todo[noprepend, caption={Short note with noprepend}]{A very long
+% and tedious note that cannot be on one line in the list of
+% todos.}
+% \begin{verbatim}
+% \todo[prepend, caption={Short note with prepend}]{A very long and tedious 
+% note that cannot be on one line in the list of todos.}.
+% \todo[noprepend, caption={Short note with noprepend}]{A very long and 
+% tedious note that cannot be on one line in the list of todos.}.
+% \end{verbatim}
+% \DescribeMacro{figwidth}
+% The |figwidth=length| option sets the default width of the figure
+% inserted by the |\missingfigure| command. 
+% The default value is |\textwidth|.
+%
+% \subsection{Options for the missingfigure command}
+%
+% \DescribeMacro{figwidth}
+% The |figwidth=length| option sets the width of the figure inserted by the
+% |\missingfigure| command.
+% Length values below $6cm$ might trigger some problems with the
+% visual appearance.
+% Try to compare the default of the missing figure command, when the
+% option is given or not. 
+% \begin{verbatim}
+% \missingfigure[figwidth=6cm]{Testing a long text string}
+% \end{verbatim}
+% \missingfigure[figwidth=6cm]{Testing a long text string}
+% \begin{verbatim}
+% \missingfigure{Testing a long text string}
+% \end{verbatim}
+% \missingfigure{Testing a long text string}
+% \begin{wrapfigure}{r}[2cm]{6cm}
+% \missingfigure[figwidth=6cm]{Add a test image \ldots}
+% \end{wrapfigure}
+% Another usage of the option is when |\missingfigure| is used in
+% the wrapfigure environment.
+% \begin{verbatim}
+% \begin{wrapfigure}{r}[2cm]{6cm}
+% \missingfigure[figwidth=6cm]{Add a test image \ldots}
+% \end{wrapfigure}
+% \end{verbatim}
+% 
+% \subsection{Options for the listoftodos command}
+% Currently the listoftodos command takes no optional arguments.
+% 
+% \subsection{Known issues}
+% \subsubsection{Package loading order}
+% The todonotes package requires the following packages.
+% \begin{multicols}{2}
+% \begin{itemize}
+% \item ifthen
+% \item xkeyval
+% \item hyperref
+% \item xcolor
+% \item tikz
+% \item calc
+% \item graphicx (is loaded via the tikz package)
+% \end{itemize}
+% \end{multicols}
+% \noindent
+% When todonotes are loaded in the preamble, the package checks
+% if these packages all are loaded. If that is not the case it loads
+% the missing packages with no options given.
+% If you want to give some specific options to some of these
+% packages, you have to load them \emph{before} the todonotes
+% package, otherwise you will get an ''Option clash'' error when
+% latex works on the document.
+%
+% \subsubsection{Wrapping of long lines in list of todos}
+% When a document is compiled with latex (and not pdflatex) long
+% items in the list of todos are not wrapped into several lines, and
+% do instead continue to the right out of the page.
+% 
+%
+% \subsection{Things to improve}
+% This is a list of things I consider to improve sometime in the
+% future. I havent been done yet as I lack the time or skills to
+% implement them.
+% Patches with implementations of these tasks will be appreciated
+% and might be included in the package if it will improve the
+% package quality.
+%
+%
+% \subsubsection{Owner information}
+% Option for the todo command.
+% \begin{verbatim}
+% \todo[owner={Fabrice}]{Stuff}
+% \end{verbatim}
+% Add info on who ''owns'' the current todo. 
+% Idea: Fabrice Niessen
+%
+%
+% \subsubsection{Due date}
+% Option for the todo command.
+% \begin{verbatim}
+% \todo[due=2008-12-07]{Stuff}
+% \end{verbatim}
+% Add info on when the current todo is due.
+% Might be enhanced by a time line of the todos that have a due date
+% assigned.
+% Idea: Fabrice Niessen
+%
+%
+% \subsubsection{Mark accomplished todos}
+% \begin{verbatim}
+% \todo[done]{Stuff}
+% \end{verbatim}
+% Idea: Fabrice Niessen
+%
+%
+% \subsubsection{Enumeration of the todo notes}
+% Add counters to the inserted notes.
+% Idea: Henrik
+%
+%
+%
+% 
+% 
+% \subsection{Usage methods}
+% In this section I have collected some different methods to use the
+% |todonotes| package.
+%
+%
+% \subsubsection{Define new commands with fixed options}
+% Often there is a need for marking different classes of things to
+% do (add reference, rewrite, \ldots).
+% One way to do this, is to define some new commands as shown below
+% (idea from Florent B.).
+% \begin{verbatim}
+% \newcommand{\addref}{\todo[color=red!40]{Add reference.}}
+% \newcommand{\rewrite}[1]{\todo[color=green!40]{#1}}
+% \end{verbatim}
+% To distinguish between the different types of todos, the
+% |todonotes| package can be loaded with the |colorinlistoftodos|
+% option, which adds small colored squares to the list of todos.
+% \begin{verbatim}
+% \usepackage[colorinlistoftodos]{todonotes}
+% \end{verbatim}
+% 
+% 
+%
+% \subsubsection{Combination with the fixme package}
+%
+% Thomas Arildsen has mailed me this use case. Check the
+% documentation for the |fixme| package, as the code below relies
+% directly on it (the |\FDUser| command is augumented when
+% |\begin{document}| is reached).
+% \begin{verbatim}
+% \usepackage[user,nomargin]{fixme}
+% \usepackage{todonotes}
+% \newcommand{\FXUser}[2]{\todo[inline,size=\small]{{\bfseries #1:} #2}}
+% \end{verbatim}
+%
+%
+%
+% \subsubsection{Altering the linespacing of todonotes}
+%
+% The |setspace| package lets you alter the line spacing of smaller
+% sections of your document. The primary construct is the
+% |spacing| environment, which is demonstrated below.
+% \begin{verbatim}
+% \begin{spacing}{0.5}
+% Some lines with a decreased line spacing. This is accomplished
+% using the setspace package that is included in standard latex
+% distributions.
+% \end{spacing}
+% \end{verbatim}
+% \begin{spacing}{0.5}
+% Some lines with a decreased line spacing. This is accomplished
+% using the setspace package that is included in standard latex
+% distributions.
+% \end{spacing}
+%
+% \vspace{0.25cm}
+% Using the |spacing| environment we can define a new todonote
+% command using the code below:
+% \begin{verbatim}
+% \newcommand{\smalltodo}[2][]
+%     {\todo[caption={#2}, #1]
+%     {\begin{spacing}{0.5}#2\end{spacing}}}
+% \end{verbatim}
+% \newcommand{\smalltodo}[2][]
+%     {\todo[caption={#2}, #1]
+%     {\begin{spacing}{0.5}#2\end{spacing}}}
+% Todonotes with decreased line spacing can now be inserted as
+% follows
+% \smalltodo[size=\footnotesize]{
+% Some lines with a decreased line spacing. This is accomplished
+% using the setspace package that is included in standard latex
+% distributions.}
+% \begin{verbatim}
+% \smalltodo[size=\footnotesize]{
+% Some lines with a decreased line spacing. This is accomplished
+% using the setspace package that is included in standard latex
+% distributions.}
+% \end{verbatim}
+%
+%
+%
+% \subsubsection{Comments ''a la Word''}
+%
+% Fabrice Niessen sent me the following usecase.
+% The idea is to define a new command |\mycomment| which adds a
+% counter and optionally the initials of the auther to the inserted
+% todonote.
+% 
+% \begin{verbatim}
+% \newcounter{mycomment}
+% \newcommand{\mycomment}[2][]{%
+%    % initials of the author (optional) + note in the margin
+%    \refstepcounter{mycomment}%
+%    {%
+%        \setstretch{0.7}% spacing
+%        \todo[color={red!100!green!33},size=\small]{%
+%            \textbf{Comment [\uppercase{#1}\themycomment]:}~#2}%
+%    }}
+% \end{verbatim}
+% \newcounter{mycomment}
+% \newcommand{\mycomment}[2][]{%
+%    \refstepcounter{mycomment}%
+%    {%
+%        \setstretch{0.7}%
+%        \todo[color={red!100!green!33},size=\small]{%
+%            \textbf{Comment [\uppercase{#1}\themycomment]:}~#2}%
+%    }}
+% 
+% The command |\mycomment[HSM]{Testing first time.}| is displayed
+% \mycomment[HSM]{Testing first time.}%
+% like shown in the left margin, and another call of the command is
+% added below |\mycomment[HSM]{Testing second time.}|.
+% \mycomment[HSM]{Testing second time.}%
+%
+%
+% \subsubsection{Marking new / old sections}
+% Sometimes a whole section has to be marked by some means. You
+% might want to try the following.
+% \begin{verbatim}
+% \todo[inline, caption={Some text}]{
+% \begin{minipage}{\linewidth}
+% Some text that might differ from the text given to the caption
+% option.
+% \end{minipage}
+% }
+% \end{verbatim}
+% It is important to add the |caption={text}| option, otherwise
+% latex will try to embed a minipage in the table of contents which
+% triggers an error.
+% Inside the minipage environment almost anything could be placed,
+% except for other todo commands.
+% \begin{verbatim}
+% \todo[inline, caption={Examine this new section}]{
+% \begin{minipage}{\linewidth}
+% Some text.
+% \begin{align}
+% \sin(\theta)^2 + \cos(\theta)^2 = 1
+% \end{align}
+% A formula and a list
+% \begin{itemize}
+% \item	An item
+% \end{itemize}
+% \end{minipage}
+% }
+% \end{verbatim}
+% The example above renders like
+% \todo[inline, caption={Examine this new section}]{
+% \begin{minipage}{\linewidth}
+% Some text.
+% \begin{align}
+% \sin(\theta)^2 + \cos(\theta)^2 = 1
+% \end{align}
+% A formula and a list
+% \begin{itemize}
+% \item	An item
+% \end{itemize}
+% \end{minipage}
+% }
+%
+%
+% \iffalse
+% \StopEventually{\PrintChanges\PrintIndex}
+% \fi
+% \StopEventually{\PrintChanges}
+%
+% \newpage
+% \section{Implementation}
+%
+% Identifies the package and loads the packages dependences.
+%    \begin{macrocode}
+\ProvidesPackage{todonotes}[2009/01/09]
+\RequirePackage{ifthen}
+\RequirePackage{xkeyval}
+\RequirePackage{hyperref}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{calc}
+%    \end{macrocode}
+% Some default values are set
+%    \begin{macrocode}
+\newcommand{\@todonotes@text}{}%
+\newcommand{\@todonotes@backgroundcolor}{orange}
+\newcommand{\@todonotes@linecolor}{orange}
+\newcommand{\@todonotes@bordercolor}{black}
+\newcommand{\@todonotes@textwidth}{\marginparwidth}
+\newcommand{\@todonotes@textsize}{\normalsize}
+\newcommand{\@todonotes@figwidth}{\textwidth}
+%    \end{macrocode}
+%
+% \subsection{Declaration of options for the package}
+% In this part the various options for
+% the package are defined.
+
+% Define the default text strings and set localization options for
+% the danish and german languages.
+%    \begin{macrocode}
+\newcommand{\@todonotes@todolistname}{Todo list}
+\newcommand{\@todonotes@MissingFigureText}{Figure}
+\newcommand{\@todonotes@MissingFigureUp}{Missing}
+\newcommand{\@todonotes@MissingFigureDown}{figure}
+\newcommand{\@todonotes@SetTodoListName}[1]
+    {\renewcommand{\@todonotes@todolistname}{#1}}
+\newcommand{\@todonotes@SetMissingFigureText}[1]
+    {\renewcommand{\@todonotes@MissingFigureText}{#1}}
+\newcommand{\@todonotes@SetMissingFigureUp}[1]
+    {\renewcommand{\@todonotes@MissingFigureUp}{#1}}
+\newcommand{\@todonotes@SetMissingFigureDown}[1]
+    {\renewcommand{\@todonotes@MissingFigureDown}{#1}}
+\newif{\if@todonotes@reverseMissingFigureTriangle}
+\DeclareOptionX{danish}{%
+    \@todonotes@SetTodoListName{G\o{}rem\aa{}lsliste}%
+    \@todonotes@SetMissingFigureText{Figur}%
+    \@todonotes@SetMissingFigureUp{Manglende}%
+    \@todonotes@SetMissingFigureDown{figur}%
+}
+\DeclareOptionX{german}{%
+    \@todonotes@SetTodoListName{Liste der noch zu erledigenden Punkte}%
+    \@todonotes@SetMissingFigureText{Abbildung}%
+    \@todonotes@SetMissingFigureUp{Fehlende}%
+    \@todonotes@SetMissingFigureDown{Abbildung}%
+}
+\DeclareOptionX{french}{%
+    \@todonotes@SetTodoListName{Liste des points \`a traiter}%
+    \@todonotes@SetMissingFigureText{Figure}%
+    \@todonotes@SetMissingFigureUp{Figure}%
+    \@todonotes@SetMissingFigureDown{manquante}%
+    \@todonotes@reverseMissingFigureTrianglefalse
+}
+\DeclareOptionX{catalan}{
+    \@todonotes@SetTodoListName{Llista de feines pendents}%
+    \@todonotes@SetMissingFigureText{Figura}%
+    \@todonotes@SetMissingFigureUp{Figura}%
+    \@todonotes@SetMissingFigureDown{pendent}%
+}
+\DeclareOptionX{spanish}{
+    \@todonotes@SetTodoListName{Lista de tareas pendientes}%
+    \@todonotes@SetMissingFigureText{Figura}%
+    \@todonotes@SetMissingFigureUp{Figura}%
+    \@todonotes@SetMissingFigureDown{pendient}%
+}
+%    \end{macrocode}
+% Create a counter, for storing the number of inserted todos.
+%    \begin{macrocode}
+\newcounter{@todonotes@numberoftodonotes}
+%    \end{macrocode}
+%
+% Make it possible to disable the functionality
+% of the package. If this option is given, the
+% commands  |\todo{}| and |\listoftodos| are defined
+% as commands with no effect. (But you can still
+% compile you document with these commands).
+%    \begin{macrocode}
+\newif{\if@todonotes@disabled}
+\DeclareOptionX{disable}{\@todonotes@disabledtrue}
+%    \end{macrocode}
+% Show small boxes in the list of todos with the color of the
+% inserted todonotes.
+%    \begin{macrocode}
+\newif{\if@todonotes@colorinlistoftodos}
+\DeclareOptionX{colorinlistoftodos}{\@todonotes@colorinlistoftodostrue}
+%    \end{macrocode}
+% The default style behaves bad when compiled
+% with latex (some text placement problems).
+% The dvistyle option, changes the visual behavior
+% to avoid this text placement problem.
+%    \begin{macrocode}
+\newif{\if@todonotes@dviStyle}
+\DeclareOptionX{dvistyle}{\@todonotes@dviStyletrue}
+%    \end{macrocode}
+% Create a color option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {color}{
+        \renewcommand{\@todonotes@backgroundcolor}{#1}
+        \renewcommand{\@todonotes@linecolor}{#1}}
+%    \end{macrocode}
+% Make the background color of the notes as
+% an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {backgroundcolor}{\renewcommand{\@todonotes@backgroundcolor}{#1}}
+%    \end{macrocode}
+% Make the line color of the notes as
+% an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {linecolor}{\renewcommand{\@todonotes@linecolor}{#1}}
+%    \end{macrocode}
+% Make the color of the notes box color as
+% an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {bordercolor}{\renewcommand{\@todonotes@bordercolor}{#1}}
+%    \end{macrocode}
+% Set whether short captions given as arguments to the todo command
+% should be included in the inserted todonote.
+%    \begin{macrocode}
+\newif{\if@todonotes@prependcaptionglobal}
+\@todonotes@prependcaptionglobalfalse
+\DeclareOptionX{prependcaption}{\@todonotes@prependcaptionglobaltrue}
+%    \end{macrocode}
+% Make the text width as an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {textwidth}{\renewcommand{\@todonotes@textwidth}{#1}}
+%    \end{macrocode}
+% Make the text size as an option. It requires some magic with the 
+% |\csname| and |\endcsname| macros, as commands cannot be taken as
+% options for a package.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {textsize}{\renewcommand{\@todonotes@textsize}{\csname #1\endcsname}}
+%    \end{macrocode}
+% Add option for shadows behind the inserted notes
+%    \begin{macrocode}
+\newif{\if@todonotes@shadowenabled}
+\@todonotes@shadowenabledfalse
+\DeclareOptionX{shadow}{\@todonotes@shadowenabledtrue
+\usetikzlibrary{shadows}}
+%    \end{macrocode}
+% Add option for the default width of the figure inserted with
+% |\missingfigure|.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {figwidth}{\renewcommand{\@todonotes@figwidth}{#1}}
+%    \end{macrocode}
+% Make the text width as an option.
+%    \begin{macrocode}
+% Finally process the given options.
+%    \begin{macrocode}
+\ProcessOptionsX
+%    \end{macrocode}
+
+
+% \subsection{Options for the todo command}
+%
+% In this part the various options for 
+% commands in the package are defined.
+% Set an arbitrarily fill color
+%    \begin{macrocode}
+\newcommand{\@todonotes@currentlinecolor}{}%
+\newcommand{\@todonotes@currentbackgroundcolor}{}%
+\newcommand{\@todonotes@currentbordercolor}{}%
+\define@key{todonotes}{color}{%
+    \renewcommand{\@todonotes@currentlinecolor}{#1}%
+    \renewcommand{\@todonotes@currentbackgroundcolor}{#1}}%
+\define@key{todonotes}{linecolor}{%
+    \renewcommand{\@todonotes@currentlinecolor}{#1}}%
+\define@key{todonotes}{backgroundcolor}{%
+    \renewcommand{\@todonotes@currentbackgroundcolor}{#1}}%
+\define@key{todonotes}{bordercolor}{%
+    \renewcommand{\@todonotes@currentbordercolor}{#1}}%
+%    \end{macrocode}
+% Set a relative font size
+%    \begin{macrocode}
+\newcommand{\@todonotes@sizecommand}{}%
+\define@key{todonotes}{size}{\renewcommand{\@todonotes@sizecommand}{#1}}%
+%    \end{macrocode}
+% Should the todo item be included in the list of todos?
+%    \begin{macrocode}
+\newif\if@todonotes@appendtolistoftodos%
+\define@key{todonotes}{list}[]{\@todonotes@appendtolistoftodostrue}%
+\define@key{todonotes}{nolist}[]{\@todonotes@appendtolistoftodosfalse}%
+%    \end{macrocode}
+% Should the todo item be displayed inline?
+%    \begin{macrocode}
+\newif\if@todonotes@inlinenote%
+\define@key{todonotes}{inline}[]{\@todonotes@inlinenotetrue}%
+\define@key{todonotes}{noinline}[]{\@todonotes@inlinenotefalse}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\newif\if@todonotes@prependcaption%
+\define@key{todonotes}{prepend}[]{\@todonotes@prependcaptiontrue}%
+\define@key{todonotes}{noprepend}[]{\@todonotes@prependcaptionfalse}%
+%    \end{macrocode}
+% Should the note in the margin be connected to the insertion point
+% in the text?
+%    \begin{macrocode}
+\newif\if@todonotes@line%
+\define@key{todonotes}{line}[]{\@todonotes@linetrue}%
+\define@key{todonotes}{noline}[]{\@todonotes@linefalse}%
+%    \end{macrocode}
+% Should the text in the list of todos be different from the text
+% in the todonote?
+%    \begin{macrocode}
+\newcommand{\@todonotes@caption}{}%
+\newif\if@todonotes@captiongiven%
+\define@key{todonotes}{caption}%
+    {\renewcommand{\@todonotes@caption}{#1}%
+    \@todonotes@captiongiventrue}%
+\define@key{todonotes}{nocaption}[]{\@todonotes@captiongivenfalse}%
+%    \end{macrocode}
+% Change the current figure width.
+%    \begin{macrocode}
+\newcommand{\@todonotes@currentfigwidth}{\@todonotes@figwidth}
+\define@key{todonotes}%
+    {figwidth}{\renewcommand{\@todonotes@currentfigwidth}{#1}}
+%    \end{macrocode}
+% Preset values of the options
+%    \begin{macrocode}
+\presetkeys%
+    {todonotes}%
+    {linecolor=\@todonotes@linecolor,%
+    backgroundcolor=\@todonotes@backgroundcolor,%
+    bordercolor=\@todonotes@bordercolor,%
+    noinline,%
+    nocaption,%
+    figwidth=\@todonotes@figwidth,%
+    line, list, size=\@todonotes@textsize}{}%
+%    \end{macrocode}
+% \subsection{The main code part}
+% Here is the actual macros defined.
+% If the option "disable" was passed to the package
+% define empty commands.
+%    \begin{macrocode}
+\if@todonotes@disabled%
+    \newcommand{\listoftodos}{}
+    \newcommand{\todo}[2][]{\ignorespaces}
+    \newcommand{\missingfigure}[2]{}
+\else % \if@todonotes@disabled
+%    \end{macrocode}
+% Define the |\listoftodos| command and define the 
+% appearance of the list of todos.
+%    \begin{macrocode}
+\newcommand{\listoftodos}
+    {\section*{\@todonotes@todolistname} \@starttoc{tdo}}
+\newcommand{\l@todo}
+    {\@dottedtocline{1}{0em}{2.3em}}
+%    \end{macrocode}
+% Define styles used by the todo command
+%    \begin{macrocode}
+\tikzstyle{notestyleraw} = [
+    draw=\@todonotes@currentbordercolor, 
+    fill=\@todonotes@currentbackgroundcolor,
+    line width=0.5pt,
+    text width = \@todonotes@textwidth - 1.6 ex - 1pt, 
+    inner sep = 0.8 ex,
+    rounded corners=4pt]
+%    \end{macrocode}
+% Add shadows and rounded corners to the inserted todonotes.
+%    \begin{macrocode}
+\if@todonotes@shadowenabled
+\tikzstyle{notestyle} = [notestyleraw,
+    general shadow={shadow xshift=.5ex, shadow yshift=-.5ex,
+        opacity=1,fill=black!50}]
+\else
+\tikzstyle{notestyle} = [notestyleraw]
+\fi
+\tikzstyle{notestyleleft} = [
+    notestyle, 
+    left]
+\tikzstyle{connectstyle} = [
+    thick, 
+    draw=\@todonotes@currentlinecolor]
+\tikzstyle{inlinenotestyle} = [
+    notestyle, 
+    text width=\linewidth - 1.6 ex - 1 pt]
+%    \end{macrocode}
+%
+% \begin{macro}{\todo}
+% Define the todo command
+%    \begin{macrocode}
+\newcommand{\todo}[2][]{%
+%    \end{macrocode}
+% Use the global value for determining the default prepend behavior.
+%    \begin{macrocode}
+\if@todonotes@prependcaptionglobal%
+	\@todonotes@prependcaptiontrue%
+\else%
+	\@todonotes@prependcaptionfalse%
+\fi%
+%    \end{macrocode}
+% Store the original text for later usage.
+%    \begin{macrocode}
+\renewcommand{\@todonotes@text}{#2}%
+\renewcommand{\@todonotes@caption}{#2}%
+\setkeys{todonotes}{#1}%
+%    \end{macrocode}
+% Add the item to the list of todos. When the option
+% |colorinlistoftodos| is given to the package a small colored 
+% square is added in front of the text.
+%    \begin{macrocode}
+\addtocounter{@todonotes@numberoftodonotes}{1}%
+\if@todonotes@appendtolistoftodos%
+    \phantomsection%
+    \if@todonotes@captiongiven%
+    \else%
+        \renewcommand{\@todonotes@caption}{#2}%
+    \fi%
+    \if@todonotes@colorinlistoftodos%
+        \addcontentsline{tdo}{todo}{\protect{%
+            \colorbox{\@todonotes@currentbackgroundcolor}%
+                {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
+            \ \@todonotes@caption}}%
+    \else%
+        \addcontentsline{tdo}{todo}{\protect{\@todonotes@caption}}%
+    \fi%
+\fi%
+%    \end{macrocode}
+% Prepend the short caption given if it is requested
+%    \begin{macrocode}
+\if@todonotes@captiongiven%
+    \if@todonotes@prependcaption%
+        \renewcommand{\@todonotes@text}{\@todonotes@caption: #2}%
+    \fi%
+\fi%
+%    \end{macrocode}
+% Place the todonote as indicated by the options (inline or in a
+% marginpar), below is the code for the inline placement.
+%    \begin{macrocode}
+\if@todonotes@inlinenote%
+    \if@todonotes@dviStyle%
+        {\par\noindent\begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+        {\noindent \@todonotes@sizecommand \@todonotes@text}%
+        {\par\noindent\begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+    \else%
+        {\par\noindent\begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {\@todonotes@sizecommand \@todonotes@text};%
+            \end{tikzpicture}\par}%
+    \fi%
+\else%
+%    \end{macrocode}
+% When the todonote should be placed inside a marginpar, the code
+% below is applied.
+% First is the current location in the document stored, this enables
+% us later to connect this point with the inserted todonote. 
+%    \begin{macrocode}
+\begin{tikzpicture}[remember picture, baseline=-0.75ex]%
+    \node [coordinate] (inText) {};%
+\end{tikzpicture}%
+\marginpar[{% Draw note in left margin
+\if@todonotes@dviStyle%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] {};%
+    \end{tikzpicture}\\ %
+    \begin{minipage}{\@todonotes@textwidth}%
+    \@todonotes@sizecommand \@todonotes@text%
+    \end{minipage}\\%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] (inNote) {};%
+    \end{tikzpicture}%
+\else%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] (inNote)%
+            {\@todonotes@sizecommand \@todonotes@text};%
+    \end{tikzpicture}%
+\fi%
+\if@todonotes@line%
+    \begin{tikzpicture}[remember picture, overlay]%
+        \draw[connectstyle]%
+        ([yshift=-0.2cm] inText)%
+        -| ([xshift=0.2cm] inNote.east)%
+        -| (inNote.east);%
+    \end{tikzpicture}%
+\fi%
+%    \end{macrocode}
+% In the book documentclass (which is a twoside layout), the
+% |\marginpar| marginpar macro takes two arguments
+% |\marginpar[left]{right}|.
+% If both arguments are given, latex will decide in which side the
+% margin note has to be inserted, and then use the corresponding
+% commands.
+%    \begin{macrocode}
+}]{% Draw note in right margin
+\if@todonotes@dviStyle%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] {};%
+    \end{tikzpicture}\\%
+    \begin{minipage}{\@todonotes@textwidth}%
+    \@todonotes@sizecommand \@todonotes@text%
+    \end{minipage}\\%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] (inNote) {};%
+    \end{tikzpicture}%
+\else%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle](inNote)%
+            {\@todonotes@sizecommand \@todonotes@text};%
+    \end{tikzpicture}%
+\fi%
+\if@todonotes@line%
+    \begin{tikzpicture}[remember picture, overlay]%
+        \draw[connectstyle]%
+        ([yshift=-0.2cm] inText)%
+        -| ([xshift=-0.2cm] inNote.west)%
+        -| (inNote.west);%
+    \end{tikzpicture}%
+\fi%
+}%
+\fi%
+\ignorespaces%
+}%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\missingfigure}
+% Defines the |\missingfigure| macro.
+%    \begin{macrocode}
+\newcommand{\missingfigure}[2][]{
+\setkeys{todonotes}{#1}%
+\addcontentsline{tdo}{todo}{\@todonotes@MissingFigureText: \protect{#2}}%
+\par
+\noindent
+\begin{tikzpicture}
+\draw[fill=black!40, draw = white, line width=0pt] 
+    (-2, -2.5) rectangle +(\@todonotes@currentfigwidth, 4cm);
+\draw (2, -0.3) node[right, text
+    width=\@todonotes@currentfigwidth-4.5cm] {#2};
+\draw[red, fill=white, rounded corners = 5pt, line width=10pt] 
+    (30:2cm) -- (150:2cm) -- (270:2cm) -- cycle;
+\draw (0, 0.3) node {\@todonotes@MissingFigureUp};
+\draw (0, -0.3) node {\@todonotes@MissingFigureDown};
+\end{tikzpicture}
+}% Ending \missingfigure command
+\fi % Ending \@todonotes@ifdisabled
+%    \end{macrocode}
+% \end{macro}
+%
+% \Finale
+\endinput
+
