@@ -5,3 +5,10 @@
 *.idx
 *.ilg
 *.ind
+*.toc
+*.out
+*.log
+todonotes.sty
+todonotes.zip
+todonotes.pdf
+todonotesexample.pdf

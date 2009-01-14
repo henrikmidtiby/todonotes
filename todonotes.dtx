@@ -461,10 +461,25 @@
 % package, otherwise you will get an ''Option clash'' error when
 % latex works on the document.
 %
+%
 % \subsubsection{Wrapping of long lines in list of todos}
 % When a document is compiled with latex (and not pdflatex) long
 % items in the list of todos are not wrapped into several lines, and
 % do instead continue to the right out of the page.
+%
+%
+% \subsubsection{Conflicts with the amsart documentclass}
+% The |amsart| document class redefines some internal commands that
+% is used by the todonotes package, this will cause an unfunctioning
+% |\listoftodos| command.
+% The following code to circumvent the problem was given by Dan
+% Luecking on comp.text.tex
+% \begin{verbatim}
+% \makeatletter
+%   \providecommand\@dotsep{5}
+% \makeatother
+% \listoftodos\relax 
+% \end{verbatim}
 % 
 %
 % \subsection{Things to improve}
