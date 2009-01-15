@@ -32,6 +32,7 @@
 \usepackage[colorinlistoftodos, shadow]{todonotes}[2009/01/09]
 \usepackage{amsmath}
 \usepackage{setspace}
+\setcounter{tocdepth}{2}
 \EnableCrossrefs         
 \CodelineIndex
 \RecordChanges
@@ -126,7 +127,8 @@
 %             Ivanov.}
 % \changes{0.8.1}{2009/01/12}{Added a space between the colored
 %             square and the text in the list of todos. Added a new
-%             usecase for marking old / new sections.}
+%             usecase for marking old / new sections. Made the name
+%             of listoftodos changeable.}
 %
 % \GetFileInfo{todonotes.dtx}
 %
@@ -407,6 +409,8 @@
 % inserted by the |\missingfigure| command. 
 % The default value is |\textwidth|.
 %
+%
+%
 % \subsection{Options for the missingfigure command}
 %
 % \DescribeMacro{figwidth}
@@ -435,9 +439,17 @@
 % \end{wrapfigure}
 % \end{verbatim}
 % 
+%
+%
 % \subsection{Options for the listoftodos command}
-% Currently the listoftodos command takes no optional arguments.
+% The |\listoftodos| command takes one optional argument, that
+% defines the name of the inserted list of todos.
+% \begin{verbatim}
+% \listoftodos[I can be called anything]
+% \end{verbatim}
 % 
+%
+%
 % \subsection{Known issues}
 % \subsubsection{Package loading order}
 % The todonotes package requires the following packages.
@@ -942,7 +954,7 @@
 % define empty commands.
 %    \begin{macrocode}
 \if@todonotes@disabled%
-    \newcommand{\listoftodos}{}
+    \newcommand{\listoftodos}[1][]{}
     \newcommand{\todo}[2][]{\ignorespaces}
     \newcommand{\missingfigure}[2]{}
 \else % \if@todonotes@disabled
@@ -950,8 +962,8 @@
 % Define the |\listoftodos| command and define the 
 % appearance of the list of todos.
 %    \begin{macrocode}
-\newcommand{\listoftodos}
-    {\section*{\@todonotes@todolistname} \@starttoc{tdo}}
+\newcommand{\listoftodos}[1][\@todonotes@todolistname]
+    {\section*{#1} \@starttoc{tdo}}
 \newcommand{\l@todo}
     {\@dottedtocline{1}{0em}{2.3em}}
 %    \end{macrocode}
