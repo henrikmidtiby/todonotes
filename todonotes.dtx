@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{387}
+% \CheckSum{0}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -723,6 +723,13 @@
 \newcommand{\@todonotes@textwidth}{\marginparwidth}
 \newcommand{\@todonotes@textsize}{\normalsize}
 \newcommand{\@todonotes@figwidth}{\textwidth}
+%    \end{macrocode}
+%    \begin{macrocode}
+\AtBeginDocument{
+\ifx\undefined\phantomsection
+\newcommand{\phantomsection}{}
+\fi
+}
 %    \end{macrocode}
 %
 % \subsection{Declaration of options for the package}
