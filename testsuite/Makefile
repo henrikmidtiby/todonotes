@@ -9,6 +9,7 @@ testsuite: \
 	colorinlistoftodos.pdf \
 	disable.pdf \
 	dvistyle.pdf \
+	withhyperref.pdf \
 
 %.pdf: \
 	%.tex
