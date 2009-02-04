@@ -129,6 +129,9 @@
 %             square and the text in the list of todos. Added a new
 %             usecase for marking old / new sections. Made the name
 %             of listoftodos changeable.}
+% \changes{0.8.2}{2009/02/04}{Italian translation by Gustavo
+%             Cevolani. Removed the dependence on the hyperref
+%             package.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -220,7 +223,7 @@
 % all inserted notes are removed.
 %
 % \DescribeMacro{danish, german, french}
-% \DescribeMacro{spanish, catalan}
+% \DescribeMacro{spanish, catalan, italian}
 % Use the danish or german translations of the text strings 
 % ''List of todos'' and ''Missing figure''.
 % The default is to use none of these options, which results in
@@ -795,6 +798,12 @@
     \@todonotes@SetMissingFigureText{Figura}%
     \@todonotes@SetMissingFigureUp{Figura}%
     \@todonotes@SetMissingFigureDown{pendient}%
+}
+\DeclareOptionX{italian}{
+    \@todonotes@SetTodoListName{Elenco delle cose da fare}%
+    \@todonotes@SetMissingFigureText{Figura}%
+    \@todonotes@SetMissingFigureUp{Figura}%
+    \@todonotes@SetMissingFigureDown{mancante}%
 }
 %    \end{macrocode}
 % Create a counter, for storing the number of inserted todos.
