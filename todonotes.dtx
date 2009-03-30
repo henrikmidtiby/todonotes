@@ -224,6 +224,13 @@
 % |\missingfigure|) are defined as macros with no effect, and thus
 % all inserted notes are removed.
 %
+% \DescribeMacro{obeyDraftOption}
+% When the option |obeyDraftOption| is given, the package checks
+% if the option |draft| is given (this option is usually given to
+% the documentclass). If the |draft| option is given, the
+% functionality of the package is enabled and otherwise the effect
+% of the package is disabled.
+%
 % \DescribeMacro{danish, german, french}
 % \DescribeMacro{spanish, catalan, italian}
 % Use the danish or german translations of the text strings 
@@ -954,9 +961,12 @@
 %    \begin{macrocode}
 \ProcessOptionsX
 %    \end{macrocode}
-
+% If the |obeyDraftOption| is given, check whether the |draft|
+% option is given and enable or disable the functionality of this
+% package.
 %    \begin{macrocode}
 \if@todonotes@obeyDraftOption
+	\@todonotes@disabledfalse
 	\if@todonotes@isDraft
 		\@todonotes@disabledtrue
 	\fi
