@@ -716,7 +716,9 @@
 %
 % \subsubsection{Link to list of todos}
 %
-% Andreas Plank have submitted this example.
+% Using the |hyperref| package it is possible to add a link from
+% the inserted todonotes to the list of todos.
+% The example were supplied by Andreas Plank.
 % \begin{verbatim}
 % % Define a counter for the inserted todonotes.
 % \newcounter{todoListItems}
@@ -744,6 +746,15 @@
 %  }
 % }
 %
+% The idea behind the code is to embed a |hypertarget| in each entry
+% in the list of todos. In the todonotes a link to the entry in the
+% list of todos is inserted as an arrow that points upwards.
+% Using the |\todoTrans| command like below, the following two notes
+% have been inserted.
+% \begin{verbatim}
+% \todoTrans{papirsflyver}
+% \todoTrans[inline]{damplokomotiv}
+% \end{verbatim}
 % \todoTrans{papirsflyver}
 % \todoTrans[inline]{damplokomotiv}
 %
