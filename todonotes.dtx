@@ -26,10 +26,10 @@
 %</package>
 %
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass[draft]{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black]{hyperref}
-\usepackage[colorinlistoftodos]{todonotes}[2009/02/04]
+\usepackage[colorinlistoftodos, obeyDraftOption]{todonotes}[2009/02/04]
 \usepackage{amsmath}
 \usepackage{setspace}
 \setcounter{tocdepth}{2}
@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{398}
+% \CheckSum{0}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -415,6 +415,8 @@
 %
 %
 % \subsection{Options for the missingfigure command}
+% \todo[color=blue]{Trouble with the mixture of the option disable 
+% and the missingfigure command inside wrapfigures.}
 %
 % \DescribeMacro{figwidth}
 % The |figwidth=length| option sets the width of the figure inserted by the
@@ -429,11 +431,11 @@
 % \missingfigure[figwidth=6cm]{Testing a long text string}
 % \begin{verbatim}
 % \missingfigure{Testing a long text string}
-% \end{verbatim}
 % \missingfigure{Testing a long text string}
 % \begin{wrapfigure}{r}[2cm]{6cm}
 % \missingfigure[figwidth=6cm]{Add a test image \ldots}
 % \end{wrapfigure}
+% \end{verbatim}
 % Another usage of the option is when |\missingfigure| is used in
 % the wrapfigure environment.
 % \begin{verbatim}
@@ -811,6 +813,13 @@
 \newcounter{@todonotes@numberoftodonotes}
 %    \end{macrocode}
 %
+% Toggle whether the package should obey the global draft option.
+%    \begin{macrocode}
+\newif{\if@todonotes@obeyDraftOption}
+\DeclareOptionX{obeyDraftOption}{\@todonotes@obeyDraftOptiontrue}
+\newif{\if@todonotes@isDraft}
+\DeclareOptionX{draft}{\@todonotes@isDrafttrue}
+%    \end{macrocode}
 % Make it possible to disable the functionality
 % of the package. If this option is given, the
 % commands  |\todo{}| and |\listoftodos| are defined
@@ -898,6 +907,13 @@
 \ProcessOptionsX
 %    \end{macrocode}
 
+%    \begin{macrocode}
+\if@todonotes@obeyDraftOption
+	\if@todonotes@isDraft
+		\@todonotes@disabledtrue
+	\fi
+\fi
+%    \end{macrocode}
 
 % \subsection{Options for the todo command}
 %
