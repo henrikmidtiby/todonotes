@@ -226,8 +226,8 @@
 % |\missingfigure|) are defined as macros with no effect, and thus
 % all inserted notes are removed.
 %
-% \DescribeMacro{obeyDraftOption}
-% When the option |obeyDraftOption| is given, the package checks
+% \DescribeMacro{obeyDraft}
+% When the option |obeyDraft| is given, the package checks
 % if the option |draft| is given (this option is usually given to
 % the documentclass). If the |draft| option is given, the
 % functionality of the package is enabled and otherwise the effect
@@ -870,8 +870,8 @@
 %
 % Toggle whether the package should obey the global draft option.
 %    \begin{macrocode}
-\newif{\if@todonotes@obeyDraftOption}
-\DeclareOptionX{obeyDraftOption}{\@todonotes@obeyDraftOptiontrue}
+\newif{\if@todonotes@obeyDraft}
+\DeclareOptionX{obeyDraft}{\@todonotes@obeyDrafttrue}
 \newif{\if@todonotes@isDraft}
 \DeclareOptionX{draft}{\@todonotes@isDrafttrue}
 %    \end{macrocode}
@@ -961,11 +961,11 @@
 %    \begin{macrocode}
 \ProcessOptionsX
 %    \end{macrocode}
-% If the |obeyDraftOption| is given, check whether the |draft|
+% If the |obeyDraft| is given, check whether the |draft|
 % option is given and enable or disable the functionality of this
 % package.
 %    \begin{macrocode}
-\if@todonotes@obeyDraftOption
+\if@todonotes@obeyDraft
 	\@todonotes@disabledfalse
 	\if@todonotes@isDraft
 		\@todonotes@disabledtrue
