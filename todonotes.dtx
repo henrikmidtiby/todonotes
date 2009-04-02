@@ -964,11 +964,15 @@
 % If the |obeyDraft| is given, check whether the |draft|
 % option is given and enable or disable the functionality of this
 % package.
+% The |disable| option will overrule the effect of |obeyDraft|.
 %    \begin{macrocode}
-\if@todonotes@obeyDraft
-	\@todonotes@disabledtrue
-	\if@todonotes@isDraft
-		\@todonotes@disabledfalse
+\if@todonotes@disabled
+\else
+	\if@todonotes@obeyDraft
+		\@todonotes@disabledtrue
+		\if@todonotes@isDraft
+			\@todonotes@disabledfalse
+		\fi
 	\fi
 \fi
 %    \end{macrocode}
