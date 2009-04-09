@@ -772,6 +772,39 @@
 % \todoTrans[inline]{damplokomotiv}
 %
 %
+%
+% \pagebreak[4]
+% \subsubsection{Emphasising word and add comment}
+%
+% It is possible to use information from the internal variables of
+% the todonotes package for accomplishing specific types of markup.
+% For marking a word or a short sentence and adding a related
+% todonote the following macro can be defined:
+% \begin{verbatim}
+% \makeatletter
+% \newcommand{\todocomment}[3][]{
+%     \todo[#1]{#3}\fcolorbox
+%		{\@todonotes@currentbordercolor}
+%		{\@todonotes@currentbackgroundcolor}{#2}}
+% \makeatother
+% \end{verbatim}
+% \makeatletter
+% \newcommand{\todocomment}[3][]{\todo[#1]{#3}\fcolorbox{\@todonotes@currentbordercolor}{\@todonotes@currentbackgroundcolor}{#2}}
+% \makeatother
+% It is now possible to \todocomment{mark}{a comment for an
+% emphasized word} single words with the same color as the inserted
+% todonote.
+% The new command respects the \todocomment[color=red]{usual
+% options}{backgroundcolor, bordercolor, textsize, \ldots} for the
+% plain todo command.
+% The two inserted comments were produced using the code below:
+% \begin{verbatim}
+% \todocomment{mark}{a comment for an emphasized word}
+% \todocomment[color=red]{usual options}
+% {backgroundcolor, bordercolor, textsize, \ldots}
+% \end{verbatim}
+%
+%
 % \iffalse
 % \StopEventually{\PrintChanges\PrintIndex}
 % \fi
