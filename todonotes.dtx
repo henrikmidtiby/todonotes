@@ -22,14 +22,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2009/04/02 .dtx Todonotes source and documentation.]
+    [2009/08/01 .dtx Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black]{hyperref}
-\usepackage[colorinlistoftodos, shadow]{todonotes}[2009/04/02]
+\usepackage[colorinlistoftodos, shadow]{todonotes}[2009/08/01]
 \usepackage{amsmath}
 \usepackage{setspace}
 \setcounter{tocdepth}{2}
@@ -138,6 +138,9 @@
 %             to the document class.}
 % \changes{0.8.4}{2009/04/02}{Fixed a bug related to the obeyDraft
 %             option.} 
+% \changes{0.8.5}{2009/08/01}{Added two new usecases (enumeration of 
+%             inserted todonotes and how to set custom default values). 
+%             Changed the order of the use case examples.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -558,11 +561,6 @@
 % Idea: Fabrice Niessen
 %
 %
-% \subsubsection{Enumeration of the todo notes}
-% Add counters to the inserted notes.
-% Idea: Henrik
-%
-%
 %
 % 
 % 
@@ -587,7 +585,86 @@
 % \usepackage[colorinlistoftodos]{todonotes}
 % \end{verbatim}
 % 
+%
+% \subsubsection{Define new commands with arbitrary default options}
+% If you do not like the default values of the standard todo command, 
+% it is possible to define a new command with the similar 
+% functionality of |\todo| with custom default values.
+% \begin{verbatim}
+% \newcommand{\todoredefined}[2][]
+% {\todo[color=red, #1]{#2}}
+% \end{verbatim}
+% \newcommand{\todoredefined}[2][]
+% {\todo[color=red, #1]{#2}}
+% \todoredefined{Test of newly defined command.}
+% The new command can now be used like shown below
+% \begin{verbatim}
+% \todoredefined{Test of newly defined command.}
+% \todoredefined[color=green]{Test of newly defined command, requesting a green color.}
+% \end{verbatim}
+% \todoredefined[color=green]{Test of newly defined command, requesting a green color.}
+% This can be done with all the accepted options for the |\todo| command.
 % 
+%
+%
+% \subsubsection{Enumerate todonotes}
+%
+% If the inserted todonotes should be enumerated, it is possible to define 
+% a new command with the desired behaviour.
+% \begin{verbatim}
+% \newcounter{todocounter}
+% \newcommand{\todonum}[2][]
+% {\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
+% \end{verbatim}
+% \newcounter{todocounter}
+% \newcommand{\todonum}[2][]
+% {\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
+% The idea is to define a new counter |todocounter|, and insert the 
+% \todonum{A numbered todonote.}
+% value of the counter in each todonote.
+% The new command can be used like
+% \todonum{Another numbered todonote.}
+% \begin{verbatim}
+% \todonum{A numbered todonote.}
+% \todonum{Another numbered todonote.}
+% \end{verbatim}
+%
+%
+% 
+% \subsubsection{Comments ''a la Word''}
+%
+% Fabrice Niessen sent me the following use case.
+% The idea is to define a new command |\mycomment| which adds a
+% counter and optionally the initials of the author to the inserted
+% todonote.
+% 
+% \begin{verbatim}
+% \newcounter{mycomment}
+% \newcommand{\mycomment}[2][]{%
+%    % initials of the author (optional) + note in the margin
+%    \refstepcounter{mycomment}%
+%    {%
+%        \setstretch{0.7}% spacing
+%        \todo[color={red!100!green!33},size=\small]{%
+%            \textbf{Comment [\uppercase{#1}\themycomment]:}~#2}%
+%    }}
+% \end{verbatim}
+% \newcounter{mycomment}
+% \newcommand{\mycomment}[2][]{%
+%    \refstepcounter{mycomment}%
+%    {%
+%        \setstretch{0.7}%
+%        \todo[color={red!100!green!33},size=\small]{%
+%            \textbf{Comment [\uppercase{#1}\themycomment]:}~#2}%
+%    }}
+% 
+% The command |\mycomment[HSM]{Testing first time.}| is displayed
+% \mycomment[HSM]{Testing first time.}%
+% like shown in the left margin, and another call of the command is
+% added below |\mycomment[HSM]{Testing second time.}|.
+% \mycomment[HSM]{Testing second time.}%
+%
+%
 %
 % \subsubsection{Combination with the fixme package}
 %
@@ -646,39 +723,6 @@
 % \end{verbatim}
 %
 %
-%
-% \subsubsection{Comments ''a la Word''}
-%
-% Fabrice Niessen sent me the following use case.
-% The idea is to define a new command |\mycomment| which adds a
-% counter and optionally the initials of the author to the inserted
-% todonote.
-% 
-% \begin{verbatim}
-% \newcounter{mycomment}
-% \newcommand{\mycomment}[2][]{%
-%    % initials of the author (optional) + note in the margin
-%    \refstepcounter{mycomment}%
-%    {%
-%        \setstretch{0.7}% spacing
-%        \todo[color={red!100!green!33},size=\small]{%
-%            \textbf{Comment [\uppercase{#1}\themycomment]:}~#2}%
-%    }}
-% \end{verbatim}
-% \newcounter{mycomment}
-% \newcommand{\mycomment}[2][]{%
-%    \refstepcounter{mycomment}%
-%    {%
-%        \setstretch{0.7}%
-%        \todo[color={red!100!green!33},size=\small]{%
-%            \textbf{Comment [\uppercase{#1}\themycomment]:}~#2}%
-%    }}
-% 
-% The command |\mycomment[HSM]{Testing first time.}| is displayed
-% \mycomment[HSM]{Testing first time.}%
-% like shown in the left margin, and another call of the command is
-% added below |\mycomment[HSM]{Testing second time.}|.
-% \mycomment[HSM]{Testing second time.}%
 %
 %
 % \subsubsection{Marking new / old sections}
@@ -772,25 +816,6 @@
 % \todoTrans[inline]{damplokomotiv}
 %
 %
-%
-%
-% \subsubsection{Enumerate todonotes}
-%
-% If the inserted todonotes should be enumerated, it is possible to define 
-% a new command with the desired behaviour.
-% \begin{verbatim}
-% \newcounter{todocounter}
-% \newcommand{\todonum}[2][]
-% {\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
-% \end{verbatim}
-% \newcounter{todocounter}
-% \newcommand{\todonum}[2][]
-% {\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
-% The idea is to define a new counter |todocounter|, and insert the 
-% value of the counter in each todonote.
-% The new command can be used like
-% |\todonum{Numbered todonote.}|
-% \todonum{Numbered todonote.}
 %
 %
 %
