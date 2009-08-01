@@ -772,6 +772,28 @@
 % \todoTrans[inline]{damplokomotiv}
 %
 %
+%
+%
+% \subsubsection{Enumerate todonotes}
+%
+% If the inserted todonotes should be enumerated, it is possible to define 
+% a new command with the desired behaviour.
+% \begin{verbatim}
+% \newcounter{todocounter}
+% \newcommand{\todonum}[2][]
+% {\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
+% \end{verbatim}
+% \newcounter{todocounter}
+% \newcommand{\todonum}[2][]
+% {\stepcounter{todocounter}\todo[#1]{\thetodocounter: #2}}
+% The idea is to define a new counter |todocounter|, and insert the 
+% value of the counter in each todonote.
+% The new command can be used like
+% |\todonum{Numbered todonote.}|
+% \todonum{Numbered todonote.}
+%
+%
+%
 % \iffalse
 % \StopEventually{\PrintChanges\PrintIndex}
 % \fi
