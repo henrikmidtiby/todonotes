@@ -22,14 +22,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2009/08/01 .dtx Todonotes source and documentation.]
+    [2009/08/05 .dtx Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black]{hyperref}
-\usepackage[colorinlistoftodos, shadow]{todonotes}[2009/08/01]
+\usepackage[colorinlistoftodos, shadow]{todonotes}[2009/08/05]
 \usepackage{amsmath}
 \usepackage{setspace}
 \setcounter{tocdepth}{2}
@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{415}
+% \CheckSum{420}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -141,6 +141,7 @@
 % \changes{0.8.5}{2009/08/01}{Added two new usecases (enumeration of 
 %             inserted todonotes and how to set custom default values). 
 %             Changed the order of the use case examples.}
+% \changes{0.8.6}{2009/08/05}{Added a portuguese translation by Og DeSouza.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -240,10 +241,19 @@
 %
 % \DescribeMacro{danish, german, french}
 % \DescribeMacro{spanish, catalan, italian}
-% Use the danish or german translations of the text strings 
+% \DescribeMacro{portuguese}
+% Use translations of the text strings 
 % ''List of todos'' and ''Missing figure''.
 % The default is to use none of these options, which results in
 % english text strings.
+% Currently the following languages are supported: 
+% catalan,
+% danish,
+% french,
+% german,
+% italian,
+% portuguese and 
+% spanish.
 % 
 % \DescribeMacro{colorinlistoftodos}
 % Adds a small colored square in front of all items in the Todo
@@ -910,6 +920,12 @@
     \@todonotes@SetMissingFigureText{Figura}%
     \@todonotes@SetMissingFigureUp{Figura}%
     \@todonotes@SetMissingFigureDown{mancante}%
+}
+\DeclareOptionX{portuguese}{
+   \@todonotes@SetTodoListName{Lista de pontos a abordar}%
+   \@todonotes@SetMissingFigureText{Figura}%
+   \@todonotes@SetMissingFigureUp{Figura}%
+   \@todonotes@SetMissingFigureDown{pendente}%
 }
 %    \end{macrocode}
 % Create a counter, for storing the number of inserted todos.
