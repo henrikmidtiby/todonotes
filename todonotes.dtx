@@ -239,7 +239,7 @@
 % functionality of the package is enabled and otherwise the effect
 % of the package is disabled.
 %
-% \DescribeMacro{danish, german, french}
+% \DescribeMacro{danish, german, ngerman, french}
 % \DescribeMacro{spanish, catalan, italian}
 % \DescribeMacro{portuguese}
 % Use translations of the text strings 
@@ -251,6 +251,7 @@
 % danish,
 % french,
 % german,
+% ngerman,
 % italian,
 % portuguese and 
 % spanish.
@@ -891,6 +892,12 @@
     \@todonotes@SetMissingFigureDown{figur}%
 }
 \DeclareOptionX{german}{%
+    \@todonotes@SetTodoListName{Liste der noch zu erledigenden Punkte}%
+    \@todonotes@SetMissingFigureText{Abbildung}%
+    \@todonotes@SetMissingFigureUp{Fehlende}%
+    \@todonotes@SetMissingFigureDown{Abbildung}%
+}
+\DeclareOptionX{ngerman}{%
     \@todonotes@SetTodoListName{Liste der noch zu erledigenden Punkte}%
     \@todonotes@SetMissingFigureText{Abbildung}%
     \@todonotes@SetMissingFigureUp{Fehlende}%
