@@ -538,6 +538,16 @@
 % \url{http://www.ctan.org/tex-archive/graphics/pgf/base/doc/generic/pgf/pgfmanual.pdf}
 %
 %
+% \subsubsection{Todonotes wrongly placed in the margin}
+% When using some document classes or packages, the todonotes inserted in the 
+% page margin can be placed quite oddly.
+% This is often caused by a wrong value of the |\marginparwidth| lenght.
+% Try using the code below in your preamble to see if this cures the problem.
+% \begin{verbatim}
+% \setlength{\marginparwidth}{2cm}
+% \end{verbatim}
+%
+%
 % \subsection{Things to improve}
 % This is a list of things I consider to improve sometime in the
 % future. It have not been done yet as I lack the time or skills to
