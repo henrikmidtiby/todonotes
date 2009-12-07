@@ -51,6 +51,13 @@ view: \
 	todonotes.pdf
 	okular todonotes.pdf
 
+testexample: \
+	todonotes.sty
+	pdflatex todonotesexample.tex
+	okular todonotesexample.pdf 
+
+
+
 clean: 
 	@rm -f $(CLEAN)
 
