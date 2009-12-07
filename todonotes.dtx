@@ -538,6 +538,16 @@
 % \url{http://www.ctan.org/tex-archive/graphics/pgf/base/doc/generic/pgf/pgfmanual.pdf}
 %
 %
+% \subsubsection{Todonotes wrongly placed in the margin}
+% When using some document classes or packages, the todonotes inserted in the 
+% page margin can be placed quite oddly.
+% This is often caused by a wrong value of the |\marginparwidth| lenght.
+% Try using the code below in your preamble to see if this cures the problem.
+% \begin{verbatim}
+% \setlength{\marginparwidth}{2cm}
+% \end{verbatim}
+%
+%
 % \subsection{Things to improve}
 % This is a list of things I consider to improve sometime in the
 % future. It have not been done yet as I lack the time or skills to
@@ -733,6 +743,24 @@
 % Some lines with a decreased line spacing. This is accomplished
 % using the setspace package that is included in standard latex
 % distributions.}
+% \end{verbatim}
+%
+% \noindent
+% A different approach is given by Vitaly.
+% \newcommand{\tinytodo}[2][]
+%   {\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
+% \begin{verbatim}
+% \newcommand{\tinytodo}[2][]
+%   {\todo[caption={#2}, size=\small, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2\par}}
+% \end{verbatim}
+% It looks like seen here.
+% \tinytodo{
+% Some lines with a decreased line spacing. This is accomplished
+% without using any special packages.}
+% \begin{verbatim}
+% \tinytodo{
+% Some lines with a decreased line spacing. This is accomplished
+% without using any special packages.}
 % \end{verbatim}
 %
 %
