@@ -919,23 +919,23 @@
 \newcommand{\@todonotes@SetMissingFigureDown}[1]
     {\renewcommand{\@todonotes@MissingFigureDown}{#1}}
 \newif{\if@todonotes@reverseMissingFigureTriangle}
+\DeclareOptionX{catalan}{
+    \@todonotes@SetTodoListName{Llista de feines pendents}%
+    \@todonotes@SetMissingFigureText{Figura}%
+    \@todonotes@SetMissingFigureUp{Figura}%
+    \@todonotes@SetMissingFigureDown{pendent}%
+}
 \DeclareOptionX{danish}{%
     \@todonotes@SetTodoListName{G\o{}rem\aa{}lsliste}%
     \@todonotes@SetMissingFigureText{Figur}%
     \@todonotes@SetMissingFigureUp{Manglende}%
     \@todonotes@SetMissingFigureDown{figur}%
 }
-\DeclareOptionX{german}{%
-    \@todonotes@SetTodoListName{Liste der noch zu erledigenden Punkte}%
-    \@todonotes@SetMissingFigureText{Abbildung}%
-    \@todonotes@SetMissingFigureUp{Fehlende}%
-    \@todonotes@SetMissingFigureDown{Abbildung}%
-}
-\DeclareOptionX{ngerman}{%
-    \@todonotes@SetTodoListName{Liste der noch zu erledigenden Punkte}%
-    \@todonotes@SetMissingFigureText{Abbildung}%
-    \@todonotes@SetMissingFigureUp{Fehlende}%
-    \@todonotes@SetMissingFigureDown{Abbildung}%
+\DeclareOptionX{dutch}{%
+   \@todonotes@SetTodoListName{Lijst van onafgewerkte taken}%
+   \@todonotes@SetMissingFigureText{Figuur}%
+   \@todonotes@SetMissingFigureUp{Ontbrekende}%
+   \@todonotes@SetMissingFigureDown{figuur}%
 }
 \DeclareOptionX{french}{%
     \@todonotes@SetTodoListName{Liste des points \`a traiter}%
@@ -944,17 +944,11 @@
     \@todonotes@SetMissingFigureDown{manquante}%
     \@todonotes@reverseMissingFigureTrianglefalse
 }
-\DeclareOptionX{catalan}{
-    \@todonotes@SetTodoListName{Llista de feines pendents}%
-    \@todonotes@SetMissingFigureText{Figura}%
-    \@todonotes@SetMissingFigureUp{Figura}%
-    \@todonotes@SetMissingFigureDown{pendent}%
-}
-\DeclareOptionX{spanish}{
-    \@todonotes@SetTodoListName{Lista de tareas pendientes}%
-    \@todonotes@SetMissingFigureText{Figura}%
-    \@todonotes@SetMissingFigureUp{Figura}%
-    \@todonotes@SetMissingFigureDown{pendient}%
+\DeclareOptionX{german}{%
+    \@todonotes@SetTodoListName{Liste der noch zu erledigenden Punkte}%
+    \@todonotes@SetMissingFigureText{Abbildung}%
+    \@todonotes@SetMissingFigureUp{Fehlende}%
+    \@todonotes@SetMissingFigureDown{Abbildung}%
 }
 \DeclareOptionX{italian}{
     \@todonotes@SetTodoListName{Elenco delle cose da fare}%
@@ -962,17 +956,23 @@
     \@todonotes@SetMissingFigureUp{Figura}%
     \@todonotes@SetMissingFigureDown{mancante}%
 }
+\DeclareOptionX{ngerman}{%
+    \@todonotes@SetTodoListName{Liste der noch zu erledigenden Punkte}%
+    \@todonotes@SetMissingFigureText{Abbildung}%
+    \@todonotes@SetMissingFigureUp{Fehlende}%
+    \@todonotes@SetMissingFigureDown{Abbildung}%
+}
 \DeclareOptionX{portuguese}{
     \@todonotes@SetTodoListName{Lista de tarefas pendentes}%
     \@todonotes@SetMissingFigureText{Figura}%
     \@todonotes@SetMissingFigureUp{Figura}%
     \@todonotes@SetMissingFigureDown{pendente}%
 }
-\DeclareOptionX{dutch}{%
-   \@todonotes@SetTodoListName{Lijst van onafgewerkte taken}%
-   \@todonotes@SetMissingFigureText{Figuur}%
-   \@todonotes@SetMissingFigureUp{Ontbrekende}%
-   \@todonotes@SetMissingFigureDown{figuur}%
+\DeclareOptionX{spanish}{
+    \@todonotes@SetTodoListName{Lista de tareas pendientes}%
+    \@todonotes@SetMissingFigureText{Figura}%
+    \@todonotes@SetMissingFigureUp{Figura}%
+    \@todonotes@SetMissingFigureDown{pendient}%
 }
 %    \end{macrocode}
 % Create a counter, for storing the number of inserted todos.
