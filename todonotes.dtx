@@ -880,6 +880,29 @@
 % \end{verbatim}
 %
 %
+% \subsubsection{Combining several modifications}
+%
+% \newcommand{\sstodo}[2][]
+% {\addtocounter{todoListItems}{1}
+% \todo[caption={\protect\hypertarget{todo\thetodoListItems}{}\thesection. #2}, #1]
+% {\begin{spacing}{1} \hfill \hyperlink{todo\thetodoListItems}{#2} \end{spacing} }}
+%
+% Manduca have combined several of the modifications above into a highly specialized 
+% todo command. 
+% \sstodo{Small notes with links back to the list of todos.}
+% He uses the code:
+% \sstodo{Smart notes with links back to the list of todos.}
+%
+% \begin{verbatim}
+% \newcounter{todoListItems}
+% \newcommand{\sstodo}[2][]
+% {\addtocounter{todoListItems}{1}
+% \todo[caption={\protect\hypertarget{todo\thetodoListItems}{}\thesection. #2}, #1]
+% {\begin{spacing}{1} \hfill \hyperlink{todo\thetodoListItems}{#2} \end{spacing} }}
+% \end{verbatim}
+% 
+% Using this approach it is possible to customize the behavior of the inserted notes
+% to a very high degree.
 %
 %
 % \iffalse
