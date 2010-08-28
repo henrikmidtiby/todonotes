@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{443}
+% \CheckSum{448}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -150,6 +150,7 @@
 % \changes{0.8.9}{2009/12/25}{Added a dutch translation by Ruben Ruben Vermeersch.}
 % \changes{0.9.0}{2010/09/13}{Added a english option as suggested by Marco Berghoff.}
 % \changes{0.9.1}{2010/09/13}{Added the todototoc command by idea from Sven Augustin.}
+% \changes{0.9.2}{2010/09/13}{Use chapter (if available) for the list of todos heading.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -1234,7 +1235,7 @@
 % appearance of the list of todos.
 %    \begin{macrocode}
 \newcommand{\listoftodos}[1][\@todonotes@todolistname]
-    {\section*{#1} \@starttoc{tdo}}
+    {\ifdefined\chapter\chapter*{#1}\else\section*{#1}\fi \@starttoc{tdo}}
 \newcommand{\l@todo}
     {\@dottedtocline{1}{0em}{2.3em}}
 %    \end{macrocode}
