@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{448}
+% \CheckSum{451}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -151,6 +151,8 @@
 % \changes{0.9.0}{2010/09/13}{Added a english option as suggested by Marco Berghoff.}
 % \changes{0.9.1}{2010/09/13}{Added the todototoc command by idea from Sven Augustin.}
 % \changes{0.9.2}{2010/09/13}{Use chapter (if available) for the list of todos heading.}
+% \changes{0.9.2}{2010/09/13}{Make an internal definition of the todo command, 
+%             for easing redefinition of the command behaviour.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -1227,7 +1229,7 @@
 %    \begin{macrocode}
 \if@todonotes@disabled%
     \newcommand{\listoftodos}[1][]{}
-    \newcommand{\todo}[2][]{\ignorespaces}
+    \newcommand{\@todo}[2][]{\ignorespaces}
     \newcommand{\missingfigure}[2][]{}
 \else % \if@todonotes@disabled
 %    \end{macrocode}
@@ -1269,10 +1271,10 @@
     text width=\linewidth - 1.6 ex - 1 pt]
 %    \end{macrocode}
 %
-% \begin{macro}{\todo}
-% Define the todo command
+% \begin{macro}{\@todo}
+% Define the |\@todo| command
 %    \begin{macrocode}
-\newcommand{\todo}[2][]{%
+\newcommand{\@todo}[2][]{%
 %    \end{macrocode}
 % Use the global value for determining the default prepend behavior.
 %    \begin{macrocode}
@@ -1440,6 +1442,13 @@
 		\addcontentsline{toc}{\@ifundefined{chapter}{section}{chapter}}{\@todonotes@todolistname}
     \fi
 }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\todo}
+% Define the |\todo| command as a redirection to |\@todo|.
+%    \begin{macrocode}
+\newcommand{\todo}[2][]{\@todo[#1]{#2}}
 %    \end{macrocode}
 % \end{macro}
 %
