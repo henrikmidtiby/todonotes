@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{430}
+% \CheckSum{435}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -148,6 +148,7 @@
 %             bug reported by Oscar Gustafsson. Explained why the placement
 %             of todonotes in the margin fails in certain custom document classes.}
 % \changes{0.8.9}{2009/12/25}{Added a dutch translation by Ruben Ruben Vermeersch.}
+% \changes{0.9.0}{2010/09/13}{Added a english option as suggested by Marco Berghoff.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -977,6 +978,12 @@
    \@todonotes@SetMissingFigureText{Figuur}%
    \@todonotes@SetMissingFigureUp{Ontbrekende}%
    \@todonotes@SetMissingFigureDown{figuur}%
+}
+\DeclareOptionX{english}{%
+   \@todonotes@SetTodoListName{Todo list}%
+   \@todonotes@SetMissingFigureText{Figure}%
+   \@todonotes@SetMissingFigureUp{Missing}%
+   \@todonotes@SetMissingFigureDown{figure}%
 }
 \DeclareOptionX{french}{%
     \@todonotes@SetTodoListName{Liste des points \`a traiter}%
