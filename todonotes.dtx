@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{435}
+% \CheckSum{443}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -149,6 +149,7 @@
 %             of todonotes in the margin fails in certain custom document classes.}
 % \changes{0.8.9}{2009/12/25}{Added a dutch translation by Ruben Ruben Vermeersch.}
 % \changes{0.9.0}{2010/09/13}{Added a english option as suggested by Marco Berghoff.}
+% \changes{0.9.1}{2010/09/13}{Added the todototoc command by idea from Sven Augustin.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -229,7 +230,12 @@
 % current document. |\listoftodos| takes no arguments.
 % For this document the list of to--do's looks like.
 % \listoftodos
+% \vspace{0.5cm}
 %
+% \DescribeMacro{\todototoc}
+% The |\todototoc| command adds an entry to the table of contents for 
+% list of todos. The command should be placed right before the 
+% |\listoftodos| command.
 %
 % \subsection{Package options}
 % \label{subsecPackageOptions}
@@ -1419,6 +1425,20 @@
 \end{tikzpicture}
 }% Ending \missingfigure command
 \fi % Ending \@todonotes@ifdisabled
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\todototoc}
+% Inserts a reference to the list of todos in the table of contents. If |chapter| is defined, 
+% |chapter| is used as level otherwise will |section| be used.
+% The |\todototoc| command respects the disable option.
+%    \begin{macrocode}
+\newcommand{\todototoc}
+{
+    \if@todonotes@disabled
+    \else
+		\addcontentsline{toc}{\@ifundefined{chapter}{section}{chapter}}{\@todonotes@todolistname}
+    \fi
+}
 %    \end{macrocode}
 % \end{macro}
 %
