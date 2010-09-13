@@ -42,6 +42,7 @@ todonotes.pdf: \
 todonotes.sty: \
 	todonotes.ins \
 	todonotes.dtx
+	rm -f todonotes.sty
 	pdflatex todonotes.ins
 
 todonotes.gls: \
