@@ -1341,10 +1341,8 @@
     \node [coordinate] (inText) {};%
 \end{tikzpicture}%
 \marginpar[{% Draw note in left margin
-\@todonotes@drawMarginNote
-\if@todonotes@line%
+    \@todonotes@drawMarginNote
     \@todonotes@drawLineToLeftMargin
-\fi%
 %    \end{macrocode}
 % In the book documentclass (which is a twoside layout), the
 % |\marginpar| marginpar macro takes two arguments
@@ -1354,10 +1352,8 @@
 % commands.
 %    \begin{macrocode}
 }]{% Draw note in right margin
-\@todonotes@drawMarginNote
-\if@todonotes@line%
+    \@todonotes@drawMarginNote
     \@todonotes@drawLineToRightMargin
-\fi%
 }%
 \fi%
 \fi %\if@todonotes@appendtolistoftodos%
@@ -1422,24 +1418,28 @@
 % Define helper function |drawLineToRightMargin|.
 %    \begin{macrocode}
 \newcommand{\@todonotes@drawLineToRightMargin}
-{\begin{tikzpicture}[remember picture, overlay]%
+{\if@todonotes@line%
+\begin{tikzpicture}[remember picture, overlay]%
         \draw[connectstyle]%
         ([yshift=-0.2cm] inText)%
         -| ([xshift=-0.2cm] inNote.west)%
         -| (inNote.west);%
-    \end{tikzpicture}}%
+    \end{tikzpicture}%
+\fi}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{drawLineToLeftMargin}
 % Define helper function |drawLineToLeftMargin|.
 %    \begin{macrocode}
 \newcommand{\@todonotes@drawLineToLeftMargin}{
+\if@todonotes@line%
     \begin{tikzpicture}[remember picture, overlay]%
         \draw[connectstyle]%
         ([yshift=-0.2cm] inText)%
         -| ([xshift=0.2cm] inNote.east)%
         -| (inNote.east);%
-    \end{tikzpicture}}
+    \end{tikzpicture}%
+\fi}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\missingfigure}
