@@ -1314,14 +1314,7 @@
     \else%
         \renewcommand{\@todonotes@caption}{#2}%
     \fi%
-    \if@todonotes@colorinlistoftodos%
-        \addcontentsline{tdo}{todo}{\protect{%
-            \colorbox{\@todonotes@currentbackgroundcolor}%
-                {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
-            \ \@todonotes@caption}}%
-    \else%
-        \addcontentsline{tdo}{todo}{\protect{\@todonotes@caption}}%
-    \fi%
+    \@todonotes@addElementToListOfTodos
 \fi%
 %    \end{macrocode}
 % Prepend the short caption given if it is requested
@@ -1370,6 +1363,20 @@
 \fi %\if@todonotes@appendtolistoftodos%
 \ignorespaces%
 }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{addElementToListOfTodos}
+% Define helper function |addElementToListOfTodos|.
+%    \begin{macrocode}
+\newcommand{\@todonotes@addElementToListOfTodos}{
+    \if@todonotes@colorinlistoftodos%
+        \addcontentsline{tdo}{todo}{\protect{%
+            \colorbox{\@todonotes@currentbackgroundcolor}%
+                {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
+            \ \@todonotes@caption}}%
+    \else%
+        \addcontentsline{tdo}{todo}{\protect{\@todonotes@caption}}%
+    \fi}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{drawInlineNote}
