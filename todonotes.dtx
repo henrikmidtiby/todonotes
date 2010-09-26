@@ -154,6 +154,8 @@
 % \changes{0.9.3}{2010/09/13}{Make an internal definition of the todo command, 
 %             for easing redefinition of the command behaviour.}
 % \changes{0.9.4}{2010/09/26}{Make the disable option work on a local scale.}
+% \changes{0.9.5}{2010/09/26}{Code simplification by extracting functionality to 
+%             smaller macros.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -335,6 +337,10 @@
 % There are several options that can be given to the |\todo|
 % command. All the options are described here and often I have
 % included examples of the change in visual appearance.
+%
+% \DescribeMacro{disable}
+% The |disable| option can be given directly to the todo command.
+% If given the command has no effect.
 %
 % \DescribeMacro{color}
 % \DescribeMacro{backgroundcolor}
@@ -1331,6 +1337,17 @@
 \if@todonotes@inlinenote%
     \@todonotes@drawInlineNote
 \else%
+    \@todonotes@drawMarginNoteWithLine
+\fi %\if@todonotes@inlinenote
+\fi %\if@todonotes@localdisable
+\ignorespaces%
+}%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{drawMarginNoteWithLine}
+% Define helper function |drawMarginNoteWithLine|.
+%    \begin{macrocode}
+\newcommand{\@todonotes@drawMarginNoteWithLine}{
 %    \end{macrocode}
 % When the todonote should be placed inside a marginpar, the code
 % below is applied.
@@ -1355,10 +1372,7 @@
     \@todonotes@drawMarginNote
     \@todonotes@drawLineToRightMargin
 }%
-\fi%
-\fi %\if@todonotes@appendtolistoftodos%
-\ignorespaces%
-}%
+}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{addElementToListOfTodos}
