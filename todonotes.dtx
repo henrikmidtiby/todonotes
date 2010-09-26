@@ -1347,7 +1347,7 @@
 % \begin{macro}{drawMarginNoteWithLine}
 % Define helper function |drawMarginNoteWithLine|.
 %    \begin{macrocode}
-\newcommand{\@todonotes@drawMarginNoteWithLine}{
+\newcommand{\@todonotes@drawMarginNoteWithLine}{%
 %    \end{macrocode}
 % When the todonote should be placed inside a marginpar, the code
 % below is applied.
@@ -1358,8 +1358,8 @@
     \node [coordinate] (inText) {};%
 \end{tikzpicture}%
 \marginpar[{% Draw note in left margin
-    \@todonotes@drawMarginNote
-    \@todonotes@drawLineToLeftMargin
+    \@todonotes@drawMarginNote%
+    \@todonotes@drawLineToLeftMargin%
 %    \end{macrocode}
 % In the book documentclass (which is a twoside layout), the
 % |\marginpar| marginpar macro takes two arguments
@@ -1369,16 +1369,16 @@
 % commands.
 %    \begin{macrocode}
 }]{% Draw note in right margin
-    \@todonotes@drawMarginNote
-    \@todonotes@drawLineToRightMargin
+    \@todonotes@drawMarginNote%
+    \@todonotes@drawLineToRightMargin%
 }%
-}
+}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{addElementToListOfTodos}
 % Define helper function |addElementToListOfTodos|.
 %    \begin{macrocode}
-\newcommand{\@todonotes@addElementToListOfTodos}{
+\newcommand{\@todonotes@addElementToListOfTodos}{%
     \if@todonotes@colorinlistoftodos%
         \addcontentsline{tdo}{todo}{\protect{%
             \colorbox{\@todonotes@currentbackgroundcolor}%
@@ -1392,7 +1392,7 @@
 % \begin{macro}{drawInlineNote}
 % Define helper function |drawInlineNote|.
 %    \begin{macrocode}
-\newcommand{\@todonotes@drawInlineNote}{
+\newcommand{\@todonotes@drawInlineNote}{%
     \if@todonotes@dviStyle%
         {\par\noindent\begin{tikzpicture}[remember picture]%
             \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
@@ -1409,7 +1409,7 @@
 % \begin{macro}{drawMarginNote}
 % Define helper function |drawMarginNote|.
 %    \begin{macrocode}
-\newcommand{\@todonotes@drawMarginNote}{
+\newcommand{\@todonotes@drawMarginNote}{%
 \if@todonotes@dviStyle%
     \begin{tikzpicture}[remember picture]%
         \draw node[notestyle] {};%
@@ -1431,8 +1431,8 @@
 % \begin{macro}{drawLineToRightMargin}
 % Define helper function |drawLineToRightMargin|.
 %    \begin{macrocode}
-\newcommand{\@todonotes@drawLineToRightMargin}
-{\if@todonotes@line%
+\newcommand{\@todonotes@drawLineToRightMargin}{%
+\if@todonotes@line%
 \begin{tikzpicture}[remember picture, overlay]%
         \draw[connectstyle]%
         ([yshift=-0.2cm] inText)%
