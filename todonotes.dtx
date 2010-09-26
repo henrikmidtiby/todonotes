@@ -1336,17 +1336,7 @@
 % marginpar), below is the code for the inline placement.
 %    \begin{macrocode}
 \if@todonotes@inlinenote%
-    \if@todonotes@dviStyle%
-        {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
-        {\noindent \@todonotes@sizecommand \@todonotes@text}%
-        {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
-    \else%
-        {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {\@todonotes@sizecommand \@todonotes@text};%
-            \end{tikzpicture}\par}%
-    \fi%
+    \@todonotes@drawInlineNote
 \else%
 %    \end{macrocode}
 % When the todonote should be placed inside a marginpar, the code
@@ -1359,7 +1349,6 @@
 \end{tikzpicture}%
 \marginpar[{% Draw note in left margin
 \@todonotes@drawMarginNote
-\fi%
 \if@todonotes@line%
     \@todonotes@drawLineToLeftMargin
 \fi%
@@ -1372,22 +1361,7 @@
 % commands.
 %    \begin{macrocode}
 }]{% Draw note in right margin
-\if@todonotes@dviStyle%
-    \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle] {};%
-    \end{tikzpicture}\\%
-    \begin{minipage}{\@todonotes@textwidth}%
-    \@todonotes@sizecommand \@todonotes@text%
-    \end{minipage}\\%
-    \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle] (inNote) {};%
-    \end{tikzpicture}%
-\else%
-    \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle](inNote)%
-            {\@todonotes@sizecommand \@todonotes@text};%
-    \end{tikzpicture}%
-\fi%
+\@todonotes@drawMarginNote
 \if@todonotes@line%
     \@todonotes@drawLineToRightMargin
 \fi%
@@ -1396,6 +1370,23 @@
 \fi %\if@todonotes@appendtolistoftodos%
 \ignorespaces%
 }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{drawInlineNote}
+% Define helper function |drawInlineNote|.
+%    \begin{macrocode}
+\newcommand{\@todonotes@drawInlineNote}{
+    \if@todonotes@dviStyle%
+        {\par\noindent\begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+        {\noindent \@todonotes@sizecommand \@todonotes@text}%
+        {\par\noindent\begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+    \else%
+        {\par\noindent\begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {\@todonotes@sizecommand \@todonotes@text};%
+            \end{tikzpicture}\par}%
+    \fi}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{drawMarginNote}
@@ -1416,7 +1407,8 @@
     \begin{tikzpicture}[remember picture]%
         \draw node[notestyle] (inNote)%
             {\@todonotes@sizecommand \@todonotes@text};%
-    \end{tikzpicture}%}
+    \end{tikzpicture}%
+\fi}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{drawLineToRightMargin}
