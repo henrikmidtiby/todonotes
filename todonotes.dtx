@@ -1358,21 +1358,7 @@
     \node [coordinate] (inText) {};%
 \end{tikzpicture}%
 \marginpar[{% Draw note in left margin
-\if@todonotes@dviStyle%
-    \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle] {};%
-    \end{tikzpicture}\\ %
-    \begin{minipage}{\@todonotes@textwidth}%
-    \@todonotes@sizecommand \@todonotes@text%
-    \end{minipage}\\%
-    \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle] (inNote) {};%
-    \end{tikzpicture}%
-\else%
-    \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle] (inNote)%
-            {\@todonotes@sizecommand \@todonotes@text};%
-    \end{tikzpicture}%
+\@todonotes@drawMarginNote
 \fi%
 \if@todonotes@line%
     \@todonotes@drawLineToLeftMargin
@@ -1410,6 +1396,27 @@
 \fi %\if@todonotes@appendtolistoftodos%
 \ignorespaces%
 }%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{drawMarginNote}
+% Define helper function |drawMarginNote|.
+%    \begin{macrocode}
+\newcommand{\@todonotes@drawMarginNote}{
+\if@todonotes@dviStyle%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] {};%
+    \end{tikzpicture}\\ %
+    \begin{minipage}{\@todonotes@textwidth}%
+    \@todonotes@sizecommand \@todonotes@text%
+    \end{minipage}\\%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] (inNote) {};%
+    \end{tikzpicture}%
+\else%
+    \begin{tikzpicture}[remember picture]%
+        \draw node[notestyle] (inNote)%
+            {\@todonotes@sizecommand \@todonotes@text};%
+    \end{tikzpicture}%}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{drawLineToRightMargin}
