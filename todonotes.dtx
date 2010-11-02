@@ -156,6 +156,7 @@
 % \changes{0.9.4}{2010/09/26}{Make the disable option work on a local scale.}
 % \changes{0.9.5}{2010/09/26}{Code simplification by extracting functionality to 
 %             smaller macros.}
+% \changes{0.9.6}{2010/10/28}{Give fontsize to TikZ. Patch by Benjamin Kellermann.}
 %
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -1401,7 +1402,7 @@
             \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
     \else%
         {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {\@todonotes@sizecommand \@todonotes@text};%
+            \draw node[inlinenotestyle,font=\@todonotes@sizecommand] {\@todonotes@text};%
             \end{tikzpicture}\par}%
     \fi}%
 %    \end{macrocode}
@@ -1422,8 +1423,8 @@
     \end{tikzpicture}%
 \else%
     \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle] (inNote)%
-            {\@todonotes@sizecommand \@todonotes@text};%
+        \draw node[notestyle,font=\@todonotes@sizecommand] (inNote)%
+            {\@todonotes@text};%
     \end{tikzpicture}%
 \fi}%
 %    \end{macrocode}
