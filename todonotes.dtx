@@ -157,7 +157,7 @@
 % \changes{0.9.5}{2010/09/26}{Code simplification by extracting functionality to 
 %             smaller macros.}
 % \changes{0.9.6}{2010/10/28}{Give fontsize to TikZ. Patch by Benjamin Kellermann.}
-%
+% \changes{0.9.7}{2010/10/28}{align notes with line where note is set}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -1422,8 +1422,9 @@
         \draw node[notestyle] (inNote) {};%
     \end{tikzpicture}%
 \else%
-    \begin{tikzpicture}[remember picture]%
-        \draw node[notestyle,font=\@todonotes@sizecommand] (inNote)%
+    \begin{tikzpicture}[remember picture,baseline=(X.base)]%
+    		\node(X){\vphantom{X}};%
+        \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
             {\@todonotes@text};%
     \end{tikzpicture}%
 \fi}%
