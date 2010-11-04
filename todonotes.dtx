@@ -158,6 +158,7 @@
 %             smaller macros.}
 % \changes{0.9.6}{2010/10/28}{Give fontsize to TikZ. Patch by Benjamin Kellermann.}
 % \changes{0.9.7}{2010/10/28}{align notes with line where note is set}
+% \changes{0.11.1}{2010/11/04}{new option for fancy line}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -1208,6 +1209,13 @@
 \define@key{todonotes}{line}[]{\@todonotes@linetrue}%
 \define@key{todonotes}{noline}[]{\@todonotes@linefalse}%
 %    \end{macrocode}
+% Should the connection between note and insertion point be drawn
+% in a fancy way? (does only work if line=true)
+%    \begin{macrocode}
+\newif\if@todonotes@fancyline\@todonotes@fancylinefalse%
+\define@key{todonotes}{fancyline}[]{\@todonotes@fancylinetrue}%
+\define@key{todonotes}{nofancyline}[]{\@todonotes@fancylinefalse}%
+%    \end{macrocode}
 % Should the text in the list of todos be different from the text
 % in the todonote?
 %    \begin{macrocode}
@@ -1435,12 +1443,24 @@
 %    \begin{macrocode}
 \newcommand{\@todonotes@drawLineToRightMargin}{%
 \if@todonotes@line%
-\begin{tikzpicture}[remember picture, overlay]%
-        \draw[connectstyle]%
-        ([yshift=-0.2cm] inText)%
-        -| ([xshift=-0.2cm] inNote.west)%
-        -| (inNote.west);%
-    \end{tikzpicture}%
+	\if@todonotes@fancyline%
+		\tikz[remember picture,overlay]{%
+			\tikzstyle{both}=[line width=3pt,draw,opacity=0.15]%
+			\tikzstyle{line}=[shorten >=5pt, line cap=round]%
+			\tikzstyle{head}=[shorten >=-1pt,dash pattern=on 0pt off 1pt,->]%
+			\foreach \s in {line,head}{%
+				\draw[both,\s]%
+					(inNote.north west).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
+			};%
+		}%
+	\else%
+		\begin{tikzpicture}[remember picture, overlay]%
+			\draw[connectstyle]%
+			([yshift=-0.2cm] inText)%
+			-| ([xshift=-0.2cm] inNote.west)%
+			-| (inNote.west);%
+		\end{tikzpicture}%
+	\fi
 \fi}%
 %    \end{macrocode}
 % \end{macro}
@@ -1449,12 +1469,24 @@
 %    \begin{macrocode}
 \newcommand{\@todonotes@drawLineToLeftMargin}{
 \if@todonotes@line%
-    \begin{tikzpicture}[remember picture, overlay]%
-        \draw[connectstyle]%
-        ([yshift=-0.2cm] inText)%
-        -| ([xshift=0.2cm] inNote.east)%
-        -| (inNote.east);%
-    \end{tikzpicture}%
+	\if@todonotes@fancyline%
+		\tikz[remember picture,overlay]{%
+			\tikzstyle{both}=[line width=3pt,draw,opacity=0.15]%
+			\tikzstyle{line}=[shorten >=5pt, line cap=round]%
+			\tikzstyle{head}=[shorten >=-1pt,dash pattern=on 0pt off 1pt,->]%
+			\foreach \s in {line,head}{%
+				\draw[both,\s]%
+					(inNote.north east).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
+			};%
+		}%
+	\else%
+		\begin{tikzpicture}[remember picture, overlay]%
+			\draw[connectstyle]%
+			([yshift=-0.2cm] inText)%
+			-| ([xshift=0.2cm] inNote.east)%
+			-| (inNote.east);%
+		\end{tikzpicture}%
+	\fi%
 \fi}
 %    \end{macrocode}
 % \end{macro}
