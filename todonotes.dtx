@@ -156,9 +156,8 @@
 % \changes{0.9.4}{2010/09/26}{Make the disable option work on a local scale.}
 % \changes{0.9.5}{2010/09/26}{Code simplification by extracting functionality to 
 %             smaller macros.}
-% \changes{0.9.6}{2010/10/28}{Give fontsize to TikZ. Patch by Benjamin Kellermann.}
-% \changes{0.9.7}{2010/10/28}{align notes with line where note is set}
-% \changes{0.11.1}{2010/11/04}{new option for fancy line}
+% \changes{0.9.6}{2010/11/04}{Give fontsize to TikZ. Align notes with line where note 
+%             is set. Added new option fancyline. Patches by Benjamin Kellermann.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -332,6 +331,11 @@
 % The option |dvistyle| changes the appearance of the inserted
 % todonotes to avoid this problem.
 %
+% \DescribeMacro{figwidth}
+% The |figwidth=length| option sets the default width of the figure
+% inserted by the |\missingfigure| command. 
+% The default value is |\columnwidth|.
+%
 % 
 %
 % \subsection{Options for the todo command}
@@ -460,12 +464,15 @@
 % \todo[noprepend, caption={Short note with noprepend}]{A very long and 
 % tedious note that cannot be on one line in the list of todos.}.
 % \end{verbatim}
-% \DescribeMacro{figwidth}
-% The |figwidth=length| option sets the default width of the figure
-% inserted by the |\missingfigure| command. 
-% The default value is |\columnwidth|.
 %
-%
+% \DescribeMacro{fancyline}
+% The |fancyline| option inserts a curved arrow, pointing from the inserted 
+% note to the insertion point.
+% \todo[fancyline]{Testing.}
+% The option is used like this:
+% \begin{verbatim}
+% \todo[fancyline]{Testing.}
+% \end{verbatim}
 %
 % \subsection{Options for the missingfigure command}
 %
@@ -1445,9 +1452,9 @@
 \if@todonotes@line%
 	\if@todonotes@fancyline%
 		\tikz[remember picture,overlay]{%
-			\tikzstyle{both}=[line width=3pt,draw,opacity=0.15]%
+			\tikzstyle{both}=[line width=3pt, draw, opacity=0.15]%
 			\tikzstyle{line}=[shorten >=5pt, line cap=round]%
-			\tikzstyle{head}=[shorten >=-1pt,dash pattern=on 0pt off 1pt,->]%
+			\tikzstyle{head}=[shorten >=-1pt, dash pattern=on 0pt off 1pt, ->]%
 			\foreach \s in {line,head}{%
 				\draw[both,\s]%
 					(inNote.north west).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
@@ -1471,9 +1478,9 @@
 \if@todonotes@line%
 	\if@todonotes@fancyline%
 		\tikz[remember picture,overlay]{%
-			\tikzstyle{both}=[line width=3pt,draw,opacity=0.15]%
+			\tikzstyle{both}=[line width=3pt, draw, opacity=0.15]%
 			\tikzstyle{line}=[shorten >=5pt, line cap=round]%
-			\tikzstyle{head}=[shorten >=-1pt,dash pattern=on 0pt off 1pt,->]%
+			\tikzstyle{head}=[shorten >=-1pt, dash pattern=on 0pt off 1pt,->]%
 			\foreach \s in {line,head}{%
 				\draw[both,\s]%
 					(inNote.north east).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
