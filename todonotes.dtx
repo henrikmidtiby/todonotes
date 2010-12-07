@@ -13,6 +13,12 @@
 % and version 1.2 or later is part of all distributions of LaTeX 
 % version 1999/12/01 or later.
 %
+% modified version (aleth) 2010/12
+% - marginnote instead of marginpar
+% - thinner line width (0.3 pt)
+% - avoid steps in line when y offset tiny (requires calc lib, and thus tikz version > 2)
+% - circle at end of line, marking note insertion point
+%
 % \fi
 %
 % \iffalse
@@ -22,14 +28,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2010/09/13 .dtx Todonotes source and documentation.]
+    [2010/09/26 .dtx Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black]{hyperref}
-\usepackage[colorinlistoftodos, shadow]{todonotes}[2010/09/13]
+\usepackage[colorinlistoftodos, shadow]{todonotes}[2010/09/26]
 \usepackage{amsmath}
 \usepackage{setspace}
 \setcounter{tocdepth}{2}
@@ -46,7 +52,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{0}
+% \CheckSum{458}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -153,7 +159,8 @@
 % \changes{0.9.2}{2010/09/13}{Use chapter (if available) for the list of todos heading.}
 % \changes{0.9.3}{2010/09/13}{Make an internal definition of the todo command, 
 %             for easing redefinition of the command behaviour.}
-% \changes{0.9.4}{2010/09/26}{Make the disable option work on a local scale.}
+% \changes{0.9.4}{2010/09/26}{Make the disable option work on a local scale as 
+%             suggested by Stefan Pinnow.}
 % \changes{0.9.5}{2010/09/26}{Code simplification by extracting functionality to 
 %             smaller macros.}
 %
@@ -932,21 +939,23 @@
 %
 % Identifies the package and loads the packages dependences.
 %    \begin{macrocode}
-\ProvidesPackage{todonotes}[2010/09/13]
+\ProvidesPackage{todonotes}[2010/09/26]
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
 \RequirePackage{tikz}
 \RequirePackage{calc}
+\RequirePackage{marginnote}
 %    \end{macrocode}
 % Some default values are set
 %    \begin{macrocode}
+\usetikzlibrary{calc}% for calculations to optimize line to margin
 \newcommand{\@todonotes@text}{}%
 \newcommand{\@todonotes@backgroundcolor}{orange}
 \newcommand{\@todonotes@linecolor}{orange}
 \newcommand{\@todonotes@bordercolor}{black}
 \newcommand{\@todonotes@textwidth}{\marginparwidth}
-\newcommand{\@todonotes@textsize}{\normalsize}
+\newcommand{\@todonotes@textsize}{}			% otherwise marginnote size setting fails
 \newcommand{\@todonotes@figwidth}{\columnwidth}
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -1260,10 +1269,10 @@
 \tikzstyle{notestyleraw} = [
     draw=\@todonotes@currentbordercolor, 
     fill=\@todonotes@currentbackgroundcolor,
-    line width=0.5pt,
+    line width = 0.3pt,    % line width for border of note
     text width = \@todonotes@textwidth - 1.6 ex - 1pt, 
     inner sep = 0.8 ex,
-    rounded corners=4pt]
+    rounded corners=1 pt]
 %    \end{macrocode}
 % Add shadows and rounded corners to the inserted todonotes.
 %    \begin{macrocode}
@@ -1278,7 +1287,7 @@
     notestyle, 
     left]
 \tikzstyle{connectstyle} = [
-    thick, 
+    line width = 0.3 pt,    % line width for line to text
     draw=\@todonotes@currentlinecolor]
 \tikzstyle{inlinenotestyle} = [
     notestyle, 
@@ -1340,7 +1349,7 @@
     \@todonotes@drawMarginNoteWithLine
 \fi %\if@todonotes@inlinenote
 \fi %\if@todonotes@localdisable
-\ignorespaces%
+%\ignorespaces%        %disable to keep spaces after a todo command
 }%
 %    \end{macrocode}
 % \end{macro}
@@ -1357,7 +1366,7 @@
 \begin{tikzpicture}[remember picture, baseline=-0.75ex]%
     \node [coordinate] (inText) {};%
 \end{tikzpicture}%
-\marginpar[{% Draw note in left margin
+\marginnote[{% Draw note in left margin ------------------------------------
     \@todonotes@drawMarginNote%
     \@todonotes@drawLineToLeftMargin%
 %    \end{macrocode}
@@ -1434,10 +1443,21 @@
 \newcommand{\@todonotes@drawLineToRightMargin}{%
 \if@todonotes@line%
 \begin{tikzpicture}[remember picture, overlay]%
+       	\draw[connectstyle]%
+	let \p1 = (inNote.west), \p2 = ([yshift=-0.2cm] inText),% 
+		\n1 = {abs(\y1 - \y2) > 0.2 cm},% avoid "step" when y offset is tiny
+		\n2 = {\x1 - (\n1 * 0.2cm)},%
+		\n3 = {(\n1==1) ? \y1 : \y2},%
+		\p3 = (\n2,\n3),%
+		\n4 = {(\n1==1) ? \x1 : \x3},%
+		\n5 = {(\n1==1) ? \y1 : \y3},%
+		\p4 = (\n4,\n5)%
+		in%
+       	([yshift=-0.2cm] inText)%
+	-| (\p3)%
+        -| (\p4);%
         \draw[connectstyle]%
-        ([yshift=-0.2cm] inText)%
-        -| ([xshift=-0.2cm] inNote.west)%
-        -| (inNote.west);%
+	([yshift=-0.2cm, xshift=-1pt] inText) circle (1pt);% tiny circle at tip of line
     \end{tikzpicture}%
 \fi}%
 %    \end{macrocode}
@@ -1449,9 +1469,20 @@
 \if@todonotes@line%
     \begin{tikzpicture}[remember picture, overlay]%
         \draw[connectstyle]%
-        ([yshift=-0.2cm] inText)%
-        -| ([xshift=0.2cm] inNote.east)%
-        -| (inNote.east);%
+	let \p1 = (inNote.east), \p2 = ([yshift=-0.2cm] inText),%
+		\n1 = {abs(\y1 - \y2) > 0.2 cm},% avoid "step" when y offset is tiny
+		\n2 = {\x1 + (\n1 * 0.2cm)},%
+		\n3 = {(\n1==1) ? \y1 : \y2},%
+		\p3 = (\n2,\n3),%
+		\n4 = {(\n1==1) ? \x1 : \x3},%
+		\n5 = {(\n1==1) ? \y1 : \y3},%
+		\p4 = (\n4,\n5)%
+		in%
+       	([yshift=-0.2cm] inText)%
+	-| (\p3)%
+        -| (\p4);%
+        \draw[connectstyle]%
+	([yshift=-0.2cm, xshift=+1pt] inText) circle (1pt);% tiny circle at tip of line
     \end{tikzpicture}%
 \fi}
 %    \end{macrocode}
