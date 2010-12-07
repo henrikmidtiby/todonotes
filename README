@@ -2,5 +2,15 @@ The package lets the user mark things to do later, in a simple and
 and visually appealing way.  The package takes several options to
 enable customization / finetuning of the visual appearance.
 
-The package makes use of the tikz and xkeyval packages.
+This modified version of the package makes use of the marginnote and 
+xkeyval packages and requires the tikz package with version >2.
+
+Modifications:
+- uses marginnote instead of marginpar 
+	(this means the font size should now be set via \marginfont)
+- avoid steps in the line to the note when y offset tiny
+- add a circle at end of the line, visually marking the note insertion point
+- thinner line width (0.3 pt) and tighter rounded corners
+
+
 
