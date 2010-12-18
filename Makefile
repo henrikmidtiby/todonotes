@@ -19,6 +19,9 @@ DISTCLEAN := \
 	todonotes.sty \
 	todonotes.pdf \
 
+default: \
+	todonotes.pdf
+
 todonotes.pdf: \
 	todonotes.sty \
 	todonotes.dtx
