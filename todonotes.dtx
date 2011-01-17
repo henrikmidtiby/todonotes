@@ -187,7 +187,8 @@
 % \section{Introduction}
 %
 % The |todonotes| package makes three commands available to the
-% user: |\todo[]{}|, |\missingfigure{}| and |\listoftodos|.
+% user: |\todo[]{}|, |\missingfigure{}| and |\listoftodos|. Also there is an
+% environment available for marking/highlighting text passsages.
 % |\todo[]{}| and |\missingfigure{}| makes it possible to insert
 % notes in your document about things that has to be done later
 % (todonotes \ldots).
@@ -215,6 +216,25 @@
 % For a description of all the options see section
 % \ref{subsecTodoOptions}.
 %
+%
+% \DescribeEnv{todomark}
+%
+% \begin{todomark}[orientation=both, style=straight]{}
+% The |todomark| environment defines a piece of the document which gets
+% highlighted by markings. You can chose from several styles and colors. 
+% You can also chose which side(s) of the text is to be marked.\\
+% Here the options |style = straight| and |orientation = both| are used. Regarding
+% style you may chose from |style = brace, bumps, coil, saw, snake,|
+% | straight, random steps, zigzag|. Colors are available as defined (named) in the
+% color package. As default the line color of the simple |todo| notes are used.
+% The line width can be chosen from |width = thin, thick,| |ultra thick|.
+% Also you may want to change the behaviour of the style segment lengths.
+%  This can be achieved by altering the default value of \\
+% |\@todonotes@segmentLength|. There is an option that influences on which side
+% of the text the marking will appear. You have the option of\\
+% |orientation = normal, reverse, both|\\
+% This feature has been developed by Stefan Goeckeritz.
+% \end{todomark} 
 %
 % \DescribeMacro{\missingfigure}
 % The |\missingfigure| command inserts an image containing an 
@@ -951,10 +971,19 @@
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
 \RequirePackage{tikz}
+\usetikzlibrary{decorations}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.pathreplacing}
 \RequirePackage{calc}
 %    \end{macrocode}
 % Some default values are set
 %    \begin{macrocode}
+\newcommand{\@todonotes@markingWidth}{}%-----------------------------------v-
+\newcommand{\@todonotes@markingColor}{}%
+\newcommand{\@todonotes@markingStyle}{}%
+\newcommand{\@todonotes@markingEnd}{}%
+\newcommand{\@todonotes@markingOrient}{}%
+\newcommand{\@todonotes@markingSegmentLength}{5mm}%----------------^-
 \newcommand{\@todonotes@text}{}%
 \newcommand{\@todonotes@backgroundcolor}{orange}
 \newcommand{\@todonotes@linecolor}{orange}
@@ -1145,8 +1174,26 @@
 \define@key{todonotes.sty}%
     {figwidth}{\renewcommand{\@todonotes@figwidth}{#1}}
 %    \end{macrocode}
-% Make the text width as an option.
+% Make the marking style as an option.
+%    \begin{macrocode}-----------------------------------------------------------------v-
+\define@choicekey{todomark}{style}{brace, bumps, coil, saw, snake, straight, random steps, zigzag}{
+\ifthenelse{\equal{#1}{straight}}
+{\renewcommand*{\@todonotes@tempStyle}{}}
+{\renewcommand*{\@todonotes@tempStyle}{#1}}
+}
+%	\end{macrocode}
+% Make the marking color as an option.
 %    \begin{macrocode}
+\define@key{todomark}{color}{\renewcommand*{\@todonotes@tempColor}{#1}}
+%	\end{macrocode}
+% Make the marking line width as an option.
+%    \begin{macrocode}
+\define@choicekey{todomark}{width}{thin, thick, ultra thick}{\renewcommand*{\@todonotes@tempWidth}{#1}}
+%	\end{macrocode}
+% Make the marking orientation as an option.
+%    \begin{macrocode}
+\define@choicekey{todomark}{orientation}[\val\nr]{ normal, reverse, both}{\renewcommand*{\@todonotes@tempOrient}{#1}}
+%	\end{macrocode}-------------------------------------------------------------------^-
 % Finally process the given options.
 %    \begin{macrocode}
 \ProcessOptionsX*
@@ -1503,6 +1550,58 @@
 \fi}
 %    \end{macrocode}
 % \end{macro}
+% \begin{environment}{todomark}------------------------------------------------------v-
+% 	\begin{macrocode}
+\newenvironment{todomark}[2][]{
+	%This approach sets default values, but user arguements (#1) can overrule all previously set keys
+	\setkeys{todomark}{style=snake,  color= \@todonotes@linecolor, width=ultra thick, orientation=normal, #1}
+	\@todonotes@textwidth = 2.5cm%
+	\normalmarginpar%
+	\marginpar{%
+ 		\tikz[remember picture, overlay] \node (rstart) {};		% grab start point
+		\ifthenelse{\equal{#2}{}}
+		{}{%
+			\todo[inline]{#2}%
+		}
+	}
+}
+{%
+	\marginpar{%
+		\tikz[remember picture, overlay] \node (rstop) {};		% grab stop point
+	}%
+
+	% draw that shit ... Let's first see which oriantation is whished
+	\ifthenelse{\equal{\@todonotes@markingOrient}{reverse}	 \or	\equal{\@todonotes@markingOrient}{both}}{%
+ 		% draw left side
+		\tikz[remember picture, overlay] {%		
+			\draw
+%				[markstyleraw]
+				[\@todonotes@markingWidth, \@todonotes@markingColor ]
+				decorate[
+					decoration= \@todonotes@markingStyle,
+					segment length=\@todonotes@markingSegmentLength]
+				 {([yshift=0.5ex , xshift=-\linewidth-5ex] rstop.south) -- ([yshift=-1ex, xshift=-\linewidth-5ex] rstart.center)};
+		}
+	}{}%
+	\ifthenelse{\equal{\@todonotes@markingOrient}{normal}	\or	\equal{\@todonotes@markingOrient}{both}}{%
+ 		% draw right side
+		\tikz[remember picture, overlay] {%
+			\draw
+%				[markstyleraw]
+				[\@todonotes@markingWidth, \@todonotes@markingColor ]
+				decorate[
+					decoration= \@todonotes@markingStyle,
+					segment length=\@todonotes@markingSegmentLength]
+				{([yshift=-1ex] rstart.center) -- ([yshift=0.5ex ]rstop.south)};
+		}
+	}{}%
+
+	% Maybe something was changed with the orientation...Reset everything for the rest of the document
+	% As a mather of fact, left orientation only works when havin this piece of code activated !
+	\normalmarginpar%
+}%--------------------------------------------------------------------------------------------^-
+%    \end{macrocode}
+% \end{environment}
 % \begin{macro}{\missingfigure}
 % Defines the |\missingfigure| macro.
 %    \begin{macrocode}
