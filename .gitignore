@@ -8,6 +8,7 @@
 *.toc
 *.out
 *.log
+errorfile
 todonotes.sty
 todonotes.zip
 todonotes.pdf
