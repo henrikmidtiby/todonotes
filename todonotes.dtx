@@ -1164,21 +1164,21 @@
 %    \begin{macrocode}-----------------------------------------------------------------v-
 \define@choicekey{todomark}{style}{brace, bumps, coil, saw, snake, straight, random steps, zigzag}{
 \ifthenelse{\equal{#1}{straight}}
-{\renewcommand*{\@todonotes@tempStyle}{}}
-{\renewcommand*{\@todonotes@tempStyle}{#1}}
+{\renewcommand*{\@todonotes@markingStyle}{}}
+{\renewcommand*{\@todonotes@markingStyle}{#1}}
 }
 %	\end{macrocode}
 % Make the marking color as an option.
 %    \begin{macrocode}
-\define@key{todomark}{color}{\renewcommand*{\@todonotes@tempColor}{#1}}
+\define@key{todomark}{color}{\renewcommand*{\@todonotes@markingColor}{#1}}
 %	\end{macrocode}
 % Make the marking line width as an option.
 %    \begin{macrocode}
-\define@choicekey{todomark}{width}{thin, thick, ultra thick}{\renewcommand*{\@todonotes@tempWidth}{#1}}
+\define@choicekey{todomark}{width}{thin, thick, ultra thick}{\renewcommand*{\@todonotes@markingWidth}{#1}}
 %	\end{macrocode}
 % Make the marking orientation as an option.
 %    \begin{macrocode}
-\define@choicekey{todomark}{orientation}[\val\nr]{ normal, reverse, both}{\renewcommand*{\@todonotes@tempOrient}{#1}}
+\define@choicekey{todomark}{orientation}[\val\nr]{ normal, reverse, both}{\renewcommand*{\@todonotes@markingOrient}{#1}}
 %	\end{macrocode}-------------------------------------------------------------------^-
 % Finally process the given options.
 %    \begin{macrocode}
@@ -1505,54 +1505,53 @@
 % \end{macro}
 % \begin{environment}{todomark}------------------------------------------------------v-
 % 	\begin{macrocode}
-\newenvironment{todomark}[2][]{
+\newenvironment{todomark}[2][]{%
 	%This approach sets default values, but user arguements (#1) can overrule all previously set keys
-	\setkeys{todomark}{style=snake,  color= \@todonotes@linecolor, width=ultra thick, orientation=normal, #1}
+	\setkeys{todomark}{style=snake,  color= \@todonotes@linecolor, width=ultra thick, orientation=normal, #1}%
 	\@todonotes@textwidth = 2.5cm%
 	\normalmarginpar%
 	\marginpar{%
  		\tikz[remember picture, overlay] \node (rstart) {};		% grab start point
-		\ifthenelse{\equal{#2}{}}
+		\ifthenelse{\equal{#2}{}}%
 		{}{%
 			\todo[inline]{#2}%
-		}
-	}
-}
-{%
-	\marginpar{%
-		\tikz[remember picture, overlay] \node (rstop) {};		% grab stop point
+		}%
 	}%
+}{%
+	\marginpar{
+		\tikz[remember picture, overlay] \node (rstop) {};		% grab stop point
+	}
 
 	% draw that shit ... Let's first see which oriantation is whished
-	\ifthenelse{\equal{\@todonotes@markingOrient}{reverse}	 \or	\equal{\@todonotes@markingOrient}{both}}{%
- 		% draw left side
-		\tikz[remember picture, overlay] {%		
+	\ifthenelse{\equal{\@todonotes@markingOrient}{reverse} \or \equal{\@todonotes@markingOrient}{both}}{%
+% 		% draw left side
+		\tikz[remember picture, overlay] {	
 			\draw
-%				[markstyleraw]
+				%[markstyleraw]
 				[\@todonotes@markingWidth, \@todonotes@markingColor ]
 				decorate[
 					decoration= \@todonotes@markingStyle,
 					segment length=\@todonotes@markingSegmentLength]
-				 {([yshift=0.5ex , xshift=-\linewidth-5ex] rstop.south) -- ([yshift=-1ex, xshift=-\linewidth-5ex] rstart.center)};
-		}
+				 {([yshift=0.5ex , xshift=-\linewidth-5ex] rstop.south) -- ([yshift=-1ex, xshift=-\linewidth-5ex] rstart.center)};%
+		}%
 	}{}%
-	\ifthenelse{\equal{\@todonotes@markingOrient}{normal}	\or	\equal{\@todonotes@markingOrient}{both}}{%
+	\ifthenelse{\equal{\@todonotes@markingOrient}{normal}	\or	\equal{\@todonotes@markingOrient}{both}}{
  		% draw right side
-		\tikz[remember picture, overlay] {%
+		\tikz[remember picture, overlay] {
 			\draw
-%				[markstyleraw]
+				%[markstyleraw]
 				[\@todonotes@markingWidth, \@todonotes@markingColor ]
 				decorate[
 					decoration= \@todonotes@markingStyle,
 					segment length=\@todonotes@markingSegmentLength]
 				{([yshift=-1ex] rstart.center) -- ([yshift=0.5ex ]rstop.south)};
-		}
+		}%
 	}{}%
-
 	% Maybe something was changed with the orientation...Reset everything for the rest of the document
 	% As a mather of fact, left orientation only works when havin this piece of code activated !
 	\normalmarginpar%
-}%--------------------------------------------------------------------------------------------^-
+}%
+%--------------------------------------------------------------------------------------------^-
 %    \end{macrocode}
 % \end{environment}
 % \begin{macro}{\missingfigure}
