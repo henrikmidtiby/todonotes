@@ -219,7 +219,7 @@
 %
 % \DescribeEnv{todomark}
 %
-% \begin{todomark}[orientation=both, style=straight]{}
+% \begin{todomark}[orientation=both, style=straight]{adsfa afds afafsd}
 % The |todomark| environment defines a piece of the document which gets
 % highlighted by markings. You can chose from several styles and colors. 
 % You can also chose which side(s) of the text is to be marked.\\
@@ -1175,25 +1175,29 @@
     {figwidth}{\renewcommand{\@todonotes@figwidth}{#1}}
 %    \end{macrocode}
 % Make the marking style as an option.
-%    \begin{macrocode}-----------------------------------------------------------------v-
+%    \begin{macrocode}
+\newcommand{\@todonotes@tempStyle}{}
 \define@choicekey{todomark}{style}{brace, bumps, coil, saw, snake, straight, random steps, zigzag}{
 \ifthenelse{\equal{#1}{straight}}
-{\renewcommand*{\@todonotes@tempStyle}{}}
-{\renewcommand*{\@todonotes@tempStyle}{#1}}
+{\renewcommand{\@todonotes@tempStyle}{}}
+{\renewcommand{\@todonotes@tempStyle}{#1}}
 }
 %	\end{macrocode}
 % Make the marking color as an option.
 %    \begin{macrocode}
-\define@key{todomark}{color}{\renewcommand*{\@todonotes@tempColor}{#1}}
+\newcommand{\@todonotes@tempColor}{}
+\define@key{todomark}{color}{\renewcommand{\@todonotes@tempColor}{#1}}
 %	\end{macrocode}
 % Make the marking line width as an option.
 %    \begin{macrocode}
-\define@choicekey{todomark}{width}{thin, thick, ultra thick}{\renewcommand*{\@todonotes@tempWidth}{#1}}
+\newcommand{\@todonotes@tempWidth}{}
+\define@choicekey{todomark}{width}{thin, thick, ultra thick}{\renewcommand{\@todonotes@tempWidth}{#1}}
 %	\end{macrocode}
 % Make the marking orientation as an option.
 %    \begin{macrocode}
-\define@choicekey{todomark}{orientation}[\val\nr]{ normal, reverse, both}{\renewcommand*{\@todonotes@tempOrient}{#1}}
-%	\end{macrocode}-------------------------------------------------------------------^-
+\newcommand{\@todonotes@tempOrient}{}
+\define@choicekey{todomark}{orientation}[\val\nr]{ normal, reverse, both}{\renewcommand{\@todonotes@tempOrient}{#1}}
+%	\end{macrocode}
 % Finally process the given options.
 %    \begin{macrocode}
 \ProcessOptionsX*
@@ -1550,7 +1554,7 @@
 \fi}
 %    \end{macrocode}
 % \end{macro}
-% \begin{environment}{todomark}------------------------------------------------------v-
+% \begin{environment}{todomark}
 % 	\begin{macrocode}
 \newenvironment{todomark}[2][]{
 	%This approach sets default values, but user arguements (#1) can overrule all previously set keys
@@ -1599,7 +1603,7 @@
 	% Maybe something was changed with the orientation...Reset everything for the rest of the document
 	% As a mather of fact, left orientation only works when havin this piece of code activated !
 	\normalmarginpar%
-}%--------------------------------------------------------------------------------------------^-
+}%
 %    \end{macrocode}
 % \end{environment}
 % \begin{macro}{\missingfigure}
