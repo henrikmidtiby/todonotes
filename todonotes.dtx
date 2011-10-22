@@ -587,6 +587,23 @@
 % relies on) is inserted in the other margin.
 %
 %
+% \subsubsection{Todonotes in footnotes}
+% Placing todonotes in footnotes throws a lot of errors.
+% Richard Stanton comes with the following work around.
+% \begin{verbatim}
+% \renewcommand{\marginpar}{\marginnote}
+% \end{verbatim}
+%
+%
+% \subsubsection{List of todo heading is not correctly formatted}
+% If using natbib, the todonotes list title gets screwed up unless 
+% you do something like this:
+% \begin{verbatim}
+% \makeatletter\let\chapter\@undefined\makeatother 
+% \end{verbatim}
+% Suggestion by Richard Stanton.
+%
+%
 % \subsection{Things to improve}
 % This is a list of things I consider to improve sometime in the
 % future. It have not been done yet as I lack the time or skills to
