@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{492}
+% \CheckSum{541}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -475,6 +475,17 @@
 % The option is used like this:
 % \begin{verbatim}
 % \todo[fancyline]{Testing.}
+% \end{verbatim}
+%
+%
+% \DescribeMacro{author}
+% The |author| option takes a parameter, the name of the author.
+% The given name is inserted in the todonote.
+% \todo[author=Xavier]{Testing author option.}
+% \todo[author=Xavier, inline]{Testing author option.}
+% \begin{verbatim}
+% \todo[author=Xavier]{Testing author option.}
+% \todo[author=Xavier, inline]{Testing author option.}
 % \end{verbatim}
 %
 % \subsection{Options for the missingfigure command}
@@ -983,6 +994,7 @@
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
 \RequirePackage{tikz}
+\usetikzlibrary{positioning}
 \RequirePackage{calc}
 %    \end{macrocode}
 % Some default values are set
@@ -1260,6 +1272,15 @@
 \define@key{todonotes}{fancyline}[]{\@todonotes@fancylinetrue}%
 \define@key{todonotes}{nofancyline}[]{\@todonotes@fancylinefalse}%
 %    \end{macrocode}
+% Author option.
+%    \begin{macrocode}
+\newcommand{\@todonotes@author}{}%
+\newif\if@todonotes@authorgiven%
+\define@key{todonotes}{author}{%
+    \renewcommand{\@todonotes@author}{#1}%
+    \@todonotes@authorgiventrue}%
+\define@key{todonotes}{noauthor}[]{\@todonotes@authorgivenfalse}%
+%    \end{macrocode}
 % Should the text in the list of todos be different from the text
 % in the todonote?
 %    \begin{macrocode}
@@ -1287,6 +1308,7 @@
     nodisable,%
     noinline,%
     nocaption,%
+    noauthor,%
     figwidth=\@todonotes@figwidth,%
     line, list, size=\@todonotes@textsize}{}%
 %    \end{macrocode}
@@ -1450,12 +1472,21 @@
     \if@todonotes@dviStyle%
         {\par\noindent\begin{tikzpicture}[remember picture]%
             \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
-        {\noindent \@todonotes@sizecommand \@todonotes@text}%
+            \if@todonotes@authorgiven%
+                {\noindent \@todonotes@sizecommand \@todonotes@author:\,\@todonotes@text}%
+            \else%
+                {\noindent \@todonotes@sizecommand \@todonotes@text}%
+            \fi
         {\par\noindent\begin{tikzpicture}[remember picture]%
             \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
     \else%
         {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle,font=\@todonotes@sizecommand] {\@todonotes@text};%
+            \draw node[inlinenotestyle,font=\@todonotes@sizecommand] {%
+                \if@todonotes@authorgiven%
+                    {\noindent \@todonotes@sizecommand \@todonotes@author:\,\@todonotes@text}%
+                \else%
+                    {\noindent \@todonotes@sizecommand \@todonotes@text}%
+                \fi};%
             \end{tikzpicture}\par}%
     \fi}%
 %    \end{macrocode}
@@ -1469,20 +1500,34 @@
         \draw node[notestyle] {};%
     \end{tikzpicture}\\ %
     \begin{minipage}{\@todonotes@textwidth}%
-    \@todonotes@sizecommand \@todonotes@text%
+    \if@todonotes@authorgiven%
+      \@todonotes@sizecommand \@todonotes@author \@todonotes@text%
+    \else%
+      \@todonotes@sizecommand \@todonotes@text%
+    \fi%
     \end{minipage}\\%
     \begin{tikzpicture}[remember picture]%
         \draw node[notestyle] (inNote) {};%
     \end{tikzpicture}%
 \else%
-	\let\originalHbadness\hbadness
-	\hbadness 100000
+    \let\originalHbadness\hbadness
+    \hbadness 100000
     \begin{tikzpicture}[remember picture,baseline=(X.base)]%
-    		\node(X){\vphantom{X}};%
+        \node(X){\vphantom{X}};%
         \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
             {\@todonotes@text};%
+        \if@todonotes@authorgiven%
+            \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
+                {\@todonotes@sizecommand\@todonotes@author};%
+            \node(Y)[below=of X]{};%
+            \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.south)%
+                {\@todonotes@text};%
+        \else%
+            \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
+                {\@todonotes@text};%
+        \fi%
     \end{tikzpicture}%
-	\hbadness \originalHbadness
+    \hbadness \originalHbadness
 \fi}%
 %    \end{macrocode}
 % \end{macro}
@@ -1541,7 +1586,7 @@
 % \begin{macro}{\missingfigure}
 % Defines the |\missingfigure| macro.
 %    \begin{macrocode}
-\newcommand{\missingfigure}[2][]{
+\newcommand{\missingfigure}[2][]{%
 \setkeys{todonotes}{#1}%
 \addcontentsline{tdo}{todo}{\@todonotes@MissingFigureText: #2}%
 \par
@@ -1578,7 +1623,7 @@
 % \begin{macro}{\todo}
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
-\newcommand{\todo}[2][]{\@todo[#1]{#2}}
+\newcommand{\todo}[2][]{\@todo[#1]{#2}}%
 %    \end{macrocode}
 % \end{macro}
 % \appendix
