@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{495}
+% \CheckSum{492}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1434,12 +1434,12 @@
 %    \begin{macrocode}
 \newcommand{\@todonotes@addElementToListOfTodos}{%
     \if@todonotes@colorinlistoftodos%
-        \addcontentsline{tdo}{todo}{\protect{%
+        \addcontentsline{tdo}{todo}{%
             \colorbox{\@todonotes@currentbackgroundcolor}%
                 {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
-            \ \@todonotes@caption}}%
+            \ \@todonotes@caption}%
     \else%
-        \addcontentsline{tdo}{todo}{\protect{\@todonotes@caption}}%
+        \addcontentsline{tdo}{todo}{\@todonotes@caption}%
     \fi}%
 %    \end{macrocode}
 % \end{macro}
@@ -1543,7 +1543,7 @@
 %    \begin{macrocode}
 \newcommand{\missingfigure}[2][]{
 \setkeys{todonotes}{#1}%
-\addcontentsline{tdo}{todo}{\@todonotes@MissingFigureText: \protect{#2}}%
+\addcontentsline{tdo}{todo}{\@todonotes@MissingFigureText: #2}%
 \par
 \noindent
 \begin{tikzpicture}
