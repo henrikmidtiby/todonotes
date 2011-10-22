@@ -955,6 +955,18 @@
 % Using this approach it is possible to customize the behavior of the inserted notes
 % to a very high degree.
 %
+% 
+% \subsubsection{Alter the appearance of the list of todos}
+% Marco Daniel gives the following example of how to add section 
+% numbers to the elements in the list of todos.
+% The code is slightly modified from 
+% \url{http://tex.stackexchange.com/questions/18838/replacing-page-number-with-other-counter-in-listoftodos}.
+% An example of the modified list of todos is shown below, the complete 
+% code example is given in appendix \ref{appssecAlterAppearenceOfListoftodos}.\\
+% \noindent
+% \begin{tikzpicture}
+% \draw node[shape=rectangle, fill=black!30, inner sep=1mm]{\includegraphics[width=\linewidth-2mm]{img/AlteredAppearenceOfListOfTodos.png}};
+% \end{tikzpicture}
 %
 % \iffalse
 % \StopEventually{\PrintChanges\PrintIndex}
@@ -1569,7 +1581,52 @@
 \newcommand{\todo}[2][]{\@todo[#1]{#2}}
 %    \end{macrocode}
 % \end{macro}
+% \appendix
+% \section{Longer code examples}
+% \subsection{Alter appearence of the list of todos}
+% \label{appssecAlterAppearenceOfListoftodos}
+% \begin{verbatim}
+% \documentclass{book}
+% 
+% \usepackage{todonotes}
+% \usepackage{lipsum}
+% \makeatletter
+% \def\myaddcontentsline#1#2#3{%
+%   \addtocontents{#1}{\protect\contentsline{#2}{#3}{see \thesection\ at p. \thepage}}}
+% \renewcommand{\@todonotes@addElementToListOfTodos}{%
+%     \if@todonotes@colorinlistoftodos%
+%         \myaddcontentsline{tdo}{todo}{{%
+%             \colorbox{\@todonotes@currentbackgroundcolor}%
+%                 {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
+%             \ \@todonotes@caption}}%
+%     \else%
+%         \myaddcontentsline{tdo}{todo}{{\@todonotes@caption}}%
+%     \fi}%
+% \newcommand*\mylistoftodos{%
+%   \begingroup
+%        \setbox\@tempboxa\hbox{see 9.9 at p. 99}%
+%        \renewcommand*\@tocrmarg{\the\wd\@tempboxa}%
+%        \renewcommand*\@pnumwidth{\the\wd\@tempboxa}%
+%        \listoftodos%
+%   \endgroup
+% }
+% \makeatother
+% 
+% \begin{document}
+% \chapter{My first chapter}
+% \section{A first section}
+% \lipsum
+% \todo{This is a note}
+% \section{Another section}
+% \lipsum
+% \todo{This is another note}
+% 
+% \tableofcontents
+% \mylistoftodos
+% \end{document}
+% \end{verbatim}
 %
+% \newpage
 % \Finale
 \endinput
 
