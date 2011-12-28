@@ -617,6 +617,18 @@
 % \end{verbatim}
 % Suggestion by Richard Stanton.
 %
+% 
+% \subsubsection{Trouble with classicthesis.sty}
+% \href{http://tex.stackexchange.com/questions/33423/todonotes-produces-double-inline-notes-instead-of-single-margin-note-with-class}{Problem description on tex.stackexchange.com}.
+% 
+% Solution by Stefan Kottwitz. 
+% The problem is caused by the redefinition of |\marginpar| in 
+% classicthesis.sty. |\marginpar| is used by todonotes. 
+% It can be fixed by restoring the original meaning, if you don't 
+% need the classicthesis marginpar style. 
+% Just add this to your document preamble:
+% |\let\marginpar\oldmarginpar|
+%
 %
 % \subsection{Things to improve}
 % This is a list of things I consider to improve sometime in the
