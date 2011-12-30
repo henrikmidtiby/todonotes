@@ -579,7 +579,21 @@
 % \makeatother
 % \listoftodos\relax 
 % \end{verbatim}
-% 
+%
+% NOT TESTED
+% NOT TESTED
+% NOT TESTED
+%
+% Dominique suggests the following workaround.
+% \begin{verbatim}
+% \makeatletter
+% \providecommand\@dotsep{5}
+% \def\listtodoname{List of Todos}
+% \def\listoftodos{\@starttoc{tdo}\listtodoname}
+% \makeatother
+% \end{verbatim}
+%
+%
 %
 % \subsubsection{Unknown option ''remember picture''}
 % If latex throws the error
