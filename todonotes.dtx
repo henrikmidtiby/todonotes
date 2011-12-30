@@ -622,6 +622,15 @@
 % When this command is issued the following marginpars (which todonotes 
 % relies on) is inserted in the other margin.
 %
+% \subsubsection{Reduce number of warnings}
+% If the width of the inserted todonotes is forced to be larger than the 
+% available space in the margin, a lot of warnings are issued.
+% This can be reduced with the following code.
+% \begin{verbatim}
+% \usepackage[textwidth=3.7cm]{todonotes}
+% \setlength{\marginparwidth}{3.7cm}
+% \end{verbatim}
+%
 %
 % \subsubsection{Todonotes in footnotes}
 % Placing todonotes in footnotes throws a lot of errors.
