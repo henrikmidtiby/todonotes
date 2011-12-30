@@ -1385,7 +1385,7 @@
 % appearance of the list of todos.
 %    \begin{macrocode}
 \newcommand{\listoftodos}[1][\@todonotes@todolistname]
-    {\ifdefined\chapter\chapter*{#1}\else\section*{#1}\fi \@starttoc{tdo}}
+    {\@ifundefined{chapter}{\section*{#1}}{\chapter*{#1}} \@starttoc{tdo}}
 \newcommand{\l@todo}
     {\@dottedtocline{1}{0em}{2.3em}}
 %    \end{macrocode}
