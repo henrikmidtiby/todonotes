@@ -1003,6 +1003,21 @@
 % \begin{tikzpicture}
 % \draw node[shape=rectangle, fill=black!30, inner sep=1mm]{\includegraphics[width=\linewidth-2mm]{img/AlteredAppearenceOfListOfTodos.png}};
 % \end{tikzpicture}
+% 
+% 
+% \subsubsection{Tikz externalization issues}
+% 
+% Using the tikz externalization framework together with todonotes 
+% can lead to some problems.
+% One solution is to disable the externalization just before the \verb!todo! 
+% command is issued and then reactivate externalization afterwards.
+% The \verb!ruggedtodo! handles this deactivation and reactivation.
+% \begin{verbatim}
+% \usetikzlibrary{external}
+% \tikzexternalize
+% \newcommand{\ruggedtodo}[2][]{\tikzexternaldisable\todo[#1]{#2}\tikzexternalenable}
+% \end{verbatim}
+% 
 %
 % \iffalse
 % \StopEventually{\PrintChanges\PrintIndex}
