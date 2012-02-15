@@ -265,7 +265,8 @@
 %
 % \DescribeMacro{obeyDraft}
 % When the option |obeyDraft| is given, the package checks
-% if the option |draft| is given (this option is usually given to
+% if the one of the options |draft|, |draftcls| or |draftclsnofoot| 
+% is given (this option is usually given to
 % the documentclass). If the |draft| option is given, the
 % functionality of the package is enabled and otherwise the effect
 % of the package is disabled.
@@ -1148,6 +1149,8 @@
 \DeclareOptionX{obeyDraft}{\@todonotes@obeyDrafttrue}
 \newif{\if@todonotes@isDraft}
 \DeclareOptionX{draft}{\@todonotes@isDrafttrue}
+\DeclareOptionX{draftcls}{\@todonotes@isDrafttrue}
+\DeclareOptionX{draftclsnofoot}{\@todonotes@isDrafttrue}
 %    \end{macrocode}
 % Make it possible to disable the functionality
 % of the package. If this option is given, the
@@ -1235,8 +1238,9 @@
 %    \begin{macrocode}
 \ProcessOptionsX*
 %    \end{macrocode}
-% If the |obeyDraft| is given, check whether the |draft|
-% option is given and enable or disable the functionality of this
+% If the |obeyDraft| is given, check whether one of the |draft|, 
+% |draftcls| or |draftclsnofoot|
+% options are given and enable or disable the functionality of this
 % package.
 % The |disable| option will overrule the effect of |obeyDraft|.
 %    \begin{macrocode}
