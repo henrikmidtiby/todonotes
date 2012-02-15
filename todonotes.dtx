@@ -263,13 +263,15 @@
 % |\missingfigure|) are defined as macros with no effect, and thus
 % all inserted notes are removed.
 %
-% \DescribeMacro{obeyDraft}
+% \DescribeMacro{obeyDraft, obeyFinal}
 % When the option |obeyDraft| is given, the package checks
 % if the one of the options |draft|, |draftcls| or |draftclsnofoot| 
 % is given (this option is usually given to
 % the documentclass). If the |draft| option is given, the
 % functionality of the package is enabled and otherwise the effect
 % of the package is disabled.
+% The option |obeyFinal| does something similar, except that the 
+% todonotes package is only disabled if the |final| option given.
 %
 % \DescribeMacro{danish, german, ngerman, french}
 % \DescribeMacro{spanish, catalan, italian}
@@ -1151,6 +1153,10 @@
 \DeclareOptionX{draft}{\@todonotes@isDrafttrue}
 \DeclareOptionX{draftcls}{\@todonotes@isDrafttrue}
 \DeclareOptionX{draftclsnofoot}{\@todonotes@isDrafttrue}
+\newif{\if@todonotes@obeyFinal}
+\DeclareOptionX{obeyFinal}{\@todonotes@obeyFinaltrue}
+\newif{\if@todonotes@isFinal}
+\DeclareOptionX{final}{\@todonotes@isFinaltrue}
 %    \end{macrocode}
 % Make it possible to disable the functionality
 % of the package. If this option is given, the
@@ -1242,6 +1248,8 @@
 % |draftcls| or |draftclsnofoot|
 % options are given and enable or disable the functionality of this
 % package.
+% If the |obeyFinal| option is given together with the |final| option
+% the todonotes are disabled.
 % The |disable| option will overrule the effect of |obeyDraft|.
 %    \begin{macrocode}
 \if@todonotes@disabled
@@ -1250,6 +1258,12 @@
 		\@todonotes@disabledtrue
 		\if@todonotes@isDraft
 			\@todonotes@disabledfalse
+		\fi
+	\fi
+	\if@todonotes@obeyFinal
+		\@todonotes@disabledfalse
+		\if@todonotes@isFinal
+			\@todonotes@disabledtrue
 		\fi
 	\fi
 \fi
