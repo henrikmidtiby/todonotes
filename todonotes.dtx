@@ -869,9 +869,17 @@
 % triggers an error.
 % Inside the minipage environment almost anything could be placed,
 % except for other todo commands.
+%
+% To streamline use the following command was suggested by Stefan Pinnow.
+% \newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{
+% \begin{minipage}{\textwidth-4pt} #2 \end{minipage}}}
 % \begin{verbatim}
-% \todo[inline, caption={Examine this new section}]{
-% \begin{minipage}{\linewidth}
+% \newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{
+% \begin{minipage}{\textwidth-4pt} #2 \end{minipage}}}
+% \end{verbatim}
+% This example renders like
+% \begin{verbatim}
+% \todoin{
 % Some text.
 % \begin{align}
 % \sin(\theta)^2 + \cos(\theta)^2 = 1
@@ -880,12 +888,10 @@
 % \begin{itemize}
 % \item	An item
 % \end{itemize}
-% \end{minipage}
 % }
 % \end{verbatim}
-% The example above renders like
-% \todo[inline, caption={Examine this new section}]{
-% \begin{minipage}{\linewidth}
+% 
+% \todoin{
 % Some text.
 % \begin{align}
 % \sin(\theta)^2 + \cos(\theta)^2 = 1
@@ -894,7 +900,6 @@
 % \begin{itemize}
 % \item	An item
 % \end{itemize}
-% \end{minipage}
 % }
 %
 %
