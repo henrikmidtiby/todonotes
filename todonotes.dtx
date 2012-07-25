@@ -22,14 +22,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2011/10/22 .dtx Todonotes source and documentation.]
+    [2012/07/25 .dtx Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black]{hyperref}
-\usepackage[colorinlistoftodos, shadow]{todonotes}[2011/10/22]
+\usepackage[colorinlistoftodos, shadow]{todonotes}[2012/07/25]
 \usepackage{amsmath}
 \usepackage{setspace}
 \setcounter{tocdepth}{2}
@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{541}
+% \CheckSum{559}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -164,6 +164,11 @@
 % \changes{0.9.9}{2011/10/22}{Added author option, implementation provided by 
 %             Xavier Alameda-Pineda. Example of modifying the 
 %             listoftodos removing some protect commands with no effect.}
+% \changes{1.0.0}{2012/07/25}{Mention trouble with the classicthesis style. 
+%             Refer to some alternatives to the package.
+%             Added todoin command as suggested by Stefan Pinnow.
+%             Described how to use tikz externalize with todonotes.
+%             Added obeyDraft and obeyFinal options.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -1032,7 +1037,7 @@
 %
 % Identifies the package and loads the packages dependences.
 %    \begin{macrocode}
-\ProvidesPackage{todonotes}[2011/10/22]
+\ProvidesPackage{todonotes}[2012/07/25]
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
