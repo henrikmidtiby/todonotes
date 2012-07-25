@@ -22,14 +22,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2011/10/22 .dtx Todonotes source and documentation.]
+    [2012/07/25 .dtx Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black]{hyperref}
-\usepackage[colorinlistoftodos, shadow]{todonotes}[2011/10/22]
+\usepackage[colorinlistoftodos, shadow]{todonotes}[2012/07/25]
 \usepackage{amsmath}
 \usepackage{setspace}
 \setcounter{tocdepth}{2}
@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{541}
+% \CheckSum{559}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -164,6 +164,11 @@
 % \changes{0.9.9}{2011/10/22}{Added author option, implementation provided by 
 %             Xavier Alameda-Pineda. Example of modifying the 
 %             listoftodos removing some protect commands with no effect.}
+% \changes{1.0.0}{2012/07/25}{Mention trouble with the classicthesis style. 
+%             Refer to some alternatives to the package.
+%             Added todoin command as suggested by Stefan Pinnow.
+%             Described how to use tikz externalize with todonotes.
+%             Added obeyDraft and obeyFinal options.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -200,6 +205,11 @@
 % I developed the basic functionality of the package while I worked
 % on my bachelor project.
 % 
+% Some alternatives for the todonotes package are:
+% \begin{itemize}
+% \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/easy-todo}{easy-todo}
+% \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/fixme}{fixme}
+% \end{itemize}
 %
 %
 % \subsection{Usage}
@@ -258,12 +268,15 @@
 % |\missingfigure|) are defined as macros with no effect, and thus
 % all inserted notes are removed.
 %
-% \DescribeMacro{obeyDraft}
+% \DescribeMacro{obeyDraft, obeyFinal}
 % When the option |obeyDraft| is given, the package checks
-% if the option |draft| is given (this option is usually given to
+% if the one of the options |draft|, |draftcls| or |draftclsnofoot| 
+% is given (this option is usually given to
 % the documentclass). If the |draft| option is given, the
 % functionality of the package is enabled and otherwise the effect
 % of the package is disabled.
+% The option |obeyFinal| does something similar, except that the 
+% todonotes package is only disabled if the |final| option given.
 %
 % \DescribeMacro{danish, german, ngerman, french}
 % \DescribeMacro{spanish, catalan, italian}
@@ -617,6 +630,18 @@
 % \end{verbatim}
 % Suggestion by Richard Stanton.
 %
+% 
+% \subsubsection{Trouble with classicthesis.sty}
+% \href{http://tex.stackexchange.com/questions/33423/todonotes-produces-double-inline-notes-instead-of-single-margin-note-with-class}{Problem description on tex.stackexchange.com}.
+% 
+% Solution by Stefan Kottwitz. 
+% The problem is caused by the redefinition of |\marginpar| in 
+% classicthesis.sty. |\marginpar| is used by todonotes. 
+% It can be fixed by restoring the original meaning, if you don't 
+% need the classicthesis marginpar style. 
+% Just add this to your document preamble:
+% |\let\marginpar\oldmarginpar|
+%
 %
 % \subsection{Things to improve}
 % This is a list of things I consider to improve sometime in the
@@ -852,9 +877,17 @@
 % triggers an error.
 % Inside the minipage environment almost anything could be placed,
 % except for other todo commands.
+%
+% To streamline use the following command was suggested by Stefan Pinnow.
+% \newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{
+% \begin{minipage}{\textwidth-4pt} #2 \end{minipage}}}
 % \begin{verbatim}
-% \todo[inline, caption={Examine this new section}]{
-% \begin{minipage}{\linewidth}
+% \newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{
+% \begin{minipage}{\textwidth-4pt} #2 \end{minipage}}}
+% \end{verbatim}
+% This example renders like
+% \begin{verbatim}
+% \todoin{
 % Some text.
 % \begin{align}
 % \sin(\theta)^2 + \cos(\theta)^2 = 1
@@ -863,12 +896,10 @@
 % \begin{itemize}
 % \item	An item
 % \end{itemize}
-% \end{minipage}
 % }
 % \end{verbatim}
-% The example above renders like
-% \todo[inline, caption={Examine this new section}]{
-% \begin{minipage}{\linewidth}
+% 
+% \todoin{
 % Some text.
 % \begin{align}
 % \sin(\theta)^2 + \cos(\theta)^2 = 1
@@ -877,7 +908,6 @@
 % \begin{itemize}
 % \item	An item
 % \end{itemize}
-% \end{minipage}
 % }
 %
 %
@@ -981,6 +1011,21 @@
 % \begin{tikzpicture}
 % \draw node[shape=rectangle, fill=black!30, inner sep=1mm]{\includegraphics[width=\linewidth-2mm]{img/AlteredAppearenceOfListOfTodos.png}};
 % \end{tikzpicture}
+% 
+% 
+% \subsubsection{Tikz externalization issues}
+% 
+% Using the tikz externalization framework together with todonotes 
+% can lead to some problems.
+% One solution is to disable the externalization just before the \verb!todo! 
+% command is issued and then reactivate externalization afterwards.
+% The \verb!ruggedtodo! handles this deactivation and reactivation.
+% \begin{verbatim}
+% \usetikzlibrary{external}
+% \tikzexternalize
+% \newcommand{\ruggedtodo}[2][]{\tikzexternaldisable\todo[#1]{#2}\tikzexternalenable}
+% \end{verbatim}
+% 
 %
 % \iffalse
 % \StopEventually{\PrintChanges\PrintIndex}
@@ -992,7 +1037,7 @@
 %
 % Identifies the package and loads the packages dependences.
 %    \begin{macrocode}
-\ProvidesPackage{todonotes}[2011/10/22]
+\ProvidesPackage{todonotes}[2012/07/25]
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
@@ -1111,6 +1156,12 @@
 \DeclareOptionX{obeyDraft}{\@todonotes@obeyDrafttrue}
 \newif{\if@todonotes@isDraft}
 \DeclareOptionX{draft}{\@todonotes@isDrafttrue}
+\DeclareOptionX{draftcls}{\@todonotes@isDrafttrue}
+\DeclareOptionX{draftclsnofoot}{\@todonotes@isDrafttrue}
+\newif{\if@todonotes@obeyFinal}
+\DeclareOptionX{obeyFinal}{\@todonotes@obeyFinaltrue}
+\newif{\if@todonotes@isFinal}
+\DeclareOptionX{final}{\@todonotes@isFinaltrue}
 %    \end{macrocode}
 % Make it possible to disable the functionality
 % of the package. If this option is given, the
@@ -1198,9 +1249,12 @@
 %    \begin{macrocode}
 \ProcessOptionsX*
 %    \end{macrocode}
-% If the |obeyDraft| is given, check whether the |draft|
-% option is given and enable or disable the functionality of this
+% If the |obeyDraft| is given, check whether one of the |draft|, 
+% |draftcls| or |draftclsnofoot|
+% options are given and enable or disable the functionality of this
 % package.
+% If the |obeyFinal| option is given together with the |final| option
+% the todonotes are disabled.
 % The |disable| option will overrule the effect of |obeyDraft|.
 %    \begin{macrocode}
 \if@todonotes@disabled
@@ -1209,6 +1263,12 @@
 		\@todonotes@disabledtrue
 		\if@todonotes@isDraft
 			\@todonotes@disabledfalse
+		\fi
+	\fi
+	\if@todonotes@obeyFinal
+		\@todonotes@disabledfalse
+		\if@todonotes@isFinal
+			\@todonotes@disabledtrue
 		\fi
 	\fi
 \fi
@@ -1640,7 +1700,7 @@
 % \usepackage{lipsum}
 % \makeatletter
 % \def\myaddcontentsline#1#2#3{%
-%   \addtocontents{#1}{\protect\contentsline{#2}{#3}{see \thesection\ at p. \thepage}}}
+%   \addtocontents{#1}{\protect\contentsline{#2}{#3}{see \thesection\ at p. \thepage}{}}}
 % \renewcommand{\@todonotes@addElementToListOfTodos}{%
 %     \if@todonotes@colorinlistoftodos%
 %         \myaddcontentsline{tdo}{todo}{{%
