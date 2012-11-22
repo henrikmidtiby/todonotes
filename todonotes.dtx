@@ -1412,7 +1412,7 @@
 %    \begin{macrocode}
 \if@todonotes@disabled%
     \newcommand{\listoftodos}[1][]{}
-    \newcommand{\@todo}[2][]{\ignorespaces}
+    \newcommand{\@todo}[2][]{}
     \newcommand{\missingfigure}[2][]{}
 \else % \if@todonotes@disabled
 %    \end{macrocode}
@@ -1489,7 +1489,7 @@
     \else%
         \renewcommand{\@todonotes@caption}{#2}%
     \fi%
-    \@todonotes@addElementToListOfTodos
+    \@todonotes@addElementToListOfTodos%
 \fi%
 %    \end{macrocode}
 % Prepend the short caption given if it is requested
@@ -1504,12 +1504,11 @@
 % marginpar), below is the code for the inline placement.
 %    \begin{macrocode}
 \if@todonotes@inlinenote%
-    \@todonotes@drawInlineNote
+    \@todonotes@drawInlineNote%
 \else%
-    \@todonotes@drawMarginNoteWithLine
-\fi %\if@todonotes@inlinenote
-\fi %\if@todonotes@localdisable
-\ignorespaces%
+    \@todonotes@drawMarginNoteWithLine%
+\fi%\if@todonotes@inlinenote
+\fi%\if@todonotes@localdisable
 }%
 %    \end{macrocode}
 % \end{macro}
@@ -1574,7 +1573,7 @@
             \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
     \else%
         {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle,font=\@todonotes@sizecommand] {%
+            \draw node[inlinenotestyle,font=\@todonotes@sizecommand]{%
                 \if@todonotes@authorgiven%
                     {\noindent \@todonotes@sizecommand \@todonotes@author:\,\@todonotes@text}%
                 \else%
@@ -1591,7 +1590,7 @@
 \if@todonotes@dviStyle%
     \begin{tikzpicture}[remember picture]%
         \draw node[notestyle] {};%
-    \end{tikzpicture}\\ %
+    \end{tikzpicture}\\%
     \begin{minipage}{\@todonotes@textwidth}%
     \if@todonotes@authorgiven%
       \@todonotes@sizecommand \@todonotes@author \@todonotes@text%
@@ -1603,8 +1602,8 @@
         \draw node[notestyle] (inNote) {};%
     \end{tikzpicture}%
 \else%
-    \let\originalHbadness\hbadness
-    \hbadness 100000
+    \let\originalHbadness\hbadness%
+    \hbadness 100000%
     \begin{tikzpicture}[remember picture,baseline=(X.base)]%
         \node(X){\vphantom{X}};%
         \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
@@ -1620,7 +1619,7 @@
                 {\@todonotes@text};%
         \fi%
     \end{tikzpicture}%
-    \hbadness \originalHbadness
+    \hbadness \originalHbadness%
 \fi}%
 %    \end{macrocode}
 % \end{macro}
@@ -1646,14 +1645,14 @@
 			-| ([xshift=-0.2cm] inNote.west)%
 			-| (inNote.west);%
 		\end{tikzpicture}%
-	\fi
+	\fi%
 \fi}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{drawLineToLeftMargin}
 % Define helper function |drawLineToLeftMargin|.
 %    \begin{macrocode}
-\newcommand{\@todonotes@drawLineToLeftMargin}{
+\newcommand{\@todonotes@drawLineToLeftMargin}{%
 \if@todonotes@line%
 	\if@todonotes@fancyline%
 		\tikz[remember picture,overlay]{%
@@ -1673,7 +1672,7 @@
 			-| (inNote.east);%
 		\end{tikzpicture}%
 	\fi%
-\fi}
+\fi}%
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\missingfigure}
@@ -1716,7 +1715,7 @@
 % \begin{macro}{\todo}
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
-\newcommand{\todo}[2][]{\@todo[#1]{#2}}%
+\newcommand{\todo}[2][]{\@bsphack\@todo[#1]{#2}\@esphack\ignorespaces}%
 %    \end{macrocode}
 % \end{macro}
 % \appendix
