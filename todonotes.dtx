@@ -559,7 +559,14 @@
 % packages, you have to load them \emph{before} the todonotes
 % package, otherwise you will get an ''Option clash'' error when
 % latex works on the document.
-%
+% 
+% If both the menukeys and the xcolor (with the option \verb!table!) 
+% package should be loaded, the following order must be used.
+% \begin{verbatim}
+%\usepackage[table]{xcolor}
+%\usepackage{todonotes}
+%\usepackage{menukeys}
+% \end{verbatim}
 %
 % \subsubsection{Wrapping of long lines in list of todos}
 % When a document is compiled with latex (and not pdflatex) long
