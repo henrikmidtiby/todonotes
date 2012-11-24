@@ -532,6 +532,15 @@
 % \end{wrapfigure}
 % \end{verbatim}
 % 
+% \DescribeMacro{figheight}
+% The |figheight=length| option changes the height of the inserted 
+% missing figure.
+% The default height is 4cm and using values lower than this might 
+% cause the warning sign to pop out of the gray area.
+% \begin{verbatim}
+% \missingfigure[figheight=6cm]{Testing a long text string}
+% \end{verbatim}
+% \missingfigure[figheight=6cm]{Testing}
 %
 %
 % \subsection{Options for the listoftodos command}
@@ -1084,6 +1093,7 @@
 \newcommand{\@todonotes@textwidth}{\marginparwidth}
 \newcommand{\@todonotes@textsize}{\normalsize}
 \newcommand{\@todonotes@figwidth}{\columnwidth}
+\newcommand{\@todonotes@figheight}{4cm}
 %    \end{macrocode}
 %    \begin{macrocode}
 \AtBeginDocument{
@@ -1272,6 +1282,8 @@
 %    \begin{macrocode}
 \define@key{todonotes.sty}%
     {figwidth}{\renewcommand{\@todonotes@figwidth}{#1}}
+\define@key{todonotes.sty}%
+    {figheight}{\renewcommand{\@todonotes@figheight}{#1}}
 %    \end{macrocode}
 % Make the text width as an option.
 %    \begin{macrocode}
@@ -1384,11 +1396,14 @@
     \@todonotes@captiongiventrue}%
 \define@key{todonotes}{nocaption}[]{\@todonotes@captiongivenfalse}%
 %    \end{macrocode}
-% Change the current figure width.
+% Change the current figure width and height.
 %    \begin{macrocode}
 \newcommand{\@todonotes@currentfigwidth}{\@todonotes@figwidth}
 \define@key{todonotes}%
     {figwidth}{\renewcommand{\@todonotes@currentfigwidth}{#1}}
+\newcommand{\@todonotes@currentfigheight}{\@todonotes@figheight}
+\define@key{todonotes}%
+    {figheight}{\renewcommand{\@todonotes@currentfigheight}{#1}}
 %    \end{macrocode}
 % Preset values of the options
 %    \begin{macrocode}
@@ -1403,6 +1418,7 @@
     nocaption,%
     noauthor,%
     figwidth=\@todonotes@figwidth,%
+    figheight=\@todonotes@figheight,%
     line, list, size=\@todonotes@textsize}{}%
 %    \end{macrocode}
 % \subsection{The main code part}
@@ -1685,7 +1701,7 @@
 \noindent
 \begin{tikzpicture}
 \draw[fill=black!40, draw = white, line width=0pt] 
-    (-2, -2.5) rectangle +(\@todonotes@currentfigwidth, 4cm);
+    (-2, -2.5) rectangle +(\@todonotes@currentfigwidth, \@todonotes@currentfigheight);
 \draw (2, -0.3) node[right, text
     width=\@todonotes@currentfigwidth-4.5cm] {#2};
 \draw[red, fill=white, rounded corners = 5pt, line width=10pt] 
