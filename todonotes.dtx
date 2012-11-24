@@ -28,7 +28,7 @@
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
-\usepackage[colorlinks, linkcolor=black]{hyperref}
+\usepackage[colorlinks, linkcolor=black, urlcolor=blue]{hyperref}
 \usepackage[colorinlistoftodos, shadow]{todonotes}[2012/07/25]
 \usepackage{amsmath}
 \usepackage{setspace}
@@ -211,9 +211,20 @@
 % 
 % Some alternatives for the todonotes package are:
 % \begin{itemize}
-% \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/easy-todo}{easy-todo}
-% \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/fixme}{fixme}
+% \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/easy-todo}{easy-todo}\\
+% Depends on |color|, |tocloft| and |ifthen|, small feature set.
+% \item \href{http://www.ctan.org/pkg/fixmetodonotes}{fixmetodonotes}\\
+% Depends on |graphicx|, |color|, |transparent|, |watermark|,|fix-cm|, |ulem| and |tocloft|, small feature set.
+% \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/todo}{todo}\\
+% Depends on |amssymb|, medium feature set.
+% \item \href{http://www.ctan.org/tex-archive/macros/latex/contrib/fixme}{fixme}\\
+% Large package with a lot of features.
 % \end{itemize}
+% The main reason for considering other packages is that the todonotes 
+% package is quire large and relies heavily on tikz.
+% This can slow down compilation of large documents significantly.
+% The mentioned alternatives have a different feature set and does not 
+% rely on tikz, which makes them require less ressoureces.
 %
 %
 % \subsection{Usage}
