@@ -1,0 +1,3 @@
+merge of feature branch with master
+git checkout master
+git merge --no-ff FeatureBranch
