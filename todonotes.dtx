@@ -46,7 +46,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{559}
+% \CheckSum{556}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -564,7 +564,14 @@
 % packages, you have to load them \emph{before} the todonotes
 % package, otherwise you will get an ''Option clash'' error when
 % latex works on the document.
-%
+% 
+% If both the menukeys and the xcolor (with the option \verb!table!) 
+% package should be loaded, the following order must be used.
+% \begin{verbatim}
+%\usepackage[table]{xcolor}
+%\usepackage{todonotes}
+%\usepackage{menukeys}
+% \end{verbatim}
 %
 % \subsubsection{Wrapping of long lines in list of todos}
 % When a document is compiled with latex (and not pdflatex) long
@@ -584,7 +591,21 @@
 % \makeatother
 % \listoftodos\relax 
 % \end{verbatim}
-% 
+%
+% NOT TESTED
+% NOT TESTED
+% NOT TESTED
+%
+% Dominique suggests the following workaround.
+% \begin{verbatim}
+% \makeatletter
+% \providecommand\@dotsep{5}
+% \def\listtodoname{List of Todos}
+% \def\listoftodos{\@starttoc{tdo}\listtodoname}
+% \makeatother
+% \end{verbatim}
+%
+%
 %
 % \subsubsection{Unknown option ''remember picture''}
 % If latex throws the error
@@ -612,6 +633,15 @@
 % |\reversemarginpar| command.
 % When this command is issued the following marginpars (which todonotes 
 % relies on) is inserted in the other margin.
+%
+% \subsubsection{Reduce number of warnings}
+% If the width of the inserted todonotes is forced to be larger than the 
+% available space in the margin, a lot of warnings are issued.
+% This can be reduced with the following code.
+% \begin{verbatim}
+% \usepackage[textwidth=3.7cm]{todonotes}
+% \setlength{\marginparwidth}{3.7cm}
+% \end{verbatim}
 %
 %
 % \subsubsection{Todonotes in footnotes}
@@ -880,10 +910,10 @@
 %
 % To streamline use the following command was suggested by Stefan Pinnow.
 % \newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{
-% \begin{minipage}{\textwidth-4pt} #2 \end{minipage}}}
+% \begin{minipage}{\textwidth-4pt}#2\end{minipage}}}
 % \begin{verbatim}
 % \newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{
-% \begin{minipage}{\textwidth-4pt} #2 \end{minipage}}}
+% \begin{minipage}{\textwidth-4pt}#2\end{minipage}}}
 % \end{verbatim}
 % This example renders like
 % \begin{verbatim}
@@ -1390,7 +1420,7 @@
 % appearance of the list of todos.
 %    \begin{macrocode}
 \newcommand{\listoftodos}[1][\@todonotes@todolistname]
-    {\ifdefined\chapter\chapter*{#1}\else\section*{#1}\fi \@starttoc{tdo}}
+    {\@ifundefined{chapter}{\section*{#1}}{\chapter*{#1}} \@starttoc{tdo}}
 \newcommand{\l@todo}
     {\@dottedtocline{1}{0em}{2.3em}}
 %    \end{macrocode}
