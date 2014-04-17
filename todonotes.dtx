@@ -281,7 +281,7 @@
 % The option |obeyFinal| does something similar, except that the 
 % todonotes package is only disabled if the |final| option given.
 %
-% \DescribeMacro{danish, german, ngerman, french}
+% \DescribeMacro{danish, german, ngerman, french, swedish}
 % \DescribeMacro{spanish, catalan, italian}
 % \DescribeMacro{portuguese, dutch}
 % Use translations of the text strings 
@@ -296,8 +296,9 @@
 % german,
 % ngerman,
 % italian,
-% portuguese and 
-% spanish.
+% portuguese,
+% spanish and
+% swedish.
 % 
 % \DescribeMacro{colorinlistoftodos}
 % Adds a small colored square in front of all items in the Todo
@@ -1194,6 +1195,12 @@
     \@todonotes@SetMissingFigureText{Figura}%
     \@todonotes@SetMissingFigureUp{Figura}%
     \@todonotes@SetMissingFigureDown{pendiente}%
+}
+\DeclareOptionX{swedish}{%
+    \@todonotes@SetTodoListName{Att g\"{o}ra-lista}%
+    \@todonotes@SetMissingFigureText{Figur}%
+    \@todonotes@SetMissingFigureUp{Figur}%
+    \@todonotes@SetMissingFigureDown{saknas}%
 }
 %    \end{macrocode}
 % Create a counter, for storing the number of inserted todos.
