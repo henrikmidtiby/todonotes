@@ -32,6 +32,7 @@
 \usepackage[colorinlistoftodos, shadow]{todonotes}[2012/07/25]
 \usepackage{amsmath}
 \usepackage{setspace}
+\usepackage{soul}
 \setcounter{tocdepth}{2}
 \EnableCrossrefs         
 \CodelineIndex
@@ -1076,6 +1077,21 @@
 % \tikzexternalize
 % \newcommand{\ruggedtodo}[2][]{\tikzexternaldisable\todo[#1]{#2}\tikzexternalenable}
 % \end{verbatim}
+% 
+% 
+% \subsubsection{Highligt text to fix}
+% Tobias Winchen provides the following example on how to highlight
+% text related to the inserted todonote.
+% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}} 
+% Example \hlfix{wrong text}{fix text}~continues here. 
+% Notice that the code relies on the \verb!soul! package.
+% \begin{verbatim}
+% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}} 
+% Example \hlfix{wrong text}{fix text}~continues here. 
+% \end{verbatim}
+% 
+% 
+% 
 % 
 %
 % \iffalse
