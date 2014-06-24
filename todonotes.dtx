@@ -47,7 +47,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{570}
+% \CheckSum{571}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1615,7 +1615,8 @@
 \newcommand{\@todonotes@addElementToListOfTodos}{%
     \if@todonotes@colorinlistoftodos%
         \addcontentsline{tdo}{todo}{%
-            \colorbox{\@todonotes@currentbackgroundcolor}%
+            \fcolorbox{\@todonotes@currentbordercolor}%
+                {\@todonotes@currentbackgroundcolor}%
                 {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
             \ \@todonotes@caption}%
     \else%
