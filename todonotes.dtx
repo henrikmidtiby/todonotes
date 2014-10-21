@@ -300,13 +300,14 @@
 %
 % \DescribeMacro{danish, german, ngerman, french, swedish}
 % \DescribeMacro{spanish, catalan, italian}
-% \DescribeMacro{portuguese, dutch}
+% \DescribeMacro{portuguese, dutch, croatian}
 % Use translations of the text strings 
 % ''List of todos'' and ''Missing figure''.
 % The default is to use none of these options, which results in
 % english text strings.
 % Currently the following languages are supported: 
 % catalan,
+% croatian,
 % danish,
 % dutch,
 % french,
@@ -1187,6 +1188,12 @@
     \@todonotes@SetMissingFigureText{Figura}%
     \@todonotes@SetMissingFigureUp{Figura}%
     \@todonotes@SetMissingFigureDown{pendent}%
+}
+\DeclareOptionX{croatian}{%
+   \@todonotes@SetTodoListName{Popis obveza}%
+   \@todonotes@SetMissingFigureText{Slika}%
+   \@todonotes@SetMissingFigureUp{Nedostaje}%
+   \@todonotes@SetMissingFigureDown{slika}%
 }
 \DeclareOptionX{danish}{%
     \@todonotes@SetTodoListName{G\o{}rem\aa{}lsliste}%
