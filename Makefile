@@ -38,18 +38,18 @@ todonotes.pdf: \
 	cd examples && pdflatex alterAppearenceOfListOfTodos.tex
 	cd examples && pdflatex alterAppearenceOfListOfTodos.tex
 	rm -rf todonotes
-	mkdir -p todonotes/latex
-	mkdir -p todonotes/doc/examples
-	cp todonotes.ins todonotes/latex/todonotes.ins
-	cp todonotes.dtx todonotes/latex/todonotes.dtx
-	cp todonotes.pdf todonotes/doc/todonotes.pdf
-	cp examples/externalize.tex todonotes/doc/examples/
-	cp examples/externalize.pdf todonotes/doc/examples/
-	cp examples/saveColorByUsingLayers.tex todonotes/doc/examples/
-	cp examples/saveColorByUsingLayers.pdf todonotes/doc/examples/
-	cp examples/alterAppearenceOfListOfTodos.tex todonotes/doc/examples/
-	cp examples/alterAppearenceOfListOfTodos.pdf todonotes/doc/examples/
+	mkdir -p todonotes/examples
+	cp todonotes.ins todonotes/todonotes.ins
+	cp todonotes.dtx todonotes/todonotes.dtx
+	cp todonotes.pdf todonotes/todonotes.pdf
+	cp examples/externalize.tex todonotes/examples/
+	cp examples/externalize.pdf todonotes/examples/
+	cp examples/saveColorByUsingLayers.tex todonotes/examples/
+	cp examples/saveColorByUsingLayers.pdf todonotes/examples/
+	cp examples/alterAppearenceOfListOfTodos.tex todonotes/examples/
+	cp examples/alterAppearenceOfListOfTodos.pdf todonotes/examples/
 	cp README todonotes/README
+	rm -f todonotes.zip
 	zip -r todonotes.zip todonotes
 
 todonotes.sty: \
