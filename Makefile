@@ -24,20 +24,31 @@ default: \
 
 todonotes.pdf: \
 	todonotes.sty \
-	todonotes.dtx
+	todonotes.dtx \
+	examples/*.tex
 	pdflatex todonotes.dtx
 	makeindex -s gglo.ist -o todonotes.gls todonotes.glo
 	makeindex -s gind.ist -o todonotes.ind todonotes.idx
 	pdflatex todonotes.dtx
-	#pdflatex todonotesexample.tex
-	#pdflatex todonotesexample.tex
+	cd examples && pdflatex externalize.tex
+	cd examples && pdflatex externalize.tex
+	cd examples && pdflatex saveColorByUsingLayers.tex
+	cd examples && pdflatex saveColorByUsingLayers.tex
+	cd examples && pdflatex saveColorByUsingLayers.tex
+	cd examples && pdflatex alterAppearenceOfListOfTodos.tex
+	cd examples && pdflatex alterAppearenceOfListOfTodos.tex
 	rm -rf todonotes
-	mkdir todonotes
-	cp todonotes.ins todonotes/todonotes.ins
-	cp todonotes.dtx todonotes/todonotes.dtx
-	cp todonotes.pdf todonotes/todonotes.pdf
-	#cp todonotesexample.tex todonotes/todonotesexample.tex
-	#cp todonotesexample.pdf todonotes/todonotesexample.pdf
+	mkdir -p todonotes/latex
+	mkdir -p todonotes/doc/examples
+	cp todonotes.ins todonotes/latex/todonotes.ins
+	cp todonotes.dtx todonotes/latex/todonotes.dtx
+	cp todonotes.pdf todonotes/doc/todonotes.pdf
+	cp examples/externalize.tex todonotes/doc/examples/
+	cp examples/externalize.pdf todonotes/doc/examples/
+	cp examples/saveColorByUsingLayers.tex todonotes/doc/examples/
+	cp examples/saveColorByUsingLayers.pdf todonotes/doc/examples/
+	cp examples/alterAppearenceOfListOfTodos.tex todonotes/doc/examples/
+	cp examples/alterAppearenceOfListOfTodos.pdf todonotes/doc/examples/
 	cp README todonotes/README
 	zip -r todonotes.zip todonotes
 
