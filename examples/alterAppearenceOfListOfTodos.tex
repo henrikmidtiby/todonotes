@@ -1,0 +1,38 @@
+\documentclass{book}
+
+\usepackage{todonotes}
+\usepackage{lipsum}
+\makeatletter
+\def\myaddcontentsline#1#2#3{%
+  \addtocontents{#1}{\protect\contentsline{#2}{#3}{see \thesection\ at p. \thepage}{}}}
+\renewcommand{\@todonotes@addElementToListOfTodos}{%
+    \if@todonotes@colorinlistoftodos%
+        \myaddcontentsline{tdo}{todo}{{%
+            \colorbox{\@todonotes@currentbackgroundcolor}%
+                {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
+            \ \@todonotes@caption}}%
+    \else%
+        \myaddcontentsline{tdo}{todo}{{\@todonotes@caption}}%
+    \fi}%
+\newcommand*\mylistoftodos{%
+  \begingroup
+       \setbox\@tempboxa\hbox{see 9.9 at p. 99}%
+       \renewcommand*\@tocrmarg{\the\wd\@tempboxa}%
+       \renewcommand*\@pnumwidth{\the\wd\@tempboxa}%
+       \listoftodos%
+  \endgroup
+}
+\makeatother
+
+\begin{document}
+\chapter{My first chapter}
+\section{A first section}
+\lipsum
+\todo{This is a note}
+\section{Another section}
+\lipsum
+\todo{This is another note}
+
+\tableofcontents
+\mylistoftodos
+\end{document}
