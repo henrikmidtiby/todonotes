@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage{todonotes}
+\usepackage{ocg-p}
+\newcommand{\TODO}[1]{
+\newsavebox\todoboxa
+\savebox\todoboxa{\begin{ocg}[printocg=never]{ToDo screen}{todo4screen}{1}
+\todo[inline]{#1}
+\end{ocg}}
+\newsavebox\todoboxb
+\savebox\todoboxb{\begin{ocg}[printocg=always]{ToDo print}{todo4print}{0}
+\todo[inline, color=white]{#1}
+\end{ocg}}
+\noindent\usebox\todoboxb\llap{\usebox\todoboxa}
+\global\let\todoboxa\relax
+\global\let\todoboxb\relax
+}
+
+\begin{document}
+
+\section{Hello world!}
+
+The todo inserted below is shown in color on the screen, but in black and white when sent to the printer.
+
+Example by Robert Rehner.
+
+\TODO{Example todo}
+\end{document}

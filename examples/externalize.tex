@@ -1,0 +1,43 @@
+% comment out to define
+%\def\CompileTikZFigures{}
+
+\documentclass{article}
+\usepackage{xspace}
+\usepackage{tikz}
+\ifx\CompileTikZFigures\undefined
+	\usetikzlibrary{external}
+	\tikzexternalize[prefix=pics/tikz/]
+\fi
+
+\usepackage{todonotes}
+
+\ifx\CompileTikZFigures\undefined
+	\makeatletter
+	\renewcommand{\todo}[2][]{%
+		\tikzexternaldisable%
+		\@bsphack\@todo[#1]{#2}\@esphack\ignorespaces%
+		\tikzexternalenable%
+		\xspace%
+		}
+	\makeatother
+\else
+	\makeatletter
+	\renewcommand{\todo}[2][]{%
+		\@bsphack\@todo[#1]{#2}\@esphack\ignorespaces\xspace%
+	}
+	\makeatother
+\fi
+
+\begin{document}
+Example by Marek Rjelka.
+
+\verb+\CompileTikZFigures+ is
+\ifx\CompileTikZFigures\undefined%
+	un%
+\fi%
+defined.
+
+\bigskip
+Here goes some\todo{a comment} text.
+
+\end{document}
