@@ -47,7 +47,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{596}
+% \CheckSum{623}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -184,6 +184,8 @@
 %             Removed some underfull box warnings, solution by Ernst Blecha.} 
 % \changes{1.0.4}{2015/07/09}{Restructured documentation and placed some examples in the 
 %             doc/examples subdirectory.}
+% \changes{1.0.5}{2015/11/11}{Added a new customization option for increasing the paper size, patch
+%             by Santiago Saavedra.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -352,6 +354,12 @@
 % |length|. The width of inline todonotes will allways be the same 
 % as the current line width.
 %
+% \DescribeMacro{extramargin}
+% |extramargin=value| sets an an additional margin on the paper, so
+% that todonotes changes the marginpar without affecting the reflow
+% of the whole document. The default value is
+% |extramargin=0cm|.
+%
 % \DescribeMacro{textsize}
 % |textsize=value| sets the default text size of the inserted
 % todonotes to the given value.
@@ -382,6 +390,15 @@
 % The |figwidth=length| option sets the default width of the figure
 % inserted by the |\missingfigure| command. 
 % The default value is |\linewidth|.
+%
+% \DescribeMacro{extramargin}
+% The |extramargin=length| option sets additional margin to be used
+% on the sides of the paper so that notes have more space.
+%
+% \DescribeMacro{twocolumn}
+% The |twocolumn| option aids this package to know that both columns
+% will be used for notes, so that the |extramargin| before set shall
+% be added to both sides of the paper.
 %
 % 
 %
@@ -1158,6 +1175,7 @@
 \newcommand{\@todonotes@textwidth}{\marginparwidth}
 \newcommand{\@todonotes@textsize}{\normalsize}
 \newcommand{\@todonotes@figwidth}{\linewidth}
+\newcommand{\@todonotes@extramargin}{0cm}
 \newcommand{\@todonotes@figheight}{4cm}
 \newcommand{\@todonotes@figcolor}{black!40}
 %    \end{macrocode}
@@ -1341,6 +1359,17 @@
 \define@key{todonotes.sty}%
     {textwidth}{\renewcommand{\@todonotes@textwidth}{#1}}
 %    \end{macrocode}
+% Enlarge the paper size by both sides when the text is set at two columnds.
+%    \begin{macrocode}
+\newif{\if@todonotes@twocolumn}
+\@todonotes@twocolumnfalse
+\DeclareOptionX{twocolumn}{\@todonotes@twocolumntrue}
+%    \end{macrocode}
+% Allow to enlarge the paper size by an extra margin as an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {extramargin}{\renewcommand{\@todonotes@extramargin}{#1}}
+%    \end{macrocode}
 % Make the text size as an option. It requires some magic with the 
 % |\csname| and |\endcsname| macros, as commands cannot be taken as
 % options for a package.
@@ -1394,6 +1423,16 @@
 		\fi
 	\fi
 \fi
+%    \end{macrocode}
+% If the paper is to be enlarged to make space for the notes, do so
+% now. Also take into account whether we are using two columns or not.
+%    \begin{macrocode}
+% === automatically change lengths
+\addtolength{\paperwidth}{\@todonotes@extramargin}
+\if@todonotes@twocolumn\addtolength{\paperwidth}{\@todonotes@extramargin}\fi
+\addtolength{\evensidemargin}{\@todonotes@extramargin}
+\addtolength{\oddsidemargin}{\@todonotes@extramargin}
+\addtolength{\marginparwidth}{\@todonotes@extramargin}
 %    \end{macrocode}
 
 % \subsection{Options for the todo command}
