@@ -1126,11 +1126,23 @@
 % \subsubsection{Highligt text to fix}
 % Tobias Winchen provides the following example on how to highlight
 % text related to the inserted todonote.
-% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}} 
+% \makeatletter
+% \if@todonotes@disabled
+% \newcommand{\hlfix}[2]{#1}
+% \else
+% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}}
+% \fi
+% \makeatother
 % Example \hlfix{wrong text}{fix text}~continues here. 
 % Notice that the code relies on the \verb!soul! package.
 % \begin{verbatim}
-% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}} 
+% \makeatletter
+% \if@todonotes@disabled
+% \newcommand{\hlfix}[2]{#1}
+% \else
+% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}}
+% \fi
+% \makeatother
 % Example \hlfix{wrong text}{fix text}~continues here. 
 % \end{verbatim}
 % 
