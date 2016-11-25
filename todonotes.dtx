@@ -47,7 +47,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{596}
+% \CheckSum{593}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1727,8 +1727,6 @@
     \hbadness 100000%
     \begin{tikzpicture}[remember picture,baseline=(X.base)]%
         \node(X){\vphantom{X}};%
-        \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
-            {\@todonotes@text};%
         \if@todonotes@authorgiven%
             \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
                 {\@todonotes@sizecommand\@todonotes@author};%
