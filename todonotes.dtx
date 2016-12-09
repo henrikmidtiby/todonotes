@@ -1804,13 +1804,13 @@
 \noindent
 \begin{tikzpicture}
 \draw[fill=\@todonotes@currentfigcolor, draw = black!40, line width=2pt]
-    (-2, -2.5) rectangle +(\@todonotes@currentfigwidth, \@todonotes@currentfigheight);
-\draw (2, -0.3) node[right, text
-    width=\@todonotes@currentfigwidth-4.5cm] {#2};
+    (-2, -1.5) rectangle +(\@todonotes@currentfigwidth, \@todonotes@currentfigheight);
+\draw (2, 0,7) node[right, text
+    width=\@todonotes@currentfigwidth-4.5cm, font=\@todonotes@sizecommand] {#2};
 \draw[red, fill=white, rounded corners = 5pt, line width=10pt] 
-    (30:2cm) -- (150:2cm) -- (270:2cm) -- cycle;
-\draw (0, 0.3) node {\@todonotes@MissingFigureUp};
-\draw (0, -0.3) node {\@todonotes@MissingFigureDown};
+    (90:2cm) -- (210:2cm) -- (330:2cm) -- cycle;
+\draw[font=\@todonotes@sizecommand] (0, 0) node {\@todonotes@MissingFigureUp};
+\draw[font=\@todonotes@sizecommand] (0, -0.4) node {\@todonotes@MissingFigureDown};
 \end{tikzpicture}\hfill
 }% Ending \missingfigure command
 \fi% Ending \@todonotes@ifdisabled
