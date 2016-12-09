@@ -1726,9 +1726,7 @@
     \let\originalHbadness\hbadness%
     \hbadness 100000%
     \begin{tikzpicture}[remember picture,baseline=(X.base)]%
-        \node(X){\vphantom{X}};%
-        \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
-            {\@todonotes@text};%
+        \node(X){\vphantom{\@todonotes@sizecommand X}};%
         \if@todonotes@authorgiven%
             \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
                 {\@todonotes@sizecommand\@todonotes@author};%
