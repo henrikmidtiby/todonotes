@@ -587,6 +587,7 @@
 % \end{verbatim}
 % \missingfigure[figcolor=white]{Testing figcolor}
 %
+%
 % \subsection{Options for the listoftodos command}
 % The |\listoftodos| command takes one optional argument, that
 % defines the name of the inserted list of todos.
@@ -1806,7 +1807,7 @@
 \draw[fill=\@todonotes@currentfigcolor, draw = black!40, line width=2pt]
     (-2, -2.5) rectangle +(\@todonotes@currentfigwidth, \@todonotes@currentfigheight);
 \draw (2, -0.3) node[right, text
-    width=\@todonotes@currentfigwidth-4.5cm] {#2};
+    width=\@todonotes@currentfigwidth-4.5cm, font=\@todonotes@sizecommand] {#2};
 \draw[red, fill=white, rounded corners = 5pt, line width=10pt] 
     (30:2cm) -- (150:2cm) -- (270:2cm) -- cycle;
 \draw (0, 0.3) node {\@todonotes@MissingFigureUp};
