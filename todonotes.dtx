@@ -184,7 +184,8 @@
 %             Removed some underfull box warnings, solution by Ernst Blecha.} 
 % \changes{1.0.4}{2015/07/09}{Restructured documentation and placed some examples in the 
 %             doc/examples subdirectory.}
-% \changes{1.0.5}{2015/11/11}{Added a new customization option for increasing the paper size, patch
+% \changes{1.0.5}{2016/11/02}{Example of how to change the space eating behaviour added by Anselm Wagner. Reduced the width of missingfigure to avoid bad box warnings.}
+% \changes{1.0.6}{2017/05/11}{Added a new customization option for increasing the paper size, patch
 %             by Santiago Saavedra.}
 % \GetFileInfo{todonotes.dtx}   
 %
@@ -306,7 +307,7 @@
 % The option |obeyFinal| does something similar, except that the 
 % todonotes package is only disabled if the |final| option given.
 %
-% \DescribeMacro{danish, german, ngerman, french, swedish}
+% \DescribeMacro{danish, german, ngerman, english, french, swedish}
 % \DescribeMacro{spanish, catalan, italian}
 % \DescribeMacro{portuguese, dutch, croatian}
 % Use translations of the text strings 
@@ -318,6 +319,7 @@
 % croatian,
 % danish,
 % dutch,
+% english, 
 % french,
 % german,
 % ngerman,
@@ -644,10 +646,16 @@
 % \subsubsection{Spacing around inserted notes}
 % Inserted todo commands will eat the white space after the command.
 % \begin{verbatim}
-%Testing\todo{Does this eat the space?} testing
-% \end{verbatim}
-% 
-% Testing\todo{Does this eat the space?}testing
+%Testing\todo{Does this eat the space?} testing.\end{verbatim}
+% \noindent
+% Testing\todo{Does this eat the space?} testing.
+%
+% This can be prevented by adding curly parenthesis after the 
+% todo command, like shown below.
+% \begin{verbatim}
+%Testing\todo{Does this eat the space?}{} testing.\end{verbatim}
+% \noindent
+% Testing\todo{Does this eat the space?}{} testing.
 %
 % \subsubsection{Wrapping of long lines in list of todos}
 % When a document is compiled with latex (and not pdflatex) long
@@ -1136,11 +1144,23 @@
 % \subsubsection{Highligt text to fix}
 % Tobias Winchen provides the following example on how to highlight
 % text related to the inserted todonote.
-% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}} 
+% \makeatletter
+% \if@todonotes@disabled
+% \newcommand{\hlfix}[2]{#1}
+% \else
+% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}}
+% \fi
+% \makeatother
 % Example \hlfix{wrong text}{fix text}~continues here. 
 % Notice that the code relies on the \verb!soul! package.
 % \begin{verbatim}
-% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}} 
+% \makeatletter
+% \if@todonotes@disabled
+% \newcommand{\hlfix}[2]{#1}
+% \else
+% \newcommand{\hlfix}[2]{\texthl{#1}\todo{#2}}
+% \fi
+% \makeatother
 % Example \hlfix{wrong text}{fix text}~continues here. 
 % \end{verbatim}
 % 
@@ -1519,10 +1539,10 @@
 %    \begin{macrocode}
 \newcommand{\@todonotes@currentfigwidth}{\@todonotes@figwidth}
 \define@key{todonotes}%
-    {figwidth}{\renewcommand{\@todonotes@currentfigwidth}{#1}}
+    {figwidth}{\renewcommand{\@todonotes@currentfigwidth}{#1-2pt}}
 \newcommand{\@todonotes@currentfigheight}{\@todonotes@figheight}
 \define@key{todonotes}%
-    {figheight}{\renewcommand{\@todonotes@currentfigheight}{#1}}
+    {figheight}{\renewcommand{\@todonotes@currentfigheight}{#1-2pt}}
 \newcommand{\@todonotes@currentfigcolor}{\@todonotes@figcolor}
 \define@key{todonotes}%
     {figcolor}{\renewcommand{\@todonotes@currentfigcolor}{#1}}
@@ -1745,9 +1765,7 @@
     \let\originalHbadness\hbadness%
     \hbadness 100000%
     \begin{tikzpicture}[remember picture,baseline=(X.base)]%
-        \node(X){\vphantom{X}};%
-        \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
-            {\@todonotes@text};%
+        \node(X){\vphantom{\@todonotes@sizecommand X}};%
         \if@todonotes@authorgiven%
             \draw node[notestyle,font=\@todonotes@sizecommand,anchor=north] (inNote) at (X.north)%
                 {\@todonotes@sizecommand\@todonotes@author};%
