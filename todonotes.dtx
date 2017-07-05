@@ -1756,7 +1756,7 @@
 			\foreach \s in {line,head}{%
 				\draw[both,\s]%
 					(inNote.north west).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
-			};%
+			}%
 		}%
 	\else%
 		\begin{tikzpicture}[remember picture, overlay]%
@@ -1782,7 +1782,7 @@
 			\foreach \s in {line,head}{%
 				\draw[both,\s]%
 					(inNote.north east).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
-			};%
+			}%
 		}%
 	\else%
 		\begin{tikzpicture}[remember picture, overlay]%
