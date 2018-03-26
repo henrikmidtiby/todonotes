@@ -1509,6 +1509,12 @@
 \define@key{todonotes}%
     {figcolor}{\renewcommand{\@todonotes@currentfigcolor}{#1}}
 %    \end{macrocode}
+% Change the width of an inline note.
+%    \begin{macrocode}
+\newcommand{\@todonotes@inlinewidth}{\linewidth}%
+\define@key{todonotes}%
+    {inlinewidth}{\renewcommand{\@todonotes@inlinewidth}{#1}}
+%    \end{macrocode}
 % Preset values of the options
 %    \begin{macrocode}
 \presetkeys%
@@ -1524,7 +1530,8 @@
     figwidth=\@todonotes@figwidth,%
     figheight=\@todonotes@figheight,%
     figcolor=\@todonotes@figcolor,%
-    line, list, size=\@todonotes@textsize}{}%
+    line, list, size=\@todonotes@textsize,
+    inlinewidth=\linewidth}{}%
 %    \end{macrocode}
 % \subsection{The main code part}
 % Here is the actual macros defined.
@@ -1572,7 +1579,7 @@
     draw=\@todonotes@currentlinecolor]
 \tikzstyle{inlinenotestyle} = [
     notestyle, 
-    text width=\linewidth - 1.6 ex - 1 pt]
+    text width=\@todonotes@inlinewidth - 1.6 ex - 1 pt]
 %    \end{macrocode}
 %
 % \begin{macro}{\@todo}
