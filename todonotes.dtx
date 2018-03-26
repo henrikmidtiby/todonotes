@@ -1514,6 +1514,13 @@
 \define@key{todonotes}%
     {inlinewidth}{\renewcommand{\@todonotes@inlinewidth}{#1}}
 %    \end{macrocode}
+% Change if inline note is written to a separate line or not.
+%    \begin{macrocode}
+\newif\if@todonotes@inlinepar
+\@todonotes@inlinepartrue
+\define@key{todonotes}{inlinepar}[]{\@todonotes@inlinepartrue}%
+\define@key{todonotes}{noinlinepar}[]{\@todonotes@inlineparfalse}%
+%    \end{macrocode}
 % Preset values of the options
 %    \begin{macrocode}
 \presetkeys%
@@ -1530,7 +1537,8 @@
     figheight=\@todonotes@figheight,%
     figcolor=\@todonotes@figcolor,%
     line, list, size=\@todonotes@textsize,
-    inlinewidth=\linewidth}{}%
+    inlinewidth=\linewidth,
+    inlinepar}{}%
 %    \end{macrocode}
 % \subsection{The main code part}
 % Here is the actual macros defined.
@@ -1690,24 +1698,32 @@
 %    \begin{macrocode}
 \newcommand{\@todonotes@drawInlineNote}{%
     \if@todonotes@dviStyle%
-        {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+        {\if@todonotes@inlinepar\par\noindent\fi%
+         \begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};
+         \end{tikzpicture}%
+         \if@todonotes@inlinepar\par\fi}%
             \if@todonotes@authorgiven%
                 {\noindent \@todonotes@sizecommand \@todonotes@author:\,\@todonotes@text}%
             \else%
                 {\noindent \@todonotes@sizecommand \@todonotes@text}%
             \fi
-        {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+        {\if@todonotes@inlinepar\par\noindent\fi%
+         \begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};
+         \end{tikzpicture}%
+         \if@todonotes@inlinepar\par\fi}%
     \else%
-        {\par\noindent\begin{tikzpicture}[remember picture]%
+        {\if@todonotes@inlinepar\par\noindent\fi%
+         \begin{tikzpicture}[remember picture]%
             \draw node[inlinenotestyle,font=\@todonotes@sizecommand]{%
                 \if@todonotes@authorgiven%
                     {\noindent \@todonotes@sizecommand \@todonotes@author:\,\@todonotes@text}%
                 \else%
                     {\noindent \@todonotes@sizecommand \@todonotes@text}%
                 \fi};%
-            \end{tikzpicture}\par}%
+         \end{tikzpicture}%
+         \if@todonotes@inlinepar\par\fi}%
     \fi}%
 %    \end{macrocode}
 % \end{macro}
