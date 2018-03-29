@@ -1857,7 +1857,11 @@
 % \begin{macro}{\todo}
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
-\newcommand{\todo}[2][]{\@bsphack\@todo[#1]{#2}\@esphack\ignorespaces}%
+\newcommand{\todo}[2][]{\if@todonotes@inlinepar%
+  \@bsphack\@todo[#1]{#2}\@esphack\ignorespaces%
+  \else%
+  \@todo[#1]{#2}%
+  \fi}%
 %    \end{macrocode}
 % \end{macro}
 % \appendix
