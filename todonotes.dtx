@@ -424,8 +424,8 @@
 % \newcommand{\insertref}[1]{\todo[color=green!40]{#1}}
 % \newcommand{\explainindetail}[1]{\todo[color=red!40]{#1}}
 % \end{verbatim}
-% An example that uses all of the color options is given below
-% \todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
+% An example that uses all of the color options is given
+% below\todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
 % bordercolor=red]{Anything but default colors}.
 % \begin{verbatim}
 % \todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
@@ -1835,7 +1835,7 @@
 % \begin{macro}{\todo}
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
-\newcommand{\todo}[2][]{\@bsphack\@todo[#1]{#2}\@esphack\ignorespaces}%
+\newcommand{\todo}[2][]{\@bsphack{\@todo[#1]{#2}}\@esphack}%
 %    \end{macrocode}
 % \end{macro}
 % \appendix
