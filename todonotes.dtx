@@ -1508,6 +1508,19 @@
 \define@key{todonotes}%
     {figcolor}{\renewcommand{\@todonotes@currentfigcolor}{#1}}
 %    \end{macrocode}
+% Change the width of an inline note.
+%    \begin{macrocode}
+\newcommand{\@todonotes@inlinewidth}{\linewidth}%
+\define@key{todonotes}%
+    {inlinewidth}{\renewcommand{\@todonotes@inlinewidth}{#1}}
+%    \end{macrocode}
+% Change if inline note is written to a separate line or not.
+%    \begin{macrocode}
+\newif\if@todonotes@inlinepar
+\@todonotes@inlinepartrue
+\define@key{todonotes}{inlinepar}[]{\@todonotes@inlinepartrue}%
+\define@key{todonotes}{noinlinepar}[]{\@todonotes@inlineparfalse}%
+%    \end{macrocode}
 % Preset values of the options
 %    \begin{macrocode}
 \presetkeys%
@@ -1523,7 +1536,9 @@
     figwidth=\@todonotes@figwidth,%
     figheight=\@todonotes@figheight,%
     figcolor=\@todonotes@figcolor,%
-    line, list, size=\@todonotes@textsize}{}%
+    line, list, size=\@todonotes@textsize,
+    inlinewidth=\linewidth,
+    inlinepar}{}%
 %    \end{macrocode}
 % \subsection{The main code part}
 % Here is the actual macros defined.
@@ -1571,7 +1586,7 @@
     draw=\@todonotes@currentlinecolor]
 \tikzstyle{inlinenotestyle} = [
     notestyle, 
-    text width=\linewidth - 1.6 ex - 1 pt]
+    text width=\@todonotes@inlinewidth - 1.6 ex - 1 pt]
 %    \end{macrocode}
 %
 % \begin{macro}{\@todo}
@@ -1683,24 +1698,32 @@
 %    \begin{macrocode}
 \newcommand{\@todonotes@drawInlineNote}{%
     \if@todonotes@dviStyle%
-        {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+        {\if@todonotes@inlinepar\par\noindent\fi%
+         \begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};
+         \end{tikzpicture}%
+         \if@todonotes@inlinepar\par\fi}%
             \if@todonotes@authorgiven%
                 {\noindent \@todonotes@sizecommand \@todonotes@author:\,\@todonotes@text}%
             \else%
                 {\noindent \@todonotes@sizecommand \@todonotes@text}%
             \fi
-        {\par\noindent\begin{tikzpicture}[remember picture]%
-            \draw node[inlinenotestyle] {};\end{tikzpicture}\par}%
+        {\if@todonotes@inlinepar\par\noindent\fi%
+         \begin{tikzpicture}[remember picture]%
+            \draw node[inlinenotestyle] {};
+         \end{tikzpicture}%
+         \if@todonotes@inlinepar\par\fi}%
     \else%
-        {\par\noindent\begin{tikzpicture}[remember picture]%
+        {\if@todonotes@inlinepar\par\noindent\fi%
+         \begin{tikzpicture}[remember picture]%
             \draw node[inlinenotestyle,font=\@todonotes@sizecommand]{%
                 \if@todonotes@authorgiven%
                     {\noindent \@todonotes@sizecommand \@todonotes@author:\,\@todonotes@text}%
                 \else%
                     {\noindent \@todonotes@sizecommand \@todonotes@text}%
                 \fi};%
-            \end{tikzpicture}\par}%
+         \end{tikzpicture}%
+         \if@todonotes@inlinepar\par\fi}%
     \fi}%
 %    \end{macrocode}
 % \end{macro}
@@ -1834,7 +1857,11 @@
 % \begin{macro}{\todo}
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
-\newcommand{\todo}[2][]{\@bsphack\@todo[#1]{#2}\@esphack\ignorespaces}%
+\newcommand{\todo}[2][]{\if@todonotes@inlinepar%
+  \@bsphack\@todo[#1]{#2}\@esphack\ignorespaces%
+  \else%
+  \@todo[#1]{#2}%
+  \fi}%
 %    \end{macrocode}
 % \end{macro}
 % \appendix
