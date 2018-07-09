@@ -539,6 +539,27 @@
 % \todo[author=Xavier, inline]{Testing author option.}
 % \end{verbatim}
 %
+%
+% \DescribeMacro{inlinewidth}
+% The |inlinewidth| option makes it possible to alter the width
+% of inline todos.
+% \todo[inline, inlinewidth=5cm]{Testing the option inlinewidth.}
+% \begin{verbatim}
+% \todo[inline, inlinewidth=5cm]{Testing the option inlinewidth.}
+% \end{verbatim}
+%
+%
+% \DescribeMacro{inlinepar / noinlinepar}
+% The options |inlinepar| and |noinlinepar| (default) determine whether the inserted inline 
+% todonote is sorrounded with \texttt{par} macros that enforce new lines
+% prior to and after inserted inline todonotes.
+% \todo[inline, inlinewidth=5cm, noinlinepar]{Testing the option inlinepar.}
+% This is a line after the inserted todonote.
+% \begin{verbatim}
+% \todo[inline, inlinewidth=5cm, noinlinepar]{Testing the option inlinepar.}
+% \end{verbatim}
+%
+%
 % \subsection{Options for the missingfigure command}
 %
 % \DescribeMacro{figwidth}
