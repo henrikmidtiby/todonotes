@@ -1208,6 +1208,13 @@
 \ifx\undefined\phantomsection
 \newcommand{\phantomsection}{}
 \fi
+\ifdim \marginparwidth < 2cm 
+\todo[inline]{Warning. The length $\backslash$marginparwidth is 
+less than 2cm and will most likely cause issues with the 
+appearance of inserted todonotes. 
+The issue can be solved by adding a line like 
+$\backslash$setlength\{$\backslash$marginparwidth\}\{2cm\} 
+prior to loading the todonotes package.} \else\fi%
 }
 %    \end{macrocode}
 %
