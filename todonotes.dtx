@@ -194,6 +194,8 @@
 %             Added new options for inline todonotes based on code from Daniel Krenn. 
 %             Added warning message when marginparwidth is less than 2cm, as 
 %             suggested by ErikBoesen.}
+% \changes{1.0.7}{2018/07/09}{Changed the warning about marginparwidth to a 
+%             proper warning message.} 
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -1218,11 +1220,11 @@
 \newcommand{\phantomsection}{}
 \fi
 \ifdim \marginparwidth < 2cm 
-\PackageWarning{todonotes}{The length $\backslash$marginparwidth is 
+\PackageWarning{todonotes}{The length marginparwidth is 
 less than 2cm and will most likely cause issues with the 
 appearance of inserted todonotes. 
 The issue can be solved by adding a line like 
-$\backslash$setlength\{$\backslash$marginparwidth\}\{2cm\} 
+\setlength{\marginparwidth}{2cm} 
 prior to loading the todonotes package.} \else\fi%
 }
 %    \end{macrocode}
