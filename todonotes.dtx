@@ -659,19 +659,6 @@
 %\usepackage{menukeys}
 % \end{verbatim}
 %
-% \subsubsection{Spacing around inserted notes}
-% Inserted todo commands will eat the white space after the command.
-% \begin{verbatim}
-%Testing\todo{Does this eat the space?} testing.\end{verbatim}
-% \noindent
-% Testing\todo{Does this eat the space?} testing.
-%
-% This can be prevented by adding curly parenthesis after the 
-% todo command, like shown below.
-% \begin{verbatim}
-%Testing\todo{Does this eat the space?}{} testing.\end{verbatim}
-% \noindent
-% Testing\todo{Does this eat the space?}{} testing.
 %
 % \subsubsection{Wrapping of long lines in list of todos}
 % When a document is compiled with latex (and not pdflatex) long
@@ -1898,7 +1885,8 @@ prior to loading the todonotes package.} \else\fi%
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
 \newcommand{\todo}[2][]{\if@todonotes@inlinepar%
-  \@bsphack\@todo[#1]{#2}\@esphack%
+  \@bsphack{\@todo[#1]{#2}}%
+  \@esphack%
   \else%
   \@todo[#1]{#2}%
   \fi}%
