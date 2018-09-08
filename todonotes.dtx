@@ -360,6 +360,10 @@
 % The specified colors must be valid according to the 
 % |xcolor| package.
 % 
+% \DescribeMacro{tickmarkheight}
+% |tickmarkheight=length| set the height of the tickmark at
+% the location where the todo is inserted.
+%
 % \DescribeMacro{textwidth}
 % |textwidth=length| sets the width of a todo item in the margin to
 % |length|. The width of inline todonotes will allways be the same 
@@ -441,6 +445,16 @@
 % \begin{verbatim}
 % \todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
 % bordercolor=red]{Anything but default colors}.
+% \end{verbatim}
+%
+%
+% \DescribeMacro{tickmarkheight}
+% |tickmarkheight=length| set the height of the tickmark at
+% the location where the todo is inserted.
+% An example of the option in use is shown here.
+% \todo[tickmarkheight=0.1cm]{Test of option.}
+% \begin{verbatim}
+% \todo[tickmarkheight=0.1cm]{Test of option.}
 % \end{verbatim}
 %
 %
@@ -1196,6 +1210,7 @@
 \newcommand{\@todonotes@backgroundcolor}{orange}
 \newcommand{\@todonotes@linecolor}{orange}
 \newcommand{\@todonotes@bordercolor}{black}
+\newcommand{\@todonotes@tickmarkheight}{0cm}
 \newcommand{\@todonotes@textwidth}{\marginparwidth}
 \newcommand{\@todonotes@textsize}{\normalsize}
 \newcommand{\@todonotes@figwidth}{\linewidth}
@@ -1377,6 +1392,12 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes.sty}%
     {bordercolor}{\renewcommand{\@todonotes@bordercolor}{#1}}
 %    \end{macrocode}
+% Make the height of the line start marking as
+% an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {tickmarkheight}{\renewcommand{\@todonotes@tickmarkheight}{#1}}
+%    \end{macrocode}
 % Set whether short captions given as arguments to the todo command
 % should be included in the inserted todonote.
 %    \begin{macrocode}
@@ -1462,6 +1483,8 @@ prior to loading the todonotes package.} \else\fi%
     \renewcommand{\@todonotes@currentbackgroundcolor}{#1}}%
 \define@key{todonotes}{bordercolor}{%
     \renewcommand{\@todonotes@currentbordercolor}{#1}}%
+\define@key{todonotes}{tickmarkheight}{%
+    \renewcommand{\@todonotes@tickmarkheight}{#1}}%
 %    \end{macrocode}
 % Set a relative font size
 %    \begin{macrocode}
@@ -1556,6 +1579,7 @@ prior to loading the todonotes package.} \else\fi%
     {linecolor=\@todonotes@linecolor,%
     backgroundcolor=\@todonotes@backgroundcolor,%
     bordercolor=\@todonotes@bordercolor,%
+    tickmarkheight=0cm,%
     nofancyline,%
     nodisable,%
     noinline,%
@@ -1817,7 +1841,8 @@ prior to loading the todonotes package.} \else\fi%
 	\else%
 		\begin{tikzpicture}[remember picture, overlay]%
 			\draw[connectstyle]%
-			([yshift=-0.2cm] inText)%
+			([yshift=-0.2cm + \@todonotes@tickmarkheight] inText)%
+			-| ([yshift=-0.2cm] inText)%
 			-| ([xshift=-0.2cm] inNote.west)%
 			-| (inNote.west);%
 		\end{tikzpicture}%
@@ -1843,7 +1868,8 @@ prior to loading the todonotes package.} \else\fi%
 	\else%
 		\begin{tikzpicture}[remember picture, overlay]%
 			\draw[connectstyle]%
-			([yshift=-0.2cm] inText)%
+			([yshift=-0.2cm + \@todonotes@tickmarkheight] inText)%
+			-| ([yshift=-0.2cm] inText)%
 			-| ([xshift=0.2cm] inNote.east)%
 			-| (inNote.east);%
 		\end{tikzpicture}%
