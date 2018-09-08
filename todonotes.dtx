@@ -1685,6 +1685,12 @@ prior to loading the todonotes package.} \else\fi%
 % First is the current location in the document stored, this enables
 % us later to connect this point with the inserted todonote. 
 %    \begin{macrocode}
+\ifvmode
+  \vspace*{-\parskip}%   % backup if we are already in vertical mode
+  \vskip-\baselineskip   % (and don't loose that space after a
+                         %  pagebreak ...
+  \noindent
+\fi
 \begin{tikzpicture}[remember picture, overlay, baseline=-0.75ex]%
     \node [coordinate] (inText) {};%
 \end{tikzpicture}%
