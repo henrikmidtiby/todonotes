@@ -1885,12 +1885,19 @@ prior to loading the todonotes package.} \else\fi%
 % \begin{macro}{\todo}
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
-\newcommand{\todo}[2][]{\if@todonotes@inlinepar%
-  \@bsphack{\@todo[#1]{#2}}%
-  \@esphack%
+\newcommand{\todo}[2][]{%
+  \if@todonotes@inlinepar
+    \ifhmode
+      \@bsphack
+    \else
+      \@savsf\@m
+      \@savsk\z@
+    \fi
+    {\@todo[#1]{#2}}%
+    \@esphack%
   \else%
-  \@todo[#1]{#2}%
-  \fi}%
+    \@todo[#1]{#2}%
+  \fi}
 %    \end{macrocode}
 % \end{macro}
 % \appendix
