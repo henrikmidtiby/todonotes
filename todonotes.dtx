@@ -1861,8 +1861,9 @@ prior to loading the todonotes package.} \else\fi%
 \noindent
 \begin{tikzpicture}
 \draw[fill=\@todonotes@currentfigcolor, draw = black!40, line width=2pt]
-    (-2, -2.5) rectangle +(\@todonotes@currentfigwidth, \@todonotes@currentfigheight);
-\draw (2, -0.3) node[right, text
+    (-2, -0.5*\@todonotes@currentfigheight-0.5cm)
+    rectangle +(\@todonotes@currentfigwidth, \@todonotes@currentfigheight);
+\draw (2, -0.5) node[right, text
     width=\@todonotes@currentfigwidth-4.5cm, font=\@todonotes@sizecommand] {#2};
 \draw[red, fill=white, rounded corners = 5pt, line width=10pt] 
     (30:2cm) -- (150:2cm) -- (270:2cm) -- cycle;
