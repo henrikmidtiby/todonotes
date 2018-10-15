@@ -1892,6 +1892,7 @@ prior to loading the todonotes package.} \else\fi%
 \addcontentsline{tdo}{todo}{\@todonotes@MissingFigureText: #2}%
 \par
 \noindent
+\hfill
 \begin{tikzpicture}
 \draw[fill=\@todonotes@currentfigcolor, draw = black!40, line width=2pt]
     (-2, -0.5*\@todonotes@currentfigheight-0.5cm)
@@ -1903,6 +1904,7 @@ prior to loading the todonotes package.} \else\fi%
 \draw (0, 0.3) node {\@todonotes@MissingFigureUp};
 \draw (0, -0.3) node {\@todonotes@MissingFigureDown};
 \end{tikzpicture}\hfill
+\null\par
 }% Ending \missingfigure command
 \fi% Ending \@todonotes@ifdisabled
 %    \end{macrocode}
