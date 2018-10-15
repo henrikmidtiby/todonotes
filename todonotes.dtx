@@ -1930,10 +1930,10 @@ prior to loading the todonotes package.} \else\fi%
 % The |\todototoc| command respects the disable option.
 %    \begin{macrocode}
 \newcommand{\todototoc}
-{
+{%
     \if@todonotes@disabled
     \else
-		\addcontentsline{toc}{\@ifundefined{chapter}{section}{chapter}}{\@todonotes@todolistname}
+		\addcontentsline{toc}{\@ifundefined{chapter}{section}{chapter}}{\@todonotes@todolistname}%
     \fi
 }
 %    \end{macrocode}
