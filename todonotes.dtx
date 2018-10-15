@@ -351,12 +351,14 @@
 %
 % \DescribeMacro{color}
 % \DescribeMacro{backgroundcolor}
+% \DescribeMacro{textcolor}
 % \DescribeMacro{linecolor}
 % \DescribeMacro{bordercolor}
 % These options sets the default colors for the todo command.
-% There is three colors that can be specified. The border color
+% There are four colors that can be specified. The border color
 % (default |bordercolor=black|) around the inserted text, the color
-% behind the inserted text (default |backgroundcolor=orange|) and
+% behind the inserted text (default |backgroundcolor=orange|), the 
+% color of the inserted text (default |textcolor=black|) and
 % the color of the line connecting the inserted textbox with the
 % current location in the text (default |linecolor=orange|). 
 % Setting the |color| option to |val| passes this value on to the 
@@ -423,6 +425,7 @@
 %
 % \DescribeMacro{color}
 % \DescribeMacro{backgroundcolor}
+% \DescribeMacro{textcolor}
 % \DescribeMacro{linecolor}
 % \DescribeMacro{bordercolor}
 % These options set the color that is used in the current todo
@@ -445,10 +448,10 @@
 % \end{verbatim}
 % An example that uses all of the color options is given
 % below\todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
-% bordercolor=red]{Anything but default colors}.
+% bordercolor=red, textcolor=yellow]{Anything but default colors}.
 % \begin{verbatim}
 % \todo[linecolor=green!70!white, backgroundcolor=blue!20!white,
-% bordercolor=red]{Anything but default colors}.
+% bordercolor=red, textcolor=yellow]{Anything but default colors}.
 % \end{verbatim}
 %
 %
@@ -1215,6 +1218,7 @@
 %    \begin{macrocode}
 \newcommand{\@todonotes@text}{}%
 \newcommand{\@todonotes@backgroundcolor}{orange}
+\newcommand{\@todonotes@textcolor}{black}
 \newcommand{\@todonotes@linecolor}{orange}
 \newcommand{\@todonotes@bordercolor}{black}
 \newcommand{\@todonotes@tickmarkheight}{0cm}
@@ -1387,6 +1391,12 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes.sty}%
     {backgroundcolor}{\renewcommand{\@todonotes@backgroundcolor}{#1}}
 %    \end{macrocode}
+% Make the text color of the notes as
+% an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
+    {textcolor}{\renewcommand{\@todonotes@textcolor}{#1}}
+%    \end{macrocode}
 % Make the line color of the notes as
 % an option.
 %    \begin{macrocode}
@@ -1480,6 +1490,7 @@ prior to loading the todonotes package.} \else\fi%
 %    \begin{macrocode}
 \newcommand{\@todonotes@currentlinecolor}{}%
 \newcommand{\@todonotes@currentbackgroundcolor}{}%
+\newcommand{\@todonotes@currenttextcolor}{}%
 \newcommand{\@todonotes@currentbordercolor}{}%
 \define@key{todonotes}{color}{%
     \renewcommand{\@todonotes@currentlinecolor}{#1}%
@@ -1488,6 +1499,8 @@ prior to loading the todonotes package.} \else\fi%
     \renewcommand{\@todonotes@currentlinecolor}{#1}}%
 \define@key{todonotes}{backgroundcolor}{%
     \renewcommand{\@todonotes@currentbackgroundcolor}{#1}}%
+\define@key{todonotes}{textcolor}{%
+    \renewcommand{\@todonotes@currenttextcolor}{#1}}%
 \define@key{todonotes}{bordercolor}{%
     \renewcommand{\@todonotes@currentbordercolor}{#1}}%
 \define@key{todonotes}{tickmarkheight}{%
@@ -1585,6 +1598,7 @@ prior to loading the todonotes package.} \else\fi%
     {todonotes}%
     {linecolor=\@todonotes@linecolor,%
     backgroundcolor=\@todonotes@backgroundcolor,%
+    textcolor=\@todonotes@textcolor,%
     bordercolor=\@todonotes@bordercolor,%
     tickmarkheight=0cm,%
     nofancyline,%
@@ -1623,6 +1637,7 @@ prior to loading the todonotes package.} \else\fi%
 \tikzstyle{notestyleraw} = [
     draw=\@todonotes@currentbordercolor, 
     fill=\@todonotes@currentbackgroundcolor,
+    text=\@todonotes@currenttextcolor,
     line width=0.5pt,
     text width = \@todonotes@textwidth - 1.6 ex - 1pt, 
     inner sep = 0.8 ex,
