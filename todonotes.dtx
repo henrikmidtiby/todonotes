@@ -411,10 +411,10 @@
 % There are several options that can be given to the |\todo|
 % command. All the options are described here and often I have
 % included examples of the change in visual appearance.
-% Default values for these options can be set using the presetkeys 
+% Default values for these options can be set using the setuptodonotes 
 % command.
 % \begin{verbatim}
-% \presetkeys{todonotes}{fancyline, color=blue!30}{}
+% \setuptodonotes{fancyline, color=blue!30}
 % \end{verbatim}
 %
 % \DescribeMacro{disable}
@@ -1206,6 +1206,10 @@
 \RequirePackage{tikz}
 \usetikzlibrary{positioning}
 \RequirePackage{calc}
+%    \end{macrocode}
+% Implement a function for setting up the todonotes package.
+%    \begin{macrocode}
+\newcommand\setuptodonotes[1]{\presetkeys{todonotes}{#1}{}}
 %    \end{macrocode}
 % Some default values are set
 %    \begin{macrocode}
