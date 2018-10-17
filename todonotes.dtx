@@ -1418,10 +1418,12 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes.sty}%
     {textwidth}{\renewcommand{\@todonotes@textwidth}{#1}}
 %    \end{macrocode}
-% Make the text size as an option. 
+% Make the text size as an option, accept both |size| and |textsize|. 
 %    \begin{macrocode}
 \define@key{todonotes.sty}%
     {textsize}{\renewcommand{\@todonotes@textsize}{#1}}
+\define@key{todonotes.sty}%
+    {size}{\renewcommand{\@todonotes@textsize}{#1}}
 %    \end{macrocode}
 % Add option for shadows behind the inserted notes
 %    \begin{macrocode}
