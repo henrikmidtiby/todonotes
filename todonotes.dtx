@@ -1601,9 +1601,12 @@ prior to loading the todonotes package.} \else\fi%
     figwidth=\@todonotes@figwidth,%
     figheight=\@todonotes@figheight,%
     figcolor=\@todonotes@figcolor,%
-    line, list, size=\@todonotes@textsize,
+    line, list,%
     inlinewidth=\linewidth,
     inlinepar}{}%
+\@temptokena\expandafter{\@todonotes@textsize}
+\edef\next{\noexpand\presetkeys{todonotes}{size=\the\@temptokena}{}}
+\next
 %    \end{macrocode}
 % \subsection{The main code part}
 % Here is the actual macros defined.
