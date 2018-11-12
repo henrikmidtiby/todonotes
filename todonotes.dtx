@@ -460,6 +460,20 @@
 % \end{verbatim}
 %
 %
+% \DescribeMacro{shadow / noshadow}
+% If the package is loaded with the |shadow| option, 
+% a shadow is added to all notes, otherwise no shadows are shown.
+% This global setting can be overwritten by the |shadow| and |noshadow|
+% \todo[noshadow]{A note without a shadow}
+% options to the todo command.
+% To insert a note with and without shadows, use the |shadow| 
+% \todo[shadow]{A note with a shadow}
+% and |noshadow| options as shown here:
+% \begin{verbatim}
+% \todo[shadow]{A note with a shadow}
+% \todo[noshadow]{A note without a shadow}
+% \end{verbatim}
+%
 % \DescribeMacro{tickmarkheight}
 % |tickmarkheight=length| set the height of the tickmark at
 % the location where the todo is inserted.
@@ -1204,6 +1218,7 @@
 \RequirePackage{xcolor}
 \RequirePackage{tikz}
 \usetikzlibrary{positioning}
+\usetikzlibrary{shadows}
 \RequirePackage{calc}
 %    \end{macrocode}
 % Implement a function for setting up the todonotes package.
@@ -1432,10 +1447,8 @@ prior to loading the todonotes package.} \else\fi%
 %    \end{macrocode}
 % Add option for shadows behind the inserted notes
 %    \begin{macrocode}
-\newif{\if@todonotes@shadowenabled}
-\@todonotes@shadowenabledfalse
-\DeclareOptionX{shadow}{\@todonotes@shadowenabledtrue
-\usetikzlibrary{shadows}}
+\newcommand{\@todonotes@shadowenabledbydefault}{noshadow}
+\DeclareOptionX{shadow}{\renewcommand{\@todonotes@shadowenabledbydefault}{shadow}}
 %    \end{macrocode}
 % Add option for the default width of the figure inserted with
 % |\missingfigure|.
@@ -1612,6 +1625,7 @@ prior to loading the todonotes package.} \else\fi%
     noinline,%
     nocaption,%
     noauthor,%
+    \@todonotes@shadowenabledbydefault,%
     figwidth=\@todonotes@figwidth,%
     figheight=\@todonotes@figheight,%
     figcolor=\@todonotes@figcolor,%
