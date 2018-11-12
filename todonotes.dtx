@@ -1499,6 +1499,15 @@ prior to loading the todonotes package.} \else\fi%
     \renewcommand{\@todonotes@currenttextcolor}{#1}}%
 \define@key{todonotes}{bordercolor}{%
     \renewcommand{\@todonotes@currentbordercolor}{#1}}%
+%    \end{macrocode}
+% Toggle whether there is a shadow behind the inserted notes.
+%    \begin{macrocode}
+\newif\if@todonotes@useshadow%
+\define@key{todonotes}{shadow}[]{\@todonotes@useshadowtrue}%
+\define@key{todonotes}{noshadow}[]{\@todonotes@useshadowfalse}%
+%    \end{macrocode}
+% Define height of the inserted tickmark.
+%    \begin{macrocode}
 \define@key{todonotes}{tickmarkheight}{%
     \renewcommand{\@todonotes@tickmarkheight}{#1}}%
 %    \end{macrocode}
@@ -1643,25 +1652,6 @@ prior to loading the todonotes package.} \else\fi%
     inner sep = 0.8 ex,
     rounded corners=4pt]
 %    \end{macrocode}
-% Add shadows and rounded corners to the inserted todonotes.
-%    \begin{macrocode}
-\if@todonotes@shadowenabled
-\tikzstyle{notestyle} = [notestyleraw,
-    general shadow={shadow xshift=.5ex, shadow yshift=-.5ex,
-        opacity=1,fill=black!50}]
-\else
-\tikzstyle{notestyle} = [notestyleraw]
-\fi
-\tikzstyle{notestyleleft} = [
-    notestyle, 
-    left]
-\tikzstyle{connectstyle} = [
-    thick, 
-    draw=\@todonotes@currentlinecolor]
-\tikzstyle{inlinenotestyle} = [
-    notestyle, 
-    text width=\@todonotes@inlinewidth - 1.6 ex - 1 pt]
-%    \end{macrocode}
 %
 % \begin{macro}{\@todo}
 % Define the |\@todo| command.
@@ -1681,6 +1671,29 @@ prior to loading the todonotes package.} \else\fi%
 \renewcommand{\@todonotes@text}{#2}%
 \renewcommand{\@todonotes@caption}{#2}%
 \setkeys{todonotes}{#1}%
+%    \end{macrocode}
+%
+% Add shadows to the inserted todonotes.
+%    \begin{macrocode}
+\if@todonotes@useshadow%
+\tikzstyle{notestyle} = [notestyleraw,%
+    general shadow={shadow xshift=0.5ex, shadow yshift=-0.5ex,%
+        opacity=1,fill=black!50}]%
+\else%
+\tikzstyle{notestyle} = [notestyleraw]%
+\fi%
+%    \end{macrocode}
+% Update notestyles
+%    \begin{macrocode}
+\tikzstyle{notestyleleft} = [%
+    notestyle,%
+    left]%
+\tikzstyle{connectstyle} = [%
+    thick,%
+    draw=\@todonotes@currentlinecolor]%
+\tikzstyle{inlinenotestyle} = [%
+    notestyle,%
+    text width=\@todonotes@inlinewidth - 1.6 ex - 1 pt]%
 %    \end{macrocode}
 % If the option |disable| is given to the command, no output is generated.
 %    \begin{macrocode}
