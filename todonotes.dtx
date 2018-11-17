@@ -1986,15 +1986,19 @@ prior to loading the todonotes package.} \else\fi%
   \if@todonotes@inlinepar
     \ifhmode
       \@bsphack
+      \@todonotes@vmodefalse
     \else
       \@savsf\@m
       \@savsk\z@
+      \@todonotes@vmodetrue
     \fi
     {\@todo[#1]{#2}}%
     \@esphack%
+    \if@todonotes@vmode \par \fi
   \else%
     \@todo[#1]{#2}%
   \fi}
+\newif\if@todonotes@vmode
 %    \end{macrocode}
 % \end{macro}
 % \appendix
