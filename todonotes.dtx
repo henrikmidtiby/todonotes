@@ -1981,6 +1981,9 @@ prior to loading the todonotes package.} \else\fi%
 % Define the |\todo| command as a redirection to |\@todo|.
 %    \begin{macrocode}
 \newcommand{\todo}[2][]{%
+  % Needed to output any dangling \item of a noskip section (see #36):
+  \if@inlabel \leavevmode \fi     
+  \if@noskipsec \leavevmode \fi
   \if@todonotes@inlinepar
     \ifhmode
       \@bsphack
