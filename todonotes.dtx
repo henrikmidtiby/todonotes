@@ -1790,14 +1790,14 @@ prior to loading the todonotes package.} \else\fi%
 %    \end{macrocode}
 % Define styles used by the todo command
 %    \begin{macrocode}
-\tikzstyle{notestyleraw} = [
+\tikzset{notestyleraw/.style = {
     draw=\@todonotes@currentbordercolor, 
     fill=\@todonotes@currentbackgroundcolor,
     text=\@todonotes@currenttextcolor,
     line width=0.5pt,
     text width = \@todonotes@textwidth - 1.6 ex - 1pt, 
     inner sep = 0.8 ex,
-    rounded corners=4pt]
+    rounded corners=4pt}}
 %    \end{macrocode}
 %
 % \begin{macro}{\@todo}
@@ -1824,9 +1824,9 @@ prior to loading the todonotes package.} \else\fi%
 %    \begin{macrocode}
 \if@todonotes@useshadow%
 \if@todonotes@shadowlibraryloaded%
-\tikzstyle{notestyle} = [notestyleraw,%
+\tikzset{notestyle/.style = {notestyleraw,%
     general shadow={shadow xshift=0.5ex, shadow yshift=-0.5ex,%
-        opacity=1,fill=black!50}]%
+        opacity=1,fill=black!50}}}%
 \else%
 \PackageWarning{todonotes}{Trying to put a shadow below a todonote,%
 	but the loadshadowlibrary option was not given when loading%
@@ -1834,20 +1834,20 @@ prior to loading the todonotes package.} \else\fi%
 \tikzstyle{notestyle} = [notestyleraw]%
 \fi%
 \else%
-\tikzstyle{notestyle} = [notestyleraw]%
+\tikzset{notestyle/.style = {notestyleraw}}%
 \fi%
 %    \end{macrocode}
 % Update notestyles
 %    \begin{macrocode}
-\tikzstyle{notestyleleft} = [%
+\tikzset{notestyleleft/.style = {%
     notestyle,%
-    left]%
-\tikzstyle{connectstyle} = [%
+    left}}%
+\tikzset{connectstyle/.style = {%
     thick,%
-    draw=\@todonotes@currentlinecolor]%
-\tikzstyle{inlinenotestyle} = [%
+    draw=\@todonotes@currentlinecolor}}%
+\tikzset{inlinenotestyle/.style = {%
     notestyle,%
-    text width=\@todonotes@inlinewidth - 1.6 ex - 1 pt]%
+    text width=\@todonotes@inlinewidth - 1.6 ex - 1 pt}}%
 %    \end{macrocode}
 % If the option |disable| is given to the command, no output is generated.
 %    \begin{macrocode}
@@ -2031,9 +2031,9 @@ prior to loading the todonotes package.} \else\fi%
 \if@todonotes@line%
 	\if@todonotes@fancyline%
 		\tikz[remember picture,overlay]{%
-			\tikzstyle{both}=[line width=3pt, draw, opacity=0.15]%
-			\tikzstyle{line}=[shorten >=5pt, line cap=round]%
-			\tikzstyle{head}=[shorten >=-1pt, dash pattern=on 0pt off 1pt, ->]%
+			\tikzset{both/.style={line width=3pt, draw, opacity=0.15}}%
+			\tikzset{line/.style={shorten >=5pt, line cap=round}}%
+			\tikzset{head/.style={shorten >=-1pt, dash pattern=on 0pt off 1pt, ->}}%
 			\foreach \s in {line,head}{%
 				\draw[both,\s]%
 					(inNote.north west).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
@@ -2058,9 +2058,9 @@ prior to loading the todonotes package.} \else\fi%
 \if@todonotes@line%
 	\if@todonotes@fancyline%
 		\tikz[remember picture,overlay]{%
-			\tikzstyle{both}=[line width=3pt, draw, opacity=0.15]%
-			\tikzstyle{line}=[shorten >=5pt, line cap=round]%
-			\tikzstyle{head}=[shorten >=-1pt, dash pattern=on 0pt off 1pt,->]%
+			\tikzset{both/.style={line width=3pt, draw, opacity=0.15}}%
+			\tikzset{line/.style={shorten >=5pt, line cap=round}}%
+			\tikzset{head/.style={shorten >=-1pt, dash pattern=on 0pt off 1pt,->}}%
 			\foreach \s in {line,head}{%
 				\draw[both,\s]%
 					(inNote.north east).. controls +(0:0) and +(90:1.5)..([yshift=1ex] inText);%
