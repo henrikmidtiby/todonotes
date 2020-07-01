@@ -792,6 +792,24 @@
 % |\let\marginpar\oldmarginpar|
 %
 %
+% \subsubsection{todos in math environments}
+% It is not possible to insert todonotes into math environments.
+% By replacing the marginpar command with a marginnote and 
+% placing the todo in an \verb!mbox! or \verb!\textrm! command, it works.
+%
+% \begin{verbatim}
+% \documentclass{article}
+% \usepackage{todonotes}
+% \usepackage{marginnote}
+% \let\marginpar\marginnote
+%
+% \begin{document}
+% \begin{equation}
+% a^2=b^2+c^2  \textrm{\todo{Test}}
+% \end{equation}
+% \end{verbatim}
+%
+%
 % \subsection{Things to improve}
 % This is a list of things I consider to improve sometime in the
 % future. It have not been done yet as I lack the time or skills to
