@@ -798,10 +798,13 @@
 % |\let\marginpar\oldmarginpar|
 %
 %
-% \subsubsection{todos in math environments}
-% It is not possible to insert todonotes into math environments.
-% By replacing the marginpar command with a marginnote and 
-% placing the todo in an \verb!mbox! or \verb!\textrm! command, it works.
+% \subsubsection{todos in math and floating environments}
+% It is not possible to insert todonotes into math environments or 
+% floating environments like \verb!figure! or \verb!table!.
+% By replacing the marginpar command with a marginnote this
+% can be enabled. 
+% For todos inside math environments the todo must be placed in an 
+% \verb!mbox! or \verb!\textrm! command.
 %
 % \begin{verbatim}
 % \documentclass{article}
@@ -813,6 +816,12 @@
 % \begin{equation}
 % a^2=b^2+c^2  \textrm{\todo{Test}}
 % \end{equation}
+% \begin{figure}
+% \centering
+% \caption{Caption\todo{tests}.}
+% \label{fig}
+% \end{figure}
+% 
 % \end{verbatim}
 %
 %
