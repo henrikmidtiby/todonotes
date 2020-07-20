@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{717}
+% \CheckSum{721}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -205,6 +205,8 @@
 %             (both commands (backslash tiny) and text (tiny) are now supported).} 
 % \changes{1.1.1}{2018/11/22}{Implemented shadow and noshadow options for the todo command.}
 % \changes{1.1.2}{2019/01/24}{Fix issue 36 and 37.}
+% \changes{1.1.3}{2020/07/20}{Fix issue 48 and make colors used in the last todo 
+%             globally available.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -1530,21 +1532,21 @@ prior to loading the todonotes package.} \else\fi%
 % commands in the package are defined.
 % Set an arbitrarily fill color
 %    \begin{macrocode}
-\newcommand{\@todonotes@currentlinecolor}{}%
-\newcommand{\@todonotes@currentbackgroundcolor}{}%
-\newcommand{\@todonotes@currenttextcolor}{}%
-\newcommand{\@todonotes@currentbordercolor}{}%
+\gdef\@todonotes@currentlinecolor{\@todonotes@linecolor}%
+\gdef\@todonotes@currentbackgroundcolor{\@todonotes@backgroundcolor}%
+\gdef\@todonotes@currenttextcolor{\@todonotes@textcolor}%
+\gdef\@todonotes@currentbordercolor{\@todonotes@bordercolor}%
 \define@key{todonotes}{color}{%
-    \renewcommand{\@todonotes@currentlinecolor}{#1}%
-    \renewcommand{\@todonotes@currentbackgroundcolor}{#1}}%
+    \gdef\@todonotes@currentlinecolor{#1}%
+    \gdef\@todonotes@currentbackgroundcolor{#1}}%
 \define@key{todonotes}{linecolor}{%
-    \renewcommand{\@todonotes@currentlinecolor}{#1}}%
+    \gdef\@todonotes@currentlinecolor{#1}}%
 \define@key{todonotes}{backgroundcolor}{%
-    \renewcommand{\@todonotes@currentbackgroundcolor}{#1}}%
+    \gdef\@todonotes@currentbackgroundcolor{#1}}%
 \define@key{todonotes}{textcolor}{%
-    \renewcommand{\@todonotes@currenttextcolor}{#1}}%
+    \gdef\@todonotes@currenttextcolor{#1}}%
 \define@key{todonotes}{bordercolor}{%
-    \renewcommand{\@todonotes@currentbordercolor}{#1}}%
+    \gdef\@todonotes@currentbordercolor{#1}}%
 %    \end{macrocode}
 % Toggle whether there is a shadow behind the inserted notes.
 %    \begin{macrocode}
