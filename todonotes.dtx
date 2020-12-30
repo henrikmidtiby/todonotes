@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{721}
+% \CheckSum{725}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1554,8 +1554,9 @@ prior to loading the todonotes package.} \else\fi%
 %    \end{macrocode}
 % Define height of the inserted tickmark.
 %    \begin{macrocode}
+\newcommand{\@todonotes@currenttickmarkheight}{\@todonotes@tickmarkheight}
 \define@key{todonotes}{tickmarkheight}{%
-    \renewcommand{\@todonotes@tickmarkheight}{#1}}%
+    \renewcommand{\@todonotes@currenttickmarkheight}{#1}}%
 %    \end{macrocode}
 % Set a relative font size
 %    \begin{macrocode}
@@ -1652,7 +1653,7 @@ prior to loading the todonotes package.} \else\fi%
     backgroundcolor=\@todonotes@backgroundcolor,%
     textcolor=\@todonotes@textcolor,%
     bordercolor=\@todonotes@bordercolor,%
-    tickmarkheight=0cm,%
+    tickmarkheight=\@todonotes@tickmarkheight,%
     nofancyline,%
     nodisable,%
     noinline,%
