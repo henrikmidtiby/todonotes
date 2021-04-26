@@ -20,14 +20,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2020/08/18 v1.1.3 Todonotes source and documentation.]
+    [2021/04/26 v1.1.4 Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black, urlcolor=blue]{hyperref}
-\usepackage[colorinlistoftodos]{todonotes}[2020/08/18]
+\usepackage[colorinlistoftodos, loadshadowlibrary]{todonotes}[2021/04/26]
 \usepackage{amsmath}
 \usepackage{setspace}
 \usepackage{soul}
@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{721}
+% \CheckSum{731}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -207,6 +207,8 @@
 % \changes{1.1.2}{2019/01/24}{Fix issue 36 and 37.}
 % \changes{1.1.3}{2020/08/18}{Fix issue 48 and make colors used in the last todo 
 %             globally available.}
+% \changes{1.1.4}{2021/04/26}{Fix issue 51 by avoid loading the tikz shadows 
+%             library by default.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -394,9 +396,15 @@
 % |caption=val| option for the todo command, where the given value
 % |val| is inserted in the inserted todonote.
 % 
+% \DescribeMacro{loadshadowlibrary}
+% If given, the |shadows| tikz library will be loaded. This is required 
+% for adding shadows to the inserted todonotes.
+%
 % \DescribeMacro{shadow}
-% If the |shadow| option is given, the inserted todonotes will be
-% displayed with a gray shadow.
+% If the |shadow| option is given, the inserted todonotes will by 
+% default be displayed with a gray shadow.
+% For this to work, the package option |loadshadowlibrary| must be 
+% provided.
 % I expect that the option will trigger problems with tikz versions
 % prior to 2.0.
 %
@@ -1251,7 +1259,6 @@
 \RequirePackage{xcolor}
 \RequirePackage{tikz}
 \usetikzlibrary{positioning}
-\usetikzlibrary{shadows}
 \RequirePackage{calc}
 %    \end{macrocode}
 % Implement a function for setting up the todonotes package.
@@ -1480,8 +1487,14 @@ prior to loading the todonotes package.} \else\fi%
 %    \end{macrocode}
 % Add option for shadows behind the inserted notes
 %    \begin{macrocode}
+\newif\if@todonotes@shadowlibraryloaded
+\@todonotes@shadowlibraryloadedfalse
+\DeclareOptionX{loadshadowlibrary}{%
+	\usetikzlibrary{shadows}%
+	\@todonotes@shadowlibraryloadedtrue}
 \newcommand{\@todonotes@shadowenabledbydefault}{noshadow}
-\DeclareOptionX{shadow}{\renewcommand{\@todonotes@shadowenabledbydefault}{shadow}}
+\DeclareOptionX{shadow}{%
+	\renewcommand{\@todonotes@shadowenabledbydefault}{shadow}}
 %    \end{macrocode}
 % Add option for the default width of the figure inserted with
 % |\missingfigure|.
@@ -1723,9 +1736,16 @@ prior to loading the todonotes package.} \else\fi%
 % Add shadows to the inserted todonotes.
 %    \begin{macrocode}
 \if@todonotes@useshadow%
+\if@todonotes@shadowlibraryloaded%
 \tikzstyle{notestyle} = [notestyleraw,%
     general shadow={shadow xshift=0.5ex, shadow yshift=-0.5ex,%
         opacity=1,fill=black!50}]%
+\else%
+\PackageWarning{todonotes}{Trying to put a shadow below a todonote, 
+	but the loadshadowlibrary option was not given when loading 
+	the todonotes package}
+\tikzstyle{notestyle} = [notestyleraw]%
+\fi%
 \else%
 \tikzstyle{notestyle} = [notestyleraw]%
 \fi%
