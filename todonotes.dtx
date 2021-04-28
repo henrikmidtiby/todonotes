@@ -1240,6 +1240,36 @@
 % \end{verbatim}
 % 
 % 
+% \subsubsection{Adding color coded levels of todos}
+% 
+% Sometimes it can be beneficial to be able to distinguish
+% between different types of todos.
+% For this I would suggest the following approach:
+% \begin{verbatim}
+% \newcommand{\todoerror}[2][]{\todo[color=red!70, #1]{#2}}
+% \newcommand{\todowarn}[2][]{\todo[color=orange, #1]{#2}}
+% \newcommand{\todoremark}[2][]{\todo[color=yellow!80!black, #1]{#2}}
+% \newcommand{\todohint}[2][]{\todo[color=green!20, #1]{#2}}
+% \newcommand{\tododone}[2][]{\todo[color=blue!50, #1]{#2}}
+%
+% \todoerror[inline]{Testing}
+% \todoremark{Testing}
+% \todowarn[inline]{Testing}
+% \todohint{Testing}
+% \tododone[disable]{Testing}
+% \end{verbatim}
+% 
+% \newcommand{\todoerror}[2][]{\todo[color=red!70, #1]{#2}}
+% \newcommand{\todowarn}[2][]{\todo[color=orange, #1]{#2}}
+% \newcommand{\todoremark}[2][]{\todo[color=yellow!80!black, #1]{#2}}
+% \newcommand{\todohint}[2][]{\todo[color=green!20, #1]{#2}}
+% \newcommand{\tododone}[2][]{\todo[color=blue!50, #1]{#2}}
+%
+% \todoerror[inline]{Testing}
+% \todoremark{Testing}
+% \todowarn[inline]{Testing}
+% \todohint{Testing}
+% \tododone[disable]{Testing}
 % 
 % 
 %
