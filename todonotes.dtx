@@ -808,7 +808,7 @@
 % |\let\marginpar\oldmarginpar|
 %
 %
-% \subsubsection{todos in math and floating environments}
+% \subsubsection{Todos in math and floating environments}
 % It is not possible to insert todonotes into math environments or 
 % floating environments like \verb!figure! or \verb!table!.
 % By replacing the marginpar command with a marginnote this
@@ -833,6 +833,26 @@
 % \end{figure}
 % 
 % \end{verbatim}
+%
+%
+% \subsubsection{Conflict between marginpar and the standalone class}
+%
+% The \verb!standalone! document class is not compatible with the 
+% \verb!\marginpar! command, which is used in the todonotes package
+% to insert contents in the side margins.
+% A workaround is to replace the \verb!\marginpar! with \verb!\marginnote!.
+% This is demonstrated here:
+% \begin{verbatim}
+% \documentclass[crop=false]{standalone}
+% \usepackage{todonotes}
+% \usepackage{marginnote}
+% \let\marginpar\marginnote
+% \begin{document}
+% Lorem ipsum
+% \todo{Bug}
+% \end{document}
+% \end{verbatim}
+%
 %
 %
 % \subsection{Things to improve}
