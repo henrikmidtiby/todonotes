@@ -1322,7 +1322,7 @@
 \newcommand{\@todonotes@textcolor}{black}
 \newcommand{\@todonotes@linecolor}{orange}
 \newcommand{\@todonotes@bordercolor}{black}
-\newcommand{\@todonotes@tickmarkheight}{0cm}
+\newcommand{\@todonotes@tickmarkheight}{unused value}
 \newcommand{\@todonotes@textwidth}{\marginparwidth}
 \newcommand{\@todonotes@textsize}{\normalsize}
 \newcommand{\@todonotes@figwidth}{\linewidth}
@@ -1513,8 +1513,9 @@ prior to loading the todonotes package.} \else\fi%
 % Make the height of the line start marking as
 % an option.
 %    \begin{macrocode}
-\define@key{todonotes.sty}%
-    {tickmarkheight}{\renewcommand{\@todonotes@tickmarkheight}{#1}}
+\newcommand{\@todonotes@defaulttickmarkheight}{0cm}
+\define@key{todonotes.sty}{tickmarkheight}{%
+    \renewcommand{\@todonotes@defaulttickmarkheight}{#1}}%
 %    \end{macrocode}
 % Set whether short captions given as arguments to the todo command
 % should be included in the inserted todonote.
@@ -1715,7 +1716,7 @@ prior to loading the todonotes package.} \else\fi%
     backgroundcolor=\@todonotes@backgroundcolor,%
     textcolor=\@todonotes@textcolor,%
     bordercolor=\@todonotes@bordercolor,%
-    tickmarkheight=0cm,%
+    tickmarkheight=\@todonotes@defaulttickmarkheight,%
     nofancyline,%
     nodisable,%
     noinline,%
