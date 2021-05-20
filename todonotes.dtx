@@ -1541,11 +1541,11 @@ prior to loading the todonotes package.} \else\fi%
 \newif\if@todonotes@shadowlibraryloaded
 \@todonotes@shadowlibraryloadedfalse
 \DeclareOptionX{loadshadowlibrary}{%
-	\usetikzlibrary{shadows}%
-	\@todonotes@shadowlibraryloadedtrue}
+    \usetikzlibrary{shadows}%
+    \@todonotes@shadowlibraryloadedtrue}
 \newcommand{\@todonotes@shadowenabledbydefault}{noshadow}
 \DeclareOptionX{shadow}{%
-	\renewcommand{\@todonotes@shadowenabledbydefault}{shadow}}
+    \renewcommand{\@todonotes@shadowenabledbydefault}{shadow}}
 %    \end{macrocode}
 % Add option for the default width of the figure inserted with
 % |\missingfigure|.
