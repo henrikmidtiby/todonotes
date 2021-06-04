@@ -20,14 +20,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2021/04/26 v1.1.4 Todonotes source and documentation.]
+    [2021/06/04 v1.1.5 Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black, urlcolor=blue]{hyperref}
-\usepackage[colorinlistoftodos, loadshadowlibrary]{todonotes}[2021/04/26]
+\usepackage[colorinlistoftodos, loadshadowlibrary]{todonotes}[2021/06/04]
 \usepackage{amsmath}
 \usepackage{setspace}
 \usepackage{soul}
@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{731}
+% \CheckSum{734}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -209,6 +209,10 @@
 %             globally available.}
 % \changes{1.1.4}{2021/04/26}{Fix issue 51 by avoid loading the tikz shadows 
 %             library by default.}
+% \changes{1.1.5}{2021/06/04}{Fix issue 54 related to additional spacing around todos with 
+%             shadows. Actually use the tickmarkheight option as suggested by 
+%             José Francisco Loff library by default. Described a workaround for using 
+%             the standalone document class.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -1303,7 +1307,7 @@
 %
 % Identifies the package and loads the packages dependences.
 %    \begin{macrocode}
-\ProvidesPackage{todonotes}[2021/04/26]
+\ProvidesPackage{todonotes}[2021/06/04]
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
