@@ -1296,6 +1296,38 @@
 % \tododone[disable]{Testing}
 % 
 % 
+% \subsubsection{Notes in both left and right margin}
+% 
+% If you want to add many todonotes in your document, it can be beneficial to 
+% use both the left and right margins for the inserted notes.
+% This can be achieved by defining a helper function the following way.
+% The main drawback is that notes inserted using the \verb!marginnote! 
+% command does not float and thus they can get to overlap.
+% This idea was suggested by 
+% \href{https://github.com/henrikmidtiby/todonotes/issues/56}{FranzAtGithub}.
+% 
+% \begin{verbatim}
+% \usepackage{marginnote}
+% \usepackage{etoolbox}
+% 
+% \newtoggle{lmargin}
+% \newcommand{\alternatingtodo}[2][]{%
+%    \iftoggle{lmargin}%
+%     {%
+%         \todo[#1]{#2}
+%         \togglefalse{lmargin}
+%     }{%
+%         {%
+%             \let\marginpar\marginnote%
+%             \reversemarginpar%
+%             \todo[#1]{#2}%
+%         }%
+%         \toggletrue{lmargin}%
+%     }%
+% }%
+% \end{verbatim}
+% 
+% 
 %
 % \iffalse
 % \StopEventually{\PrintChanges\PrintIndex}
