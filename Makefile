@@ -39,9 +39,11 @@ todonotes.pdf: \
 	cd examples && pdflatex alterAppearenceOfListOfTodos.tex
 	rm -rf todonotes
 	mkdir -p todonotes/examples
+	mkdir -p todonotes/img
 	cp todonotes.ins todonotes/todonotes.ins
 	cp todonotes.dtx todonotes/todonotes.dtx
 	cp todonotes.pdf todonotes/todonotes.pdf
+	cp img/AlteredAppearenceOfListOfTodos.png todonotes/img/AlteredAppearenceOfListOfTodos.png
 	cp examples/externalize.tex todonotes/examples/
 	cp examples/externalize.pdf todonotes/examples/
 	cp examples/saveColorByUsingLayers.tex todonotes/examples/
