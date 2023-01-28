@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{734}
+% \CheckSum{738}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -241,11 +241,13 @@
 % \newpage
 % \section{Introduction}
 %
-% The |todonotes| package makes three commands available to the
+% The |todonotes| package makes four commands available to the
 % user: |\todo[]{}|, |\missingfigure{}| and |\listoftodos|.
 % |\todo[]{}| and |\missingfigure{}| makes it possible to insert
 % notes in your document about things that has to be done later
-% (todonotes \ldots).
+% (todonotes \ldots). The |\todostyle| command allows the user to 
+% define named custom styles as abbreviations for lists of other
+% options that can be given to the |\todo| command.
 % I developed the basic functionality of the package while I worked
 % on my bachelor project.
 % 
@@ -314,6 +316,19 @@
 % The |\todototoc| command adds an entry to the table of contents for 
 % list of todos. The command should be placed right before the 
 % |\listoftodos| command.
+%
+% \DescribeMacro{\todostyle\marg{name}\marg{style}}
+% The |\todostyle| command defines a new optional argument to the
+% |\todo| command \meta{name} which sets the options given by
+% \meta{style}. For instance, after issuing
+% \begin{verbatim}
+% \todostyle{red}{color=red,shadow}\end{verbatim}
+% the command |\todonote[red]{Stuff}| has the same effect as:
+% \begin{verbatim}
+% \todonote[color=red,shadow]{Stuff}\end{verbatim}
+% Defined styles should be used
+% as the first optional argument to |\todo|, as they reset all
+% predefined options to their defaults.
 %
 % \subsection{Package options}
 % \label{subsecPackageOptions}
@@ -858,7 +873,17 @@
 % \end{document}
 % \end{verbatim}
 %
+% \subsubsection{Issues with user-defined styles}
 %
+% Using an option defined using |\todostyle| will reset all predefined
+% options to their defaults. For instance,
+% |\todo[inline,newstyle}{Stuff}| will not be inline; however
+% |\todo[newstyle,inline]{Stuff}| will be.
+%
+% |\todostyle| does not check if the name of the defined style is
+% already one of the defined options, so, e.g.,
+% |\todostyle{inline}{color=red}| will redefine the |inline| option
+% to produce red marginal notes.
 %
 % \subsection{Things to improve}
 % This is a list of things I consider to improve sometime in the
@@ -938,6 +963,15 @@
 % This \todoredefined[color=green]{Test of newly defined command, requesting a green color.}
 % can be done with all the accepted options for the |\todo| command.
 % 
+% If only available options to the |\todo| command are desired in the
+% defined comman, a similar effect can be achieved by defining a new style.
+% For instance, 
+% \begin{verbatim}
+% \todostyle{red}{color=red}
+% \todo[red,inline]{A red to do}\end{verbatim}
+% \todostyle{red}{color=red}%
+% will produce a note like this:\todo[red,inline]{A todo with user-defined
+% style \emph{red}}
 %
 %
 % \subsubsection{Enumerate todonotes}
@@ -2142,6 +2176,17 @@ prior to loading the todonotes package.} \else\fi%
     \@todo[#1]{#2}%
   \fi}
 \newif\if@todonotes@vmode
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\todostyle}
+% Define the |\todostyle| macro. |\todostyle|\marg{name}\marg{style}
+% defines an |xkeyval| option \meta{name} that, when called in a
+% |\todo| or |\missingfigure| command, sets the preset options 
+% followed by \meta{style}.
+%    \begin{macrocode}
+\newcommand*{\todostyle}[2]{%
+    \define@key{todonotes}{#1}[]{%
+        \setkeys{todonotes}{#2}}}
 %    \end{macrocode}
 % \end{macro}
 % \appendix
