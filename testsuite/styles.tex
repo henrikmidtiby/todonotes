@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{../todonotes}
+
+\todostyle{done}{backgroundcolor={black!10},textcolor={black!60}}
+\todostyle{greenbg}{backgroundcolor={green}}
+\todostyle{blue}{textcolor={blue},figcolor=blue!20}
+
+\begin{document}
+todonotes styles
+
+\listoftodos
+
+\missingfigure[blue]{Draw this figure in blue\ldots}
+
+\todo{Testing}
+\todo[done,inline]{Testing: inline in style done}
+\todo[greenbg]{Testing again: green background}
+\todo[blue]{Testing again: blue text}
+\todo[greenbg,blue]{Testing again: green background, blue text (but only blue text in effect)}
+
+\end{document}
