@@ -1606,6 +1606,15 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes.sty}%
     {textwidth}{\renewcommand{\@todonotes@textwidth}{#1}}
 %    \end{macrocode}
+% Make the formatting of a note an option. Notes are formatted using
+% |\todoformat|, which by default does nothing. If the option
+% |format=cmd| is given, notes are formatted using |\cmd| instead.
+% Default formatting can also be changed by redefining |\todoformat|
+%    \begin{macrocode}
+\newcommand{\todoformat}[1]{#1}
+\define@key{todonotes.sty}%
+    {format}{\renewcommand{\todoformat}{\@nameuse{#1}}}
+%    \end{macrocode}
 % Make the text size as an option, accept both |size| and |textsize|. 
 %    \begin{macrocode}
 \define@key{todonotes.sty}%
@@ -1697,6 +1706,14 @@ prior to loading the todonotes package.} \else\fi%
 %    \begin{macrocode}
 \define@key{todonotes}{tickmarkheight}{%
     \renewcommand{\@todonotes@tickmarkheight}{#1}}%
+%    \end{macrocode}
+% Make formatting of notes a per-note option as well, by redefining
+% the internal |\@todonotes@format| command, which is then used in
+% formatting the actual note.
+%    \begin{macrocode}
+\newcommand{\@todonotes@format}{\todoformat}%
+\define@key{todonotes}{format}{%
+    \renewcommand{\@todonotes@format}{\@nameuse{#1}}}%
 %    \end{macrocode}
 % Set a relative font size
 %    \begin{macrocode}
@@ -1793,6 +1810,7 @@ prior to loading the todonotes package.} \else\fi%
     backgroundcolor=\@todonotes@backgroundcolor,%
     textcolor=\@todonotes@textcolor,%
     bordercolor=\@todonotes@bordercolor,%
+    format=todoformat,
     tickmarkheight=\@todonotes@defaulttickmarkheight,%
     nofancyline,%
     nodisable,%
@@ -2004,9 +2022,10 @@ prior to loading the todonotes package.} \else\fi%
          \end{tikzpicture}%
          \if@todonotes@inlinepar\par\fi}%
             \if@todonotes@authorgiven%
-                {\noindent \@todonotes@useSizeCommand \@todonotes@author:\,\@todonotes@text}%
+                {\noindent \@todonotes@useSizeCommand \@todonotes@author:\,\@todonotes@format{\@todonotes@text}}%
             \else%
-                {\noindent \@todonotes@useSizeCommand \@todonotes@text}%
+                {\noindent \@todonotes@useSizeCommand 
+                    \@todonotes@format{\@todonotes@text}}%
             \fi
         {\if@todonotes@inlinepar\par\noindent\fi%
          \begin{tikzpicture}[remember picture]%
@@ -2018,9 +2037,10 @@ prior to loading the todonotes package.} \else\fi%
          \begin{tikzpicture}[remember picture]%
             \draw node[inlinenotestyle,font=\@todonotes@useSizeCommand]{%
                 \if@todonotes@authorgiven%
-                    {\noindent \@todonotes@author:\,\@todonotes@text}%
+                    {\noindent \@todonotes@author:\,%
+                        \@todonotes@format{\@todonotes@text}}%
                 \else%
-                    {\noindent \@todonotes@text}%
+                    {\noindent \@todonotes@format{\@todonotes@text}}%
                 \fi};%
          \end{tikzpicture}%
          \if@todonotes@inlinepar\par\fi}%
@@ -2037,9 +2057,10 @@ prior to loading the todonotes package.} \else\fi%
     \end{tikzpicture}\\%
     \begin{minipage}{\@todonotes@textwidth}%
     \if@todonotes@authorgiven%
-      \@todonotes@useSizeCommand \@todonotes@author \@todonotes@text%
+      \@todonotes@useSizeCommand \@todonotes@author:\,
+         \@todonotes@format{\@todonotes@text}%
     \else%
-      \@todonotes@useSizeCommand \@todonotes@text%
+      \@todonotes@useSizeCommand\@todonotes@format{\@todonotes@text}%
     \fi%
     \end{minipage}\\%
     \begin{tikzpicture}[remember picture]%
@@ -2055,10 +2076,10 @@ prior to loading the todonotes package.} \else\fi%
                 {\@todonotes@author};%
             \node(Y)[below=of X]{};%
             \draw node[notestyle,font=\@todonotes@useSizeCommand,anchor=north] (inNote) at (X.south)%
-                {\@todonotes@text};%
+                {\@todonotes@format{\@todonotes@text}};%
         \else%
             \draw node[notestyle,font=\@todonotes@useSizeCommand,anchor=north] (inNote) at (X.north)%
-                {\@todonotes@text};%
+                {\@todonotes@format{\@todonotes@text}};%
         \fi%
     \end{tikzpicture}%
     \hbadness \originalHbadness%
