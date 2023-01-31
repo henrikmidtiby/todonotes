@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{738}
+% \CheckSum{760}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1606,10 +1606,12 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes.sty}%
     {textwidth}{\renewcommand{\@todonotes@textwidth}{#1}}
 %    \end{macrocode}
-% Make the formatting of a note an option. Notes are formatted using
-% |\todoformat|, which by default does nothing. If the option
-% |format=cmd| is given, notes are formatted using |\cmd| instead.
-% Default formatting can also be changed by redefining |\todoformat|
+% Make the formatting of a note an option.
+% Notes are formatted using |\todoformat|, which by default does
+% nothing.
+% If the option |format=cmd| is given, notes are formatted using
+% |\cmd| instead.
+% Default formatting can also be changed by redefining |\todoformat|.
 %    \begin{macrocode}
 \newcommand{\todoformat}[1]{#1}
 \define@key{todonotes.sty}%
@@ -1810,7 +1812,7 @@ prior to loading the todonotes package.} \else\fi%
     backgroundcolor=\@todonotes@backgroundcolor,%
     textcolor=\@todonotes@textcolor,%
     bordercolor=\@todonotes@bordercolor,%
-    format=todoformat,
+    format=todoformat,%
     tickmarkheight=\@todonotes@defaulttickmarkheight,%
     nofancyline,%
     nodisable,%
@@ -2024,7 +2026,7 @@ prior to loading the todonotes package.} \else\fi%
             \if@todonotes@authorgiven%
                 {\noindent \@todonotes@useSizeCommand \@todonotes@author:\,\@todonotes@format{\@todonotes@text}}%
             \else%
-                {\noindent \@todonotes@useSizeCommand 
+                {\noindent \@todonotes@useSizeCommand%
                     \@todonotes@format{\@todonotes@text}}%
             \fi
         {\if@todonotes@inlinepar\par\noindent\fi%
