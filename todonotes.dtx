@@ -795,6 +795,11 @@
 %
 % \subsubsection{Todonotes in footnotes}
 % Placing todonotes in footnotes throws a lot of errors.
+% However inline notes seems to work fine, as shown here
+% \footnote{Note \todo[inline]{description}}:
+% \begin{verbatim}
+% \footnote{Note \todo[inline]{description}}
+% \end{verbatim}
 % Richard Stanton comes with the following work around.
 % \begin{verbatim}
 % \renewcommand{\marginpar}{\marginnote}
