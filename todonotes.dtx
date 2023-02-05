@@ -31,6 +31,9 @@
 \usepackage{amsmath}
 \usepackage{setspace}
 \usepackage{soul}
+\usepackage{ulem}
+\usepackage{dingbat}
+
 \setcounter{tocdepth}{2}
 \EnableCrossrefs         
 \CodelineIndex
@@ -45,7 +48,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{760}
+% \CheckSum{777}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -245,7 +248,7 @@
 % \section{Introduction}
 %
 % The |todonotes| package makes four commands available to the
-% user: |\todo[]{}|, |\missingfigure{}| and |\listoftodos|.
+% user: |\todo[]{}|, |\missingfigure{}|, |\listoftodos|, and |\todostyle|.
 % |\todo[]{}| and |\missingfigure{}| makes it possible to insert
 % notes in your document about things that has to be done later
 % (todonotes \ldots). 
@@ -445,7 +448,18 @@
 % inserted by the |\missingfigure| command. 
 % The default value is |\linewidth|.
 %
-% 
+% \DescribeMacro{format}
+% \DescribeMacro{listformat}
+% The |format=cmd| option sets the name of the command used to format 
+% the note. E.g., |format=textbf| sets all notes in boldface. The 
+% default command used to format notes is |\todoformat|. |\todoformat| is 
+% provided by the package, and by default does nothing. It can be 
+% redefined, e.g., by adding
+% \begin{verbatim}
+% \renewcommand{\todoformat}[1]{[\emph{#1}]}\end{verbatim}
+% to surround the text of a note by square brackets and set it in italics.
+% The option |listformat| and the command |\todolistformat| do the same,
+% except not in the note itself but in the list of todo notes instead.
 %
 % \subsection{Options for the todo command}
 % \label{subsecTodoOptions}
@@ -644,6 +658,17 @@
 % \todo[inline, inlinewidth=5cm, noinlinepar]{Testing the option inlinepar.}
 % \end{verbatim}
 %
+% \DescribeMacro{format}
+% \DescribeMacro{listformat}
+% The options |format=cmd| and |listformat=cmd| specify to use the 
+% command |\cmd| to format the note and the text/caption of the note 
+% in the list of todos. E.g., 
+% \begin{verbatim}
+% \todo[format=textbf,listformat=emph]{Testing the options format and listformat.}\end{verbatim}
+% will produce a boldface marginal todo note which is italicized 
+% in the list of todos.\todo[format=textbf,listformat=emph]{Testing 
+% the options format and listformat.} This option overrides the 
+% defaults given with the corresponding package options.
 %
 % \subsection{Options for the missingfigure command}
 %
@@ -694,6 +719,11 @@
 % \end{verbatim}
 % \missingfigure[figcolor=white]{Testing figcolor}
 %
+% \DescribeMacro{format}
+% \DescribeMacro{listformat}
+% The options |format=cmd| and |listformat=cmd| specify the use of 
+% command |\cmd| to format the missing figure and the text in the 
+% list of todos.
 %
 % \subsection{Options for the listoftodos command}
 % The |\listoftodos| command takes one optional argument, that
@@ -922,16 +952,6 @@
 % assigned.
 % Idea: Fabrice Niessen
 %
-%
-% \subsubsection{Mark accomplished todos}
-% \begin{verbatim}
-% \todo[done]{Stuff}
-% \end{verbatim}
-% Idea: Fabrice Niessen
-%
-%
-%
-% 
 % 
 % \subsection{Usage methods}
 % In this section I have collected some different methods to use the
@@ -982,6 +1002,38 @@
 % will produce a note like this:\todo[red,inline]{A todo with user-defined
 % style \emph{red}}
 %
+% \subsubsection{Marking completed todos}
+% 
+% Use custom formatting commands and a user-defined style |done| to mark
+% completed todos.
+% For instance, to strike out all todos marked |done|, include:
+% \todostyle{done}{format=sout,listformat=sout}
+% \begin{verbatim}
+% \todostyle{done}{format=sout,listformat=sout}\end{verbatim}
+% A completed todo note\todo[done]{A completed todo} will then be 
+% formatted using the |\sout| command from the |ulem| package 
+% (which must be loaded in the preamble). You can combine this with
+% custom formatting commands. E.g., to display a completed todo
+% ``greyed out'' and with a leading checkmark, load the |dingbat| package and 
+% define
+% \begin{verbatim}
+% \newcommand{\checked}[1]{\checkmark\ #1}
+% \todostyle{done}{format=checked,
+%   listformat=checked,
+%   backgroundcolor={black!10},
+%   textcolor={black!60}}\end{verbatim}
+% \newcommand{\checked}[1]{\checkmark\ #1}
+% \todostyle{done}{format=checked,
+%   listformat=checked,
+%   backgroundcolor={black!10},
+%   textcolor={black!70}}
+% A completed todo note will then appear like this:
+% \todo[done,inline]{A completed todo with a checkmark} 
+% To simply hide completed todos, define the |done| style as
+% \begin{verbatim}
+% \todostyle{done}{disable}\end{verbatim}
+% Remember that user-defined styles should precede other options given
+% to the |\todo| command.
 %
 % \subsubsection{Enumerate todonotes}
 %
@@ -1007,7 +1059,7 @@
 %
 %
 % 
-% \subsubsection{Comments ''a la Word''}
+% \subsubsection{Comments ``a la Word''}
 %
 % Fabrice Niessen sent me the following use case.
 % The idea is to define a new command |\mycomment| which adds a
@@ -1620,6 +1672,17 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes.sty}%
     {format}{\renewcommand{\todoformat}{\@nameuse{#1}}}
 %    \end{macrocode}
+% Make the formatting of an entry in the list of notes an option.
+% List entries are formatted using |\todolistformat|, which by default does
+% nothing.
+% If the option |listformat=cmd| is given, list entries are formatted using
+% |\cmd| instead.
+% Default formatting can also be changed by redefining |\todolistformat|.
+%    \begin{macrocode}
+\newcommand{\todolistformat}[1]{#1}
+\define@key{todonotes.sty}%
+    {listformat}{\renewcommand{\todolistformat}{\@nameuse{#1}}}
+%    \end{macrocode}
 % Make the text size as an option, accept both |size| and |textsize|. 
 %    \begin{macrocode}
 \define@key{todonotes.sty}%
@@ -1720,6 +1783,14 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes}{format}{%
     \renewcommand{\@todonotes@format}{\@nameuse{#1}}}%
 %    \end{macrocode}
+% Do the same for formatting in the list of notes, by redefining
+% the internal |\@todonotes@format| command, which is then used in
+% formatting the actual note.
+%    \begin{macrocode}
+\newcommand{\@todonotes@listformat}{\todolistformat}%
+\define@key{todonotes}{listformat}{%
+    \renewcommand{\@todonotes@listformat}{\@nameuse{#1}}}%
+%    \end{macrocode}
 % Set a relative font size
 %    \begin{macrocode}
 \newcommand{\@todonotes@sizecommand}{}%
@@ -1816,6 +1887,7 @@ prior to loading the todonotes package.} \else\fi%
     textcolor=\@todonotes@textcolor,%
     bordercolor=\@todonotes@bordercolor,%
     format=todoformat,%
+    listformat=todolistformat,%
     tickmarkheight=\@todonotes@defaulttickmarkheight,%
     nofancyline,%
     nodisable,%
@@ -1998,9 +2070,9 @@ prior to loading the todonotes package.} \else\fi%
             \fcolorbox{\@todonotes@currentbordercolor}%
                 {\@todonotes@currentbackgroundcolor}%
                 {\textcolor{\@todonotes@currentbackgroundcolor}{o}}%
-            \ \@todonotes@caption}%
+            \ \@todonotes@listformat{\@todonotes@caption}}%
     \else%
-        \addcontentsline{tdo}{todo}{\@todonotes@caption}%
+        \addcontentsline{tdo}{todo}{\@todonotes@listformat{\@todonotes@caption}}%
     \fi}%
 %    \end{macrocode}
 % \end{macro}
@@ -2150,7 +2222,8 @@ prior to loading the todonotes package.} \else\fi%
 %    \begin{macrocode}
 \newcommand{\missingfigure}[2][]{%
 \setkeys{todonotes}{#1}%
-\addcontentsline{tdo}{todo}{\@todonotes@MissingFigureText: #2}%
+\addcontentsline{tdo}{todo}{\@todonotes@listformat
+    {\@todonotes@MissingFigureText: #2}}%
 \par
 \noindent
 \hfill
@@ -2159,7 +2232,7 @@ prior to loading the todonotes package.} \else\fi%
     (-2, -0.5*\@todonotes@currentfigheight-0.5cm)
     rectangle +(\@todonotes@currentfigwidth, \@todonotes@currentfigheight);
 \draw (2, -0.5) node[right, text
-    width=\@todonotes@currentfigwidth-4.5cm, font=\@todonotes@useSizeCommand] {#2};
+    width=\@todonotes@currentfigwidth-4.5cm, font=\@todonotes@useSizeCommand] {\@todonotes@format{#2}};
 \draw[red, fill=white, rounded corners = 5pt, line width=10pt] 
     (30:2cm) -- (150:2cm) -- (270:2cm) -- cycle;
 \draw (0, 0.3) node {\@todonotes@MissingFigureUp};

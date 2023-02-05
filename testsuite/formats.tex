@@ -1,22 +1,23 @@
 \documentclass{article}
-\usepackage[format=textbf]{../todonotes}
+\usepackage[format=textbf,listformat=textbf]{../todonotes}
 
 \begin{document}
 todonotes with format options.
 
 \listoftodos
 
-\missingfigure{Draw this figure \ldots}
+\missingfigure[listformat=emph]{Draw this figure in default textbf but emph in list\ldots}
 
 \todo{Testing: textbf as default}
 \todo[inline,author=XXX]{Testing inline: textbf}
-\todo[format=emph]{Testing: emph}
+\todo[format=emph,listformat=emph]{Testing: emph for both format and listformat}
 \todo[inline,author=XXX]{Testing inline with author: textbf}
 \todo[author={XXX},caption={Caption},format=emph]{Testing: emph, with
 author and caption}
 \todo[author={XXX},caption={Caption},prepend,format=emph]{Testing: emph, with
 author and prepended caption}
 \renewcommand{\todoformat}[1]{[[\textsl{#1}]]}
+\renewcommand{\todolistformat}[1]{[[\textsl{#1}]]}
 \todo{Testing: no option, back to default, but we've redefined
-\texttt{\textbackslash todoformat} }
+\texttt{\textbackslash todoformat} and \texttt{\textbackslash todolistformat}}
 \end{document}
