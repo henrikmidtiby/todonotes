@@ -1518,6 +1518,13 @@ prior to loading the todonotes package.} \else\fi%
     \@todonotes@SetMissingFigureDown{saknas}%
 }
 %    \end{macrocode}
+% Define parameters for the list of todo if they are not defined by 
+% the current document class.
+%    \begin{macrocode}
+\providecommand{\@tocrmarg}{2.55em}
+\providecommand{\@dotsep}{4.5}
+\providecommand{\@pnumwidth}{1.55em}
+%    \end{macrocode}
 % Create a counter, for storing the number of inserted todos.
 %    \begin{macrocode}
 \newcounter{@todonotes@numberoftodonotes}
