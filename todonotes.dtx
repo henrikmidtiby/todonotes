@@ -20,14 +20,14 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{todonotes}
 %<*package>
-    [2023/01/31 v1.1.6 Todonotes source and documentation.]
+    [2024/01/05 v1.1.7 Todonotes source and documentation.]
 %</package>
 %
 %<*driver>
 \documentclass{ltxdoc}
 \usepackage{wrapfig}
 \usepackage[colorlinks, linkcolor=black, urlcolor=blue]{hyperref}
-\usepackage[colorinlistoftodos, loadshadowlibrary]{todonotes}[2023/01/31]
+\usepackage[colorinlistoftodos, loadshadowlibrary]{todonotes}[2024/01/05]
 \usepackage{amsmath}
 \usepackage{setspace}
 \usepackage{soul}
@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{760}
+% \CheckSum{766}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -216,6 +216,8 @@
 % \changes{1.1.6}{2023/01/31}{Fix issue 64 by adding the command definetodostyle and 
 %             the format option to the todo and missingfigure commands. 
 %             Pull request by rzach.}
+% \changes{1.1.7}{2024/01/05}{Fix issue 73 by providing default values for parameters 
+%             needed to typeset the list of todos.}
 % \GetFileInfo{todonotes.dtx}   
 %
 % \DoNotIndex{\newcommand,\newenvironment}
@@ -1383,7 +1385,7 @@
 %
 % Identifies the package and loads the packages dependences.
 %    \begin{macrocode}
-\ProvidesPackage{todonotes}[2023/01/31]
+\ProvidesPackage{todonotes}[2024/01/05]
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
 \RequirePackage{xcolor}
