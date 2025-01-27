@@ -45,7 +45,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{766}
+% \CheckSum{779}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -399,6 +399,11 @@
 % background and line color options.
 % The specified colors must be valid according to the 
 % |xcolor| package.
+%
+% \DescribeMacro{linewidth}
+% |linewidth=length| sets the width of the line pointing to the note to
+% |length|. The default is current |1pt|. Thicker lines are interesting
+% for visibility when printing.
 % 
 % \DescribeMacro{tickmarkheight}
 % |tickmarkheight=length| set the height of the tickmark at
@@ -495,6 +500,16 @@
 % bordercolor=red, textcolor=yellow]{Anything but default colors}.
 % \end{verbatim}
 %
+%
+% \DescribeMacro{linewidth}
+% |linewidth=length| sets the width of the line pointing to the note to
+% |length|. The default is current |1pt|. Thicker lines are interesting
+% for visibility when printing\todo[linewidth=3pt]{Thick pointer}.
+%
+% \begin{verbatim}
+% \todo[linewidth=3pt]{Thick pointer}.
+% \end{verbatim}
+% 
 %
 % \DescribeMacro{shadow / noshadow}
 % If the package is loaded with the |shadow| option, 
@@ -1403,6 +1418,7 @@
 \newcommand{\@todonotes@backgroundcolor}{orange}
 \newcommand{\@todonotes@textcolor}{black}
 \newcommand{\@todonotes@linecolor}{orange}
+\newcommand{\@todonotes@linewidth}{1pt}
 \newcommand{\@todonotes@bordercolor}{black}
 \newcommand{\@todonotes@tickmarkheight}{unused value}
 \newcommand{\@todonotes@textwidth}{\marginparwidth}
@@ -1597,6 +1613,12 @@ prior to loading the todonotes package.} \else\fi%
 % an option.
 %    \begin{macrocode}
 \define@key{todonotes.sty}%
+    {linewidth}{\renewcommand{\@todonotes@linewidth}{#1}}
+%    \end{macrocode}
+% Make the width of the pointing line as
+% an option.
+%    \begin{macrocode}
+\define@key{todonotes.sty}%
     {bordercolor}{\renewcommand{\@todonotes@bordercolor}{#1}}
 %    \end{macrocode}
 % Make the height of the line start marking as
@@ -1695,6 +1717,7 @@ prior to loading the todonotes package.} \else\fi%
 % Set an arbitrarily fill color
 %    \begin{macrocode}
 \gdef\@todonotes@currentlinecolor{\@todonotes@linecolor}%
+\gdef\@todonotes@currentlinewidth{\@todonotes@linewidth}%
 \gdef\@todonotes@currentbackgroundcolor{\@todonotes@backgroundcolor}%
 \gdef\@todonotes@currenttextcolor{\@todonotes@textcolor}%
 \gdef\@todonotes@currentbordercolor{\@todonotes@bordercolor}%
@@ -1703,6 +1726,8 @@ prior to loading the todonotes package.} \else\fi%
     \gdef\@todonotes@currentbackgroundcolor{#1}}%
 \define@key{todonotes}{linecolor}{%
     \gdef\@todonotes@currentlinecolor{#1}}%
+\define@key{todonotes}{linewidth}{%
+    \gdef\@todonotes@currentlinewidth{#1}}%
 \define@key{todonotes}{backgroundcolor}{%
     \gdef\@todonotes@currentbackgroundcolor{#1}}%
 \define@key{todonotes}{textcolor}{%
@@ -1821,6 +1846,7 @@ prior to loading the todonotes package.} \else\fi%
 \presetkeys%
     {todonotes}%
     {linecolor=\@todonotes@linecolor,%
+    linewidth=\@todonotes@linewidth,%
     backgroundcolor=\@todonotes@backgroundcolor,%
     textcolor=\@todonotes@textcolor,%
     bordercolor=\@todonotes@bordercolor,%
@@ -1916,7 +1942,7 @@ prior to loading the todonotes package.} \else\fi%
     notestyle,%
     left]%
 \tikzstyle{connectstyle} = [%
-    thick,%
+    line width = \@todonotes@currentlinewidth,%
     draw=\@todonotes@currentlinecolor]%
 \tikzstyle{inlinenotestyle} = [%
     notestyle,%
