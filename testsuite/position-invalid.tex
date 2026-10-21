@@ -1,0 +1,7 @@
+% Expected failure: position only accepts auto, left, or right.
+\documentclass{article}
+\setlength{\marginparwidth}{2.5cm}
+\usepackage{todonotes}
+\begin{document}
+Invalid position.\todo[position=bottom]{Invalid note}
+\end{document}

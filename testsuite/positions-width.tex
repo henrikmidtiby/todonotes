@@ -1,0 +1,19 @@
+\documentclass{article}
+\setlength{\textwidth}{11cm}
+\setlength{\oddsidemargin}{2cm}
+\setlength{\marginparwidth}{2.5cm}
+\usepackage[textwidth=2cm,textsize=small]{todonotes}
+\setuptodonotes{position=right}
+\todostyle{leftnote}{position=left}
+\begin{document}
+BODY-WIDTH. The note width differs from the margin box width.
+\todo[position=left]{L-NARROW}
+\todo{R-NARROW}
+An explicit option before a style follows the existing style reset rule.
+\todo[position=right,leftnote]{L-STYLE-LAST}
+\par\vspace{4cm}
+\reversemarginpar
+BODY-WIDTH-REVERSE. The reversed margin also uses the correct distance.
+\todo{R-SHIFTED}
+\todo[position=left]{L-NORMAL}
+\end{document}
