@@ -1,0 +1,17 @@
+\documentclass[twocolumn]{article}
+\setlength{\textwidth}{12cm}
+\setlength{\oddsidemargin}{2cm}
+\setlength{\marginparwidth}{2.5cm}
+\usepackage[textsize=small]{todonotes}
+\setuptodonotes{position=right}
+\begin{document}
+BODY-FIRST-COLUMN. These two notes must have the same position.
+\todo[position=auto]{L-COLUMN-AUTO}
+\todo{L-COLUMN-FALLBACK}
+\todo[inline]{INLINE-TWOCOLUMN}
+\todo[disable,position=left]{DISABLED-TWOCOLUMN}
+\newpage
+BODY-SECOND-COLUMN. The other column uses the right margin.
+\todo[position=auto]{R-COLUMN-AUTO}
+\todo[position=left]{R-COLUMN-FALLBACK}
+\end{document}

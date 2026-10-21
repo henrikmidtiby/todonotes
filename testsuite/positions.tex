@@ -1,0 +1,57 @@
+\documentclass[twoside]{article}
+\setlength{\textwidth}{11cm}
+\setlength{\textheight}{20cm}
+\setlength{\oddsidemargin}{2cm}
+\setlength{\evensidemargin}{1cm}
+\setlength{\marginparwidth}{2.5cm}
+\usepackage[textsize=small]{todonotes}
+\setuptodonotes{position=right}
+\todostyle{leftnote}{position=left,color=green!20}
+\begin{document}
+\section*{Odd page: common default and local overrides}
+BODY-ODD. First note uses the preamble default.\todo{R-DEFAULT}
+The next note overrides it.\todo[position=left]{L-LOCAL}
+The next follows the document.\todo[position=auto]{R-AUTO-ODD}
+Finally the default must still be right.\todo{R-AFTER}
+This is one paragraph, so the note options must survive delayed placement.
+\par\vspace{4cm}
+BODY-STYLES. A style selects the left margin.\todo[leftnote]{L-STYLE}
+An explicit option after a style wins.\todo[leftnote,position=right]{R-STYLE-OVERRIDE}
+\setuptodonotes{color=yellow!25}
+Changing only the color preserves the common position.\todo{R-SETUP-MERGE}
+\par\vspace{4cm}
+BODY-LIST.
+\begin{itemize}
+\item A narrower line width must not change the page margin.
+\todo[position=left,noline]{L-LIST}
+\todo[position=right,author=Reviewer,fancyline]{R-AUTHOR}
+\end{itemize}
+\newpage
+\section*{Even page: physical sides and normal margin notes}
+BODY-EVEN. Auto follows the outside margin.\todo[position=auto]{L-AUTO-EVEN}
+Explicit right remains on the right.\todo{R-EVEN}
+Explicit left remains on the left.\todo[position=left]{L-EVEN}
+An ordinary margin note follows the document.\marginpar{L-ORDINARY}
+\par\vspace{5cm}
+\setuptodonotes{position=auto}
+BODY-RESET. The common default can be reset.\todo{L-RESET}
+\todo[inline,position=right]{INLINE-UNCHANGED}
+\todo[disable,position=left]{DISABLED-NOTE}
+\newpage
+\reversemarginpar
+\section*{Odd page with reversed margins}
+BODY-REVERSE. Auto follows the reversed margin.\todo{L-REVERSE-AUTO}
+Explicit right ignores the reversed margin.\todo[position=right]{R-REVERSE}
+Explicit left is still left.\todo[position=left]{L-REVERSE}
+An ordinary margin note remains reversed.\marginpar{L-REVERSE-ORDINARY}
+\par\vspace{5cm}
+\setuptodonotes{noinlinepar}
+BODY-NOGROUP. The next path has no outer todo group.
+\todo[position=right]{R-NOGROUP}
+The default is reset before the next call.\todo{L-NOGROUP-DEFAULT}
+\newpage
+\section*{Even page with reversed margins}
+BODY-REVERSE-EVEN. Auto now selects the right.\todo{R-REVERSE-AUTO}
+\todo[position=left]{L-REVERSE-EVEN}
+\todo[position=right]{R-REVERSE-EVEN}
+\end{document}

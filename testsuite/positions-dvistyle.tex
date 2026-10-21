@@ -1,0 +1,15 @@
+\documentclass{article}
+\setlength{\textwidth}{11cm}
+\setlength{\oddsidemargin}{2cm}
+\setlength{\marginparwidth}{2.5cm}
+\usepackage[dvistyle,textsize=small]{todonotes}
+\setuptodonotes{position=right}
+\begin{document}
+BODY-DVI. Default right note.\todo{R-DVI}
+Forced left note.\todo[position=left]{L-DVI}
+Auto still uses the original placement.\todo[position=auto]{R-DVI-AUTO}
+\par\vspace{6cm}
+\reversemarginpar
+BODY-DVI-REVERSE. Reversed automatic note.\todo[position=auto]{L-DVI-AUTO}
+Right note with author.\todo[author=Author,fancyline]{R-DVI-AUTHOR}
+\end{document}

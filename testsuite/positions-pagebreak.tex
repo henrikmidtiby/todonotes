@@ -1,0 +1,17 @@
+\documentclass[twoside]{article}
+\setlength{\textwidth}{11cm}
+\setlength{\textheight}{7cm}
+\setlength{\oddsidemargin}{2cm}
+\setlength{\evensidemargin}{1cm}
+\setlength{\marginparwidth}{2.5cm}
+\usepackage[textsize=small]{todonotes}
+\begin{document}
+BODY-PAGEBREAK. This paragraph begins close to the bottom of a page.
+\par\vspace{5cm}
+\noindent Before the automatic break.\todo[position=right]{R-BREAK-BEFORE}\\
+One line before the break.\\
+One more line before the break.\\
+After the automatic break.\todo[position=left]{L-BREAK-AFTER}\\
+The right side remains right.\todo[position=right]{R-BREAK-AFTER}\\
+Auto follows the resulting page.\todo{L-BREAK-AUTO}
+\end{document}

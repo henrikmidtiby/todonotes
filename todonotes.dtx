@@ -460,6 +460,31 @@
 % \setuptodonotes{fancyline, color=blue!30}
 % \end{verbatim}
 %
+% \DescribeMacro{position}
+% The |position=auto|, |position=left| and |position=right| options
+% select the margin for a note. The default, |auto|, preserves the
+% document's normal margin placement, including two-sided layouts and
+% |\reversemarginpar|. In a one-column layout, |left| and |right| select
+% the physical left and right page margins, on both odd and even pages.
+% Set a common default in the preamble and override it on individual notes:
+% \begin{verbatim}
+% \usepackage{todonotes}
+% \setuptodonotes{position=right}
+% ...
+% \todo{Uses the right margin.}
+% \todo[position=left]{Uses the left margin.}
+% \todo[position=auto]{Uses the document's normal margin placement.}
+% \end{verbatim}
+% This option does not change ordinary |\marginpar| notes. Inline notes
+% and missing figures ignore it. As with other options, user-defined
+% styles follow the ordering rules described under known issues.
+% Explicit |left| and |right| positions require a one-column layout with
+% the standard |\marginpar| mechanism. In two-column layouts they issue
+% a warning and fall back to |auto|. Packages that replace |\marginpar|
+% may use a different layout and are not covered by this positioning
+% option. The existing vertical spacing between margin notes is retained;
+% notes in opposite margins may therefore still push each other down.
+%
 % \DescribeMacro{disable}
 % The |disable| option can be given directly to the todo command.
 % If given the command has no effect.
@@ -1747,7 +1772,15 @@ prior to loading the todonotes package.} \else\fi%
 \define@key{todonotes}{list}[]{\@todonotes@appendtolistoftodostrue}%
 \define@key{todonotes}{nolist}[]{\@todonotes@appendtolistoftodosfalse}%
 %    \end{macrocode}
-% Should the todo item be displayed inline?
+% Select the margin for the todo item.
+%    \begin{macrocode}
+\newcommand{\@todonotes@position}{auto}%
+\newcommand{\@todonotes@positionindex}{0}%
+\define@choicekey{todonotes}{position}%
+    [\@todonotes@position\@todonotes@positionindex]%
+    {auto,left,right}{}%
+%    \end{macrocode}
+% Whether the note is placed inline.
 %    \begin{macrocode}
 \newif\if@todonotes@inlinenote%
 \define@key{todonotes}{inline}[]{\@todonotes@inlinenotetrue}%
@@ -1829,6 +1862,7 @@ prior to loading the todonotes package.} \else\fi%
     nofancyline,%
     nodisable,%
     noinline,%
+    position=auto,%
     nocaption,%
     noauthor,%
     \@todonotes@shadowenabledbydefault,%
@@ -1964,7 +1998,19 @@ prior to loading the todonotes package.} \else\fi%
 % \begin{macro}{drawMarginNoteWithLine}
 % Define helper function |drawMarginNoteWithLine|.
 %    \begin{macrocode}
+\newlength{\@todonotes@marginshift}
 \newcommand{\@todonotes@drawMarginNoteWithLine}{%
+\ifnum\@todonotes@positionindex>\z@
+    \if@twocolumn
+        \PackageWarning{todonotes}{position=\@todonotes@position\space
+            is not supported in two-column layouts.\MessageBreak
+            Using position=auto for this note}%
+        \renewcommand{\@todonotes@positionindex}{0}%
+    \else
+        \setlength{\@todonotes@marginshift}{%
+            \columnwidth + 2\marginparsep + \marginparwidth}%
+    \fi
+\fi
 %    \end{macrocode}
 % When the todonote should be placed inside a marginpar, the code
 % below is applied.
@@ -1980,9 +2026,14 @@ prior to loading the todonotes package.} \else\fi%
 \begin{tikzpicture}[remember picture, overlay, baseline=-0.75ex]%
     \node [coordinate] (inText) {};%
 \end{tikzpicture}%
-\marginpar[{% Draw note in left margin
-    \@todonotes@drawMarginNote%
-    \@todonotes@drawLineToLeftMargin%
+\marginpar[{% The alternative selected by LaTeX for the left margin.
+    \ifnum\@todonotes@positionindex=\tw@
+        \@todonotes@drawShiftedMarginNote{\@todonotes@marginshift}%
+            {\@todonotes@drawLineToRightMargin}%
+    \else
+        \@todonotes@drawMarginNote%
+        \@todonotes@drawLineToLeftMargin%
+    \fi
 %    \end{macrocode}
 % In the book documentclass (which is a twoside layout), the
 % |\marginpar| marginpar macro takes two arguments
@@ -1991,10 +2042,33 @@ prior to loading the todonotes package.} \else\fi%
 % margin note has to be inserted, and then use the corresponding
 % commands.
 %    \begin{macrocode}
-}]{% Draw note in right margin
-    \@todonotes@drawMarginNote%
-    \@todonotes@drawLineToRightMargin%
+}]{% The alternative selected by LaTeX for the right margin.
+    \ifnum\@todonotes@positionindex=\@ne
+        \@todonotes@drawShiftedMarginNote{-\@todonotes@marginshift}%
+            {\@todonotes@drawLineToLeftMargin}%
+    \else
+        \@todonotes@drawMarginNote%
+        \@todonotes@drawLineToRightMargin%
+    \fi
 }%
+}%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{drawShiftedMarginNote}
+% Both margin alternatives are boxed before the output routine chooses
+% a side. Shift the contents of the opposite alternative, rather than
+% changing global margin-placement flags. The surrounding box keeps its
+% normal width and the inner paragraph also supports the |dvistyle| layout.
+% The distance is computed before entering the inner paragraph, where
+% layout dimensions may differ from those of the main text.
+%    \begin{macrocode}
+\newcommand{\@todonotes@drawShiftedMarginNote}[2]{%
+    \makebox[\marginparwidth][l]{%
+        \hspace*{#1}%
+        \parbox[t]{\marginparwidth}{%
+            \@todonotes@drawMarginNote%
+            #2}%
+    }%
 }%
 %    \end{macrocode}
 % \end{macro}
